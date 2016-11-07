@@ -1,5 +1,5 @@
 {
-  "name": "flapper-news",
+  "name": "aboredcook",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -11,11 +11,13 @@
     "debug": "~2.2.0",
     "ejs": "~2.5.2",
     "express": "~4.14.0",
+    "express-jwt": "^5.1.0",
     "jsonwebtoken": "^7.1.9",
     "mongoose": "^4.6.6",
     "morgan": "~1.7.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
+    "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0"
   }
 }

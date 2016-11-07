@@ -2,12 +2,27 @@ var express = require('express');
 var router = express.Router();
 
 var mongoose = require('mongoose');
+var passport = require('passport');
+var jwt = require('express-jwt');
+
+//load models
 var Recipe = mongoose.model('Recipe');
 var Comment = mongoose.model('Comment');
+var User = mongoose.model('User');
 
-var passport = require('passport');
+//middleware til at godkende gyldighed af JWT-token
+var auth = jwt({secret: 'jegerhemmeligucn', userProperty: 'payload'});
 
-// GET recipes
+// GET homepage (vores SPA index.ejs)
+router.get('/', function(req, res) {
+    res.render('index.ejs', {});
+});
+
+/******************************
+ *   RECIPE & COMMENT ROUTES  *
+ ******************************/
+
+// GET all recipes
 router.get('/recipes', function(req, res, next) {
     Recipe.find(function(err, recipes) {
         if (err) {
@@ -18,9 +33,10 @@ router.get('/recipes', function(req, res, next) {
     });
 });
 
-// /recipe en recipe (lel)
-router.post('/recipes', function(req, res, next) {
+// POST recipe
+router.post('/recipes', auth, function(req, res, next) {
     var recipe = new Recipe(req.body);
+    recipe.author = req.payload.username;
 
     recipe.save(function(err, recipe) {
         if (err) {
@@ -33,8 +49,8 @@ router.post('/recipes', function(req, res, next) {
 
 
 
-//her bruger vi router.param middleware injection ved ":recipe" - very sexy
-router.get('/recipes/:recipe', function(req, res) {
+// GET single recipe (her bruger vi router.param middleware injection til at håndtere ":recipe"-id -se middleware routes længere nede)
+router.get('/recipes/:recipe', function(req, res, next) {
     req.recipe.populate('comments', function(err, recipe) {
         if (err) {
             return next(err);
@@ -44,8 +60,8 @@ router.get('/recipes/:recipe', function(req, res) {
     });
 });
 
-//upvote en recipe - bruger upvote metode defineret i modellen for recipe
-router.put('/recipes/:recipe/upvote', function(req, res, next) {
+// PUT upvote recipe (bruger upvote metode defineret i modellen for recipe)
+router.put('/recipes/:recipe/upvote', auth, function(req, res, next) {
     req.recipe.upvote(function(err, recipe) {
         if (err) {
             return next(err);
@@ -55,7 +71,8 @@ router.put('/recipes/:recipe/upvote', function(req, res, next) {
     });
 });
 
-router.put('/recipes/:recipe/comments/:comment/upvote', function(req, res, next) {
+// PUT upvote comment
+router.put('/recipes/:recipe/comments/:comment/upvote', auth, function(req, res, next) {
     req.recipe.comment.upvote(function(err, comment) {
         if (err) {
             return next(err);
@@ -65,10 +82,11 @@ router.put('/recipes/:recipe/comments/:comment/upvote', function(req, res, next)
     });
 });
 
-//tilføj comment til recipe
-router.post('/recipes/:recipe/comments', function(req, res, next) {
+// POST comment til recipe
+router.post('/recipes/:recipe/comments', auth, function(req, res, next) {
     var comment = new Comment(req.body);
     comment.recipe = req.recipe;
+    comment.author = req.payload.username;
 
     comment.save(function(err, comment) {
         if (err) {
@@ -80,21 +98,67 @@ router.post('/recipes/:recipe/comments', function(req, res, next) {
             if (err) {
                 return next(err);
             }
-
             res.json(comment);
         });
     });
 });
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index', {});
+/******************************
+ *    AUTHENTICATION ROUTES   *
+ ******************************/
+
+//POST register ny bruger
+router.post('/register', function(req, res, next) {
+    if (!req.body.username || !req.body.password) {
+        return res.status(400).json({
+            message: 'Please fill out all fields'
+        });
+    }
+
+    var user = new User();
+
+    user.username = req.body.username;
+
+    user.setPassword(req.body.password)
+
+    user.save(function(err) {
+        if (err) {
+            return next(err);
+        }
+
+        return res.json({
+            token: user.generateJWT()
+        })
+    });
 });
 
+router.post('/login', function(req, res, next) {
+    if (!req.body.username || !req.body.password) {
+        return res.status(400).json({
+            message: 'Please fill out all fields'
+        });
+    }
 
-//MIDDLEWARE JAMS
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            return next(err);
+        }
 
-//slick as fuck middleware til single recipe retrival
+        if (user) {
+            return res.json({
+                token: user.generateJWT()
+            });
+        } else {
+            return res.status(401).json(info);
+        }
+    })(req, res, next);
+});
+
+/******************************
+ *    MIDDLEWARE ROUTES       *
+ ******************************/
+
+//Single recipe retrival query
 router.param('recipe', function(req, res, next, id) {
     var query = Recipe.findById(id);
 
@@ -111,7 +175,7 @@ router.param('recipe', function(req, res, next, id) {
     });
 });
 
-//slick as fuck middleware til single recipe retrival
+//Single comment retrival query
 router.param('comment', function(req, res, next, id) {
     var query = Comment.findById(id);
 
@@ -128,4 +192,6 @@ router.param('comment', function(req, res, next, id) {
     });
 });
 
+
+//Eksponér alle routes i vores express router
 module.exports = router;
