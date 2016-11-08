@@ -18,7 +18,7 @@
 <body ng-app="cookbook">
     <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
         <ul class="nav navbar-nav">
-            <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
+            <li ng-show="isLoggedIn()"><a href="/#/user">{{ currentUser() }}</a></li>
             <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
             <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
             <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
@@ -102,6 +102,18 @@
             </div>
             <button type="submit" class="btn btn-primary">recipe</button>
         </form>
+    </script>
+
+    <script type="text/ng-template" id="/user.html">
+        <div class="page-header">
+          <h3>Username: {{user.username}}</h3>
+          <h3>My Id: {{user._id}}</h3>
+
+          <h3>Muh recipes:</h3>
+          <div ng-repeat="recipe in user.recipes">
+          <li>{{recipe}}</li>
+
+        </div>
     </script>
 
     <script type="text/ng-template" id="/register.html">

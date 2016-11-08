@@ -8,8 +8,10 @@ var UserSchema = new mongoose.Schema({
         lowercase: true,
         unique: true
     },
+    recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
     hash: String,
     salt: String
+
 });
 
 UserSchema.methods.setPassword = function(password) {

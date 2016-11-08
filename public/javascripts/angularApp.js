@@ -47,6 +47,11 @@ app.config([
                         $state.go('home');
                     }
                 }]
+            })
+            .state('user', {
+                url: '/user',
+                templateUrl: '/user.html',
+                controller: 'MainCtrl'
             });
     }
 ]);
@@ -104,6 +109,15 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
     return o;
 }]);
 
+app.factory('users', ['$http', 'auth', function($http, auth) {
+    var o = {};
+    o.getCurrentUser = function() {
+        var userId = auth.currentUserId();
+        return $http.get('/users/' + userId);
+    };
+    return o;
+}])
+
 app.factory('auth', ['$http', '$window', function($http, $window) {
     var auth = {};
     auth.saveToken = function(token) {
@@ -133,6 +147,15 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
         }
     };
 
+    auth.currentUserId = function() {
+        if (auth.isLoggedIn()) {
+            var token = auth.getToken();
+            var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+            return payload._id;
+        }
+    };
+
     auth.register = function(user) {
         return $http.post('/register', user).success(function(data) {
             auth.saveToken(data.token);
@@ -154,9 +177,16 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
 app.controller('MainCtrl', [
     '$scope',
     'recipes',
+    'users',
     'auth',
-    function($scope, recipes, auth) {
+    function($scope, recipes, users, auth) {
         $scope.recipes = recipes.recipes;
+
+        users.getCurrentUser().then(function(res) {
+            $scope.user = res.data;
+        });
+
+
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.addRecipe = function() {
             if (!$scope.title || $scope.title === '') {

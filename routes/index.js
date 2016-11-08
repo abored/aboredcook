@@ -11,7 +11,10 @@ var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 
 //middleware til at godkende gyldighed af JWT-token
-var auth = jwt({secret: 'jegerhemmeligucn', userProperty: 'payload'});
+var auth = jwt({
+    secret: 'jegerhemmeligucn',
+    userProperty: 'payload'
+});
 
 // GET homepage (vores SPA index.ejs)
 router.get('/', function(req, res) {
@@ -36,6 +39,8 @@ router.get('/recipes', function(req, res, next) {
 // POST recipe
 router.post('/recipes', auth, function(req, res, next) {
     var recipe = new Recipe(req.body);
+
+    //hent og sæt username fra jwt-payload (slip for at query db for username)
     recipe.author = req.payload.username;
 
     recipe.save(function(err, recipe) {
@@ -43,6 +48,19 @@ router.post('/recipes', auth, function(req, res, next) {
             return next(err);
         }
 
+        //Opret reference til users "recipe"-array, der holder alle recipe id's brugeren har lavet
+        User.findByIdAndUpdate(req.payload._id, {
+                $push: {
+                    "recipes": {
+                        _id: recipe._id
+                    }
+                }
+            },
+            function(err, user) {
+                if (err) {
+                    return next(err);
+                }
+            })
         res.json(recipe);
     });
 });
@@ -104,6 +122,21 @@ router.post('/recipes/:recipe/comments', auth, function(req, res, next) {
 });
 
 /******************************
+ *         USERS ROUTES       *
+ ******************************/
+
+// GET single user
+router.get('/users/:user', function(req, res, next) {
+    req.user.populate('recipes', function(err, user) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(user);
+    });
+});
+
+/******************************
  *    AUTHENTICATION ROUTES   *
  ******************************/
 
@@ -157,6 +190,22 @@ router.post('/login', function(req, res, next) {
 /******************************
  *    MIDDLEWARE ROUTES       *
  ******************************/
+
+router.param('user', function(req, res, next, id) {
+    var query = User.findById(id);
+
+    query.exec(function(err, user) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return next(new Error('can\'t find user'));
+        }
+
+        req.user = user;
+        return next();
+    });
+});
 
 //Single recipe retrival query
 router.param('recipe', function(req, res, next, id) {
