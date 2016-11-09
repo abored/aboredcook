@@ -1,0 +1,38 @@
+﻿<div class="page-header">
+    <h1>COOKBOOK</h1>
+</div>
+
+<div ng-repeat="recipe in recipes | orderBy:'-upvotes'">
+    <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)"></span> {{recipe.upvotes}}
+    <span style="font-size:20px; margin-left:10px;">
+        <a ng-show="recipe.ingredients" href="{{recipe.ingredients}}">
+            {{recipe.title}}
+        </a>
+        <span ng-hide="recipe.ingredients">
+            {{recipe.title}}
+        </span>
+        <span>
+            <a href="#/recipes/{{recipe._id}}">Comments</a>
+        </span>
+    </span>
+    <span ng-show="recipe.author">
+        posted by <a href="#/user/{{recipe.author}}">{{recipe.author}}</a> |
+    </span>
+</div>
+
+<form ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
+
+    <div ng-hide="isLoggedIn()">
+        <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+    </div>
+
+    <h3>Add a new recipe</h3>
+
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Ingredients" ng-model="ingredients"></input>
+    </div>
+    <button type="submit" class="btn btn-primary">recipe</button>
+</form>

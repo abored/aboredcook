@@ -9,7 +9,7 @@ app.config([
         $stateProvider
             .state('home', {
                 url: '/home',
-                templateUrl: '/home.html',
+                template: '<home>',
                 controller: 'MainCtrl',
                 resolve: {
                     recipePromise: ['recipes', function(recipes) {
@@ -19,7 +19,7 @@ app.config([
             })
             .state('recipes', {
                 url: '/recipes/{id}',
-                templateUrl: '/recipes.html',
+                template: '<recipes>',
                 controller: 'RecipesCtrl',
                 resolve: {
                     recipe: ['$stateParams', 'recipes', function($stateParams, recipes) {
@@ -30,7 +30,7 @@ app.config([
 
         .state('login', {
                 url: '/login',
-                templateUrl: '/login.html',
+                template: '<login>',
                 controller: 'AuthCtrl',
                 onEnter: ['$state', 'auth', function($state, auth) {
                     if (auth.isLoggedIn()) {
@@ -40,7 +40,7 @@ app.config([
             })
             .state('register', {
                 url: '/register',
-                templateUrl: '/register.html',
+                template: '<register>',
                 controller: 'AuthCtrl',
                 onEnter: ['$state', 'auth', function($state, auth) {
                     if (auth.isLoggedIn()) {
@@ -50,7 +50,7 @@ app.config([
             })
             .state('user', {
                 url: '/user/{username}',
-                templateUrl: '/user.html',
+                template: '<user-profile>',
                 controller: 'UserCtrl',
                 resolve: {
                     user: ['$stateParams', 'users', function($stateParams, users) {
@@ -287,4 +287,29 @@ app.controller('NavCtrl', [
         $scope.currentUser = auth.currentUser;
         $scope.logOut = auth.logOut;
     }
-]);
+])
+app.directive('home', function () {
+    return {
+        templateUrl: 'templates/home.html'
+    }
+})
+app.directive('userProfile', function () {
+    return {
+        templateUrl: 'templates/user-profile.html'
+    }
+})
+app.directive('register', function () {
+    return {
+        templateUrl: 'templates/register.html'
+    }
+})
+app.directive('recipes', function () {
+    return {
+        templateUrl: 'templates/recipes.html'
+    }
+})
+app.directive('login', function () {
+    return {
+        templateUrl: 'templates/login.html'
+    }
+});
