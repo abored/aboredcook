@@ -73,7 +73,6 @@ router.get('/recipes/:recipe', function(req, res, next) {
         if (err) {
             return next(err);
         }
-
         res.json(recipe);
     });
 });
@@ -121,6 +120,41 @@ router.post('/recipes/:recipe/comments', auth, function(req, res, next) {
     });
 });
 
+//middleware til GET recipes
+router.param('recipe', function(req, res, next, id) {
+    var query = Recipe.findById(id);
+
+    query.exec(function(err, recipe) {
+        if (err) {
+            return next(err);
+        }
+        if (!recipe) {
+            return next(new Error('can\'t find recipe'));
+        }
+
+        req.recipe = recipe;
+        return next();
+    });
+});
+
+//middleware til GET comment
+router.param('comment', function(req, res, next, id) {
+    var query = Comment.findById(id);
+
+    query.exec(function(err, comment) {
+        if (err) {
+            return next(err);
+        }
+        if (!comment) {
+            return next(new Error('can\'t find comment'));
+        }
+
+        req.recipe.comment = comment;
+        return next();
+    });
+});
+
+
 /******************************
  *         USERS ROUTES       *
  ******************************/
@@ -136,13 +170,27 @@ router.get('/users/:user', function(req, res, next) {
     });
 });
 
-router.get('/users/:user', function(req, res, next) {
-    req.user.populate('recipes', function(err, user) {
+// middleware til GET user
+router.param('user', function(req, res, next, id) {
+    var query = '';
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        query = User.findById(id);
+    } else {
+        query = User.findOne({
+            'username': id
+        });
+    }
+
+    query.exec(function(err, user) {
         if (err) {
             return next(err);
         }
+        if (!user) {
+            return next(new Error('can\'t find user'));
+        }
 
-        res.json(user);
+        req.user = user;
+        return next();
     });
 });
 
@@ -196,66 +244,6 @@ router.post('/login', function(req, res, next) {
         }
     })(req, res, next);
 });
-
-/******************************
- *    MIDDLEWARE ROUTES       *
- ******************************/
-
-router.param('user', function(req, res, next, id) {
-    var query = '';
-    if (id.match(/^[0-9a-fA-F]{24}$/)) {
-        query = User.findById(id);
-    } else {
-        query = User.findOne({'username': id});
-    }
-
-    query.exec(function(err, user) {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            return next(new Error('can\'t find user'));
-        }
-
-        req.user = user;
-        return next();
-    });
-});
-
-//Single recipe retrival query
-router.param('recipe', function(req, res, next, id) {
-    var query = Recipe.findById(id);
-
-    query.exec(function(err, recipe) {
-        if (err) {
-            return next(err);
-        }
-        if (!recipe) {
-            return next(new Error('can\'t find recipe'));
-        }
-
-        req.recipe = recipe;
-        return next();
-    });
-});
-
-//Single comment retrival query
-router.param('comment', function(req, res, next, id) {
-    var query = Comment.findById(id);
-
-    query.exec(function(err, comment) {
-        if (err) {
-            return next(err);
-        }
-        if (!comment) {
-            return next(new Error('can\'t find comment'));
-        }
-
-        req.recipe.comment = comment;
-        return next();
-    });
-});
-
 
 //Eksponér alle routes i vores express router
 module.exports = router;

@@ -13,4 +13,6 @@ RecipeSchema.methods.upvote = function(callback) {
   this.save(callback);
 };
 
+RecipeSchema.index({title: 'text', ingredients: 'text' });
+
 mongoose.model('Recipe', RecipeSchema);

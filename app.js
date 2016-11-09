@@ -17,7 +17,7 @@ require('./models/Users');
 require('./config/passport');
 
 //forbind til mongoDB
-mongoose.connect('mongodb://localhost/cookbook');
+mongoose.connect('mongodb://admin:admin@ds147497.mlab.com:47497/cookbook');
 
 //load alle routes
 var index = require('./routes/index');

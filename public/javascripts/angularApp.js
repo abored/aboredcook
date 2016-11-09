@@ -62,6 +62,10 @@ app.config([
     }
 ]);
 
+/*********************
+ *     FACTORIES     *
+ *********************/
+
 app.factory('recipes', ['$http', 'auth', function($http, auth) {
     var o = {
         recipes: []
@@ -187,6 +191,10 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
     return auth;
 }])
 
+/*********************
+ *    CONTROLLERS    *
+ *********************/
+
 app.controller('MainCtrl', [
     '$scope',
     'recipes',
@@ -223,7 +231,7 @@ app.controller('RecipesCtrl', [
         $scope.isLoggedIn = auth.isLoggedIn;
 
         $scope.addComment = function() {
-            if ($scope.body === '') {
+            if (!$scope.body) {
                 return;
             }
             recipes.addComment(recipe._id, {
@@ -283,26 +291,35 @@ app.controller('NavCtrl', [
         $scope.logOut = auth.logOut;
     }
 ])
+
+/*********************
+ *     DIRECTIVES    *
+ *********************/
+
 app.directive('home', function() {
     return {
         templateUrl: 'templates/home.html'
     }
 })
+
 app.directive('userProfile', function() {
     return {
         templateUrl: 'templates/user-profile.html'
     }
 })
+
 app.directive('register', function() {
     return {
         templateUrl: 'templates/register.html'
     }
 })
+
 app.directive('recipes', function() {
     return {
         templateUrl: 'templates/recipes.html'
     }
 })
+
 app.directive('login', function() {
     return {
         templateUrl: 'templates/login.html'
