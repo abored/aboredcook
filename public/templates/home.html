@@ -12,14 +12,14 @@
         <span ng-hide="recipe.ingredients">
             {{recipe.title}}
         </span>
-        <span>
-            <a href="#/recipes/{{recipe._id}}">Comments</a>
+        <span> -
+            <a href="#/recipes/{{recipe._id}}">{{recipe.comments.length}} Comments</a>
         </span>
     </span>
     <span ng-show="recipe.author">
         posted by
         <a href="#/user/{{recipe.author}}">{{recipe.author}}</a>
-        |
+        
     </span>
 </div>
 
