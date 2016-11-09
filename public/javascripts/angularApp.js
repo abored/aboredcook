@@ -123,7 +123,9 @@ app.factory('users', ['$http', 'auth', function($http, auth) {
     };
 
     o.getUserByUsername = function(username) {
-        return $http.get('/users/' + username);
+        return $http.get('/users/' + username).then(function(res) {
+            return res.data;
+        });
     }
     return o;
 }])
@@ -266,16 +268,9 @@ app.controller('AuthCtrl', [
 app.controller('UserCtrl', [
     '$scope',
     'users',
-    function($scope, users) {
-        $scope.user = {};
-
-        $scope.getCurrentUser = users.getCurrentUser().then(function(res) {
-            $scope.user = res.data;
-        });
-
-        $scope.getUserByUsername = users.getUserByUsername($scope.user.username).then(function(res) {
-            $scope.user = res.data;
-        });
+    'user',
+    function($scope, users, user) {
+        $scope.user = user;
     }
 ])
 
@@ -288,27 +283,27 @@ app.controller('NavCtrl', [
         $scope.logOut = auth.logOut;
     }
 ])
-app.directive('home', function () {
+app.directive('home', function() {
     return {
         templateUrl: 'templates/home.html'
     }
 })
-app.directive('userProfile', function () {
+app.directive('userProfile', function() {
     return {
         templateUrl: 'templates/user-profile.html'
     }
 })
-app.directive('register', function () {
+app.directive('register', function() {
     return {
         templateUrl: 'templates/register.html'
     }
 })
-app.directive('recipes', function () {
+app.directive('recipes', function() {
     return {
         templateUrl: 'templates/recipes.html'
     }
 })
-app.directive('login', function () {
+app.directive('login', function() {
     return {
         templateUrl: 'templates/login.html'
     }
