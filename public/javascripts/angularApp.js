@@ -49,9 +49,15 @@ app.config([
                 }]
             })
             .state('user', {
-                url: '/user',
+                url: '/user/{username}',
                 templateUrl: '/user.html',
-                controller: 'MainCtrl'
+                controller: 'UserCtrl',
+                resolve: {
+                    user: ['$stateParams', 'users', function($stateParams, users) {
+                        return users.getUserByUsername($stateParams.username);
+                    }]
+                }
+
             });
     }
 ]);
@@ -115,6 +121,10 @@ app.factory('users', ['$http', 'auth', function($http, auth) {
         var userId = auth.currentUserId();
         return $http.get('/users/' + userId);
     };
+
+    o.getUserByUsername = function(username) {
+        return $http.get('/users/' + username);
+    }
     return o;
 }])
 
@@ -174,18 +184,13 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
 
     return auth;
 }])
+
 app.controller('MainCtrl', [
     '$scope',
     'recipes',
-    'users',
     'auth',
-    function($scope, recipes, users, auth) {
+    function($scope, recipes, auth) {
         $scope.recipes = recipes.recipes;
-
-        users.getCurrentUser().then(function(res) {
-            $scope.user = res.data;
-        });
-
 
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.addRecipe = function() {
@@ -255,6 +260,22 @@ app.controller('AuthCtrl', [
                 $state.go('home');
             });
         };
+    }
+])
+
+app.controller('UserCtrl', [
+    '$scope',
+    'users',
+    function($scope, users) {
+        $scope.user = {};
+
+        $scope.getCurrentUser = users.getCurrentUser().then(function(res) {
+            $scope.user = res.data;
+        });
+
+        $scope.getUserByUsername = users.getUserByUsername($scope.user.username).then(function(res) {
+            $scope.user = res.data;
+        });
     }
 ])
 

@@ -136,6 +136,16 @@ router.get('/users/:user', function(req, res, next) {
     });
 });
 
+router.get('/users/:user', function(req, res, next) {
+    req.user.populate('recipes', function(err, user) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(user);
+    });
+});
+
 /******************************
  *    AUTHENTICATION ROUTES   *
  ******************************/
@@ -192,7 +202,12 @@ router.post('/login', function(req, res, next) {
  ******************************/
 
 router.param('user', function(req, res, next, id) {
-    var query = User.findById(id);
+    var query = '';
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        query = User.findById(id);
+    } else {
+        query = User.findOne({'username': id});
+    }
 
     query.exec(function(err, user) {
         if (err) {
