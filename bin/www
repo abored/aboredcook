@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('aboredcook:server');
+var debug = require('debug')('cookbook:server');
 var http = require('http');
 
 /**

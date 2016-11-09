@@ -9,7 +9,7 @@ app.config([
         $stateProvider
             .state('home', {
                 url: '/home',
-                template: '<home>',
+                templateUrl: 'templates/home.html',
                 controller: 'MainCtrl',
                 resolve: {
                     recipePromise: ['recipes', function(recipes) {
@@ -19,7 +19,7 @@ app.config([
             })
             .state('recipes', {
                 url: '/recipes/{id}',
-                template: '<recipes>',
+                templateUrl: 'templates/recipes.html',
                 controller: 'RecipesCtrl',
                 resolve: {
                     recipe: ['$stateParams', 'recipes', function($stateParams, recipes) {
@@ -30,7 +30,7 @@ app.config([
 
         .state('login', {
                 url: '/login',
-                template: '<login>',
+                templateUrl: 'templates/login.html',
                 controller: 'AuthCtrl',
                 onEnter: ['$state', 'auth', function($state, auth) {
                     if (auth.isLoggedIn()) {
@@ -40,7 +40,7 @@ app.config([
             })
             .state('register', {
                 url: '/register',
-                template: '<register>',
+                templateUrl: 'templates/register.html',
                 controller: 'AuthCtrl',
                 onEnter: ['$state', 'auth', function($state, auth) {
                     if (auth.isLoggedIn()) {
@@ -50,7 +50,7 @@ app.config([
             })
             .state('user', {
                 url: '/user/{username}',
-                template: '<user-profile>',
+                templateUrl: 'templates/user.html',
                 controller: 'UserCtrl',
                 resolve: {
                     user: ['$stateParams', 'users', function($stateParams, users) {
@@ -58,6 +58,21 @@ app.config([
                     }]
                 }
 
+            })
+            .state('me', {
+                url: '/me',
+                templateUrl: 'templates/me.html',
+                controller: 'UserCtrl',
+                resolve: {
+                    user: ['$stateParams', 'users', function($stateParams, users) {
+                        return users.getCurrentUser();
+                    }]
+                }
+
+            })
+            .state('me.edit', {
+                url: '/edit',
+                templateUrl: 'templates/me.edit.html'
             });
     }
 ]);
@@ -123,7 +138,9 @@ app.factory('users', ['$http', 'auth', function($http, auth) {
     var o = {};
     o.getCurrentUser = function() {
         var userId = auth.currentUserId();
-        return $http.get('/users/' + userId);
+        return $http.get('/users/' + userId).then(function(res) {
+            return res.data;
+        });
     };
 
     o.getUserByUsername = function(username) {
@@ -275,9 +292,8 @@ app.controller('AuthCtrl', [
 
 app.controller('UserCtrl', [
     '$scope',
-    'users',
     'user',
-    function($scope, users, user) {
+    function($scope, user) {
         $scope.user = user;
     }
 ])
@@ -294,7 +310,7 @@ app.controller('NavCtrl', [
 
 /*********************
  *     DIRECTIVES    *
- *********************/
+ ********************
 
 app.directive('home', function() {
     return {
@@ -305,6 +321,18 @@ app.directive('home', function() {
 app.directive('userProfile', function() {
     return {
         templateUrl: 'templates/user-profile.html'
+    }
+})
+
+app.directive('me', function() {
+    return {
+        templateUrl: 'templates/me.html'
+    }
+})
+
+app.directive('me.edit', function() {
+    return {
+        templateUrl: 'templates/me.edit.html'
     }
 })
 
@@ -324,4 +352,4 @@ app.directive('login', function() {
     return {
         templateUrl: 'templates/login.html'
     }
-});
+}); */

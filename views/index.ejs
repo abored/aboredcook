@@ -12,13 +12,15 @@
         .glyphicon-thumbs-up {
             cursor: pointer;
         }
+        body {overflow-x: hidden;}
     </style>
 </head>
 
-<body ng-app="cookbook">
+<body ng-app="cookbook" wrap>
+
     <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
         <ul class="nav navbar-nav">
-            <li ng-show="isLoggedIn()"><a href="/#/user/{{ currentUser()}}">{{ currentUser() }}</a></li>
+            <li ng-show="isLoggedIn()"><a href="/#/me">{{ currentUser() }}</a></li>
             <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
             <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
             <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
@@ -40,6 +42,8 @@
     <script type="text/ng-template" id="/recipes.html"></script>
 
     <script type="text/ng-template" id="/user.html"></script>
+
+    <script type="text/ng-template" id="/me.html"></script>
 
     <script type="text/ng-template" id="/register.html"></script>
 
