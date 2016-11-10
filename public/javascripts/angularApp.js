@@ -148,6 +148,18 @@ app.factory('users', ['$http', 'auth', function($http, auth) {
             return res.data;
         });
     }
+
+    o.editUser = function(user) {
+        return $http.put('/me/edit', user, {
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
+            }
+        }).then(function(res) {
+
+            return res.data;
+        });
+    }
+
     return o;
 }])
 
@@ -218,7 +230,6 @@ app.controller('MainCtrl', [
     'auth',
     function($scope, recipes, auth) {
         $scope.recipes = recipes.recipes;
-
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.addRecipe = function() {
             if (!$scope.title || $scope.title === '') {
@@ -292,9 +303,17 @@ app.controller('AuthCtrl', [
 
 app.controller('UserCtrl', [
     '$scope',
+    '$state',
     'user',
-    function($scope, user) {
+    'auth',
+    'users',
+    function($scope, $state, user, auth, users) {
         $scope.user = user;
+        $scope.isLoggedIn = auth.isLoggedIn();
+        $scope.submit = function() {
+            users.editUser($scope.user);
+            $state.go('me');
+        }
     }
 ])
 

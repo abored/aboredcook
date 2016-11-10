@@ -194,6 +194,17 @@ router.param('user', function(req, res, next, id) {
     });
 });
 
+router.put('/me/edit', auth, function(req, res, next) {
+    User.findByIdAndUpdate(req.payload._id, {
+        $set: req.body
+    }, function(err, user) {
+        if (err) {
+            return next(err);
+        }
+        res.json(user)
+    });
+})
+
 /******************************
  *    AUTHENTICATION ROUTES   *
  ******************************/
