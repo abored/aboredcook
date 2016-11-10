@@ -50,7 +50,7 @@ app.config([
             })
             .state('user', {
                 url: '/user/{username}',
-                templateUrl: 'templates/user.html',
+                templateUrl: 'templates/user-profile.html',
                 controller: 'UserCtrl',
                 resolve: {
                     user: ['$stateParams', 'users', function($stateParams, users) {
