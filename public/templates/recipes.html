@@ -2,7 +2,7 @@
     <h3>{{recipe.title}}</h3>
 </div>
 <span ng-show="recipe.ingredients">
-    <h3>Ingredients:</h3>{{recipe.ingredients}}</span>
+    Ingredients: {{recipe.ingredients}}</span>
 
 <div ng-repeat="comment in recipe.comments | orderBy:'-upvotes'">
     <span class="glyphicon glyphicon-thumbs-up" ng-show="isLoggedIn()" ng-click="incrementUpvotes(comment)"></span>
