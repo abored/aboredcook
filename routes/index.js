@@ -77,6 +77,49 @@ router.get('/recipes/:recipe', function(req, res, next) {
     });
 });
 
+// PUT favorite recipe (bruger upvote metode defineret i modellen for recipe)
+router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
+    var user = User.findById(req.payload._id, function(err, user) {
+        if (err) {
+            return next(err);
+        }
+        return user;
+    });
+
+    //user har allerede recipe-id i favorites array, så vi fjerne den (unfavorite)
+    if (user.favorites.includes(req.recipe._id)) {
+        User.update({
+            _id: user._id
+        }, {
+            $pull: {
+                "favorites": req.recipe._id
+            }
+        });
+        req.recipe.unFavorite(function(err, recipe) {
+            if (err) {
+                return next(err);
+            }
+            res.json(recipe);
+        })
+    }
+    //user har ikke favorited recipe så vi tilføjer den hans array.
+    else {
+        User.update({
+            _id: user._id
+        }, {
+            $pull: {
+                "favorites": req.recipe._id
+            }
+        });
+        req.recipe.Favorite(function(err, recipe) {
+            if (err) {
+                return next(err);
+            }
+            res.json(recipe);
+        })
+    }
+});
+
 // PUT upvote recipe (bruger upvote metode defineret i modellen for recipe)
 router.put('/recipes/:recipe/upvote', auth, function(req, res, next) {
     req.recipe.upvote(function(err, recipe) {
