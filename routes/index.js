@@ -77,6 +77,8 @@ router.get('/recipes/:recipe', function(req, res, next) {
     });
 });
 
+
+
 // PUT favorite recipe (bruger upvote metode defineret i modellen for recipe)
 router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
     var user = User.findById(req.payload._id, function(err, user) {
