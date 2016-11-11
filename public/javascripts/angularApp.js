@@ -96,7 +96,14 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
         });
     };
     o.delete = function(id) {
-        return $http.delete('/recipes/' + id + '/delete')
+        return $http.delete('/recipes/' + id + '/delete', {
+          headers: {
+              Authorization: 'Bearer ' + auth.getToken()
+          }
+        }).success(function(res){
+          console.log(res.data);
+          return res.data;
+        });
 
     };
     o.create = function(recipe) {
@@ -264,7 +271,8 @@ app.controller('RecipesCtrl', [
         $scope.isLoggedIn = auth.isLoggedIn;
 
         $scope.deleteRecipe = function() {
-            recipes.delete(recipe._id).success(function() {
+            recipes.delete(recipe._id).success(function(res) {
+                console.log(res.data);
                 $state.go('home');
             })
 

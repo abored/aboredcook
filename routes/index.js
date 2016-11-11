@@ -77,6 +77,23 @@ router.get('/recipes/:recipe', function(req, res, next) {
     });
 });
 
+router.delete('/recipes/:recipe/delete', auth, function(req, res, next) {
+    if (req.recipe.author === req.payload.username) {
+        Recipe.remove({
+            _id: req.recipe._id
+        }, function(err, removed) {
+            if (err) {
+                return next(err);
+            }
+            console.log(removed);
+            res.json(removed);
+        })
+    }
+    else {
+      res.json("That's not your recipe!");
+    }
+
+});
 
 
 // PUT favorite recipe (bruger upvote metode defineret i modellen for recipe)
@@ -86,7 +103,6 @@ router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
             return next(err);
         }
         return user;
-        test
     });
 
     //user har allerede recipe-id i favorites array, så vi fjerne den (unfavorite)
