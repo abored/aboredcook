@@ -85,12 +85,10 @@ router.delete('/recipes/:recipe/delete', auth, function(req, res, next) {
             if (err) {
                 return next(err);
             }
-            console.log(removed);
-            res.json(removed);
+            res.json("Recipe removed");
         })
-    }
-    else {
-      res.json("That's not your recipe!");
+    } else {
+        res.json("That's not your recipe!");
     }
 
 });
@@ -98,45 +96,48 @@ router.delete('/recipes/:recipe/delete', auth, function(req, res, next) {
 
 // PUT favorite recipe (bruger upvote metode defineret i modellen for recipe)
 router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
-    var user = User.findById(req.payload._id, function(err, user) {
-        if (err) {
-            return next(err);
-        }
-        return user;
-    });
 
-    //user har allerede recipe-id i favorites array, så vi fjerne den (unfavorite)
-    if (user.favorites.includes(req.recipe._id)) {
-        User.update({
-            _id: user._id
-        }, {
-            $pull: {
-                "favorites": req.recipe._id
-            }
-        });
-        req.recipe.unFavorite(function(err, recipe) {
-            if (err) {
-                return next(err);
-            }
-            res.json(recipe);
-        })
+    function getUserByIdPromise(id) {
+        var promise = User.findById(req.payload._id).exec();
+        return promise;
     }
-    //user har ikke favorited recipe så vi tilføjer den hans array.
-    else {
-        User.update({
-            _id: user._id
-        }, {
-            $pull: {
-                "favorites": req.recipe._id
-            }
-        });
-        req.recipe.Favorite(function(err, recipe) {
-            if (err) {
-                return next(err);
-            }
-            res.json(recipe);
-        })
-    }
+
+    var userPromise = getUserByIdPromise(req.payload._id);
+    userPromise.then(function(user) {
+        console.log(user);
+        if (user.favorites.includes(req.recipe._id)) {
+            User.update({
+                _id: user._id
+            }, {
+                $pull: {
+                    "favorites": req.recipe._id
+                }
+            });
+            req.recipe.unFavorite(function(err, recipe) {
+                if (err) {
+                    return next(err);
+                }
+                res.json(recipe);
+            })
+        }
+        //user har ikke favorited recipe så vi tilføjer den hans array.
+        else {
+            User.update({
+                _id: user._id
+            }, {
+                $pull: {
+                    "favorites": req.recipe._id
+                }
+            });
+            req.recipe.Favorite(function(err, recipe) {
+                if (err) {
+                    return next(err);
+                }
+                res.json(recipe);
+            })
+        }
+    })
+
 });
 
 // PUT upvote recipe (bruger upvote metode defineret i modellen for recipe)
@@ -317,6 +318,8 @@ router.post('/login', function(req, res, next) {
         }
     })(req, res, next);
 });
+
+
 
 //Eksponér alle routes i vores express router
 module.exports = router;

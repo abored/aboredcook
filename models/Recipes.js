@@ -9,7 +9,7 @@ var RecipeSchema = new mongoose.Schema({
 
   preptime: Number,
   people : Number,
-  
+
   favorites: {type: Number, default: 0},
   upvotes: {type: Number, default: 0},
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
@@ -29,7 +29,6 @@ RecipeSchema.methods.unFavorite = function(callback) {
   this.favorites -= 1;
   this.save(callback);
 };
-
 
 
 RecipeSchema.index({title: 'text', ingredients: 'text' });

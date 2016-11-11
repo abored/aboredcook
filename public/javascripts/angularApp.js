@@ -27,6 +27,10 @@ app.config([
                     }]
                 }
             })
+            .state('recipes.favorite', {
+                url: '/favorite',
+                templateUrl: 'templates/recipes.html'
+            })
 
         .state('login', {
                 url: '/login',
@@ -97,12 +101,11 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
     };
     o.delete = function(id) {
         return $http.delete('/recipes/' + id + '/delete', {
-          headers: {
-              Authorization: 'Bearer ' + auth.getToken()
-          }
-        }).success(function(res){
-          console.log(res.data);
-          return res.data;
+            headers: {
+                Authorization: 'Bearer ' + auth.getToken()
+            }
+        }).success(function(res) {
+            return res
         });
 
     };
@@ -121,6 +124,17 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
                 Authorization: 'Bearer ' + auth.getToken()
             }
         });
+    };
+    o.favorite = function(id) {
+        return $http.put('/recipes/' + id + '/favorite', null, {
+                headers: {
+                    Authorization: 'Bearer ' + auth.getToken()
+                }
+            })
+            .success(function(res) {
+                console.log(res);
+                return res.data;
+            });
     };
     o.upvote = function(recipe) {
         return $http.put('/recipes/' + recipe._id + '/upvote', null, {
@@ -270,9 +284,16 @@ app.controller('RecipesCtrl', [
         $scope.recipe = recipe;
         $scope.isLoggedIn = auth.isLoggedIn;
 
+        $scope.favorite = function(){
+          recipes.favorite(recipe._id).success(function(res){
+            console.log(res);
+          })
+        };
+
+
         $scope.deleteRecipe = function() {
             recipes.delete(recipe._id).success(function(res) {
-                console.log(res.data);
+                console.log(res);
                 $state.go('home');
             })
 
