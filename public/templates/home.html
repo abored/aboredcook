@@ -8,18 +8,18 @@
             <img class="img-responsive img-portfolio img-hover" src="img/pop-food1.jpg" alt="Cook book">
             <div class="caption">
                 <a href="#/recipes/{{recipe._id}}"><h3>{{recipe.title}}</h3></a>
-                <small><span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)"></span>{{recipe.upvotes}} likes!</small>
+                <small><span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)"></span> {{recipe.upvotes}} likes!</small>
                 <p>{{recipe.disc}}</p>
                 <ul class="list-inline">
-                    <li><i class="fa fa-comment-o" aria-hidden="true"></i> {{recipe.comments.length}}</li>
-                    <li><i class="fa fa-clock-o" aria-hidden="true"></i> {{recipe.preptime}} </li>
-                    <li><i class="fa fa-users" aria-hidden="true"></i> {{recipe.people}} </li>
+                    <li><span class="glyphicon glyphicon-comment"></span> {{recipe.comments.length}} </li>
+                    <li><span class="glyphicon glyphicon-time"></span> {{recipe.preptime}} </li>
+                    <li><span class="glyphicon glyphicon-user"></span> {{recipe.people}} </li>
                 </ul>
             </div>
             
         </div>
     </div>
-
+    
 </div>
 
 <form ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
