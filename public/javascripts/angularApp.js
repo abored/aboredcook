@@ -95,6 +95,10 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
             return res.data;
         });
     };
+    o.delete = function(id) {
+        return $http.delete('/recipes/' + id + '/delete')
+
+    };
     o.create = function(recipe) {
         return $http.post('/recipes', recipe, {
             headers: {
@@ -254,10 +258,17 @@ app.controller('RecipesCtrl', [
     'recipes',
     'recipe',
     'auth',
-    function($scope, recipes, recipe, auth) {
+    '$state',
+    function($scope, recipes, recipe, auth, $state) {
         $scope.recipe = recipe;
         $scope.isLoggedIn = auth.isLoggedIn;
 
+        $scope.deleteRecipe = function() {
+            recipes.delete(recipe._id).success(function() {
+                $state.go('home');
+            })
+
+        };
         $scope.addComment = function() {
             if (!$scope.body) {
                 return;
