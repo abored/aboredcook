@@ -86,6 +86,7 @@ router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
             return next(err);
         }
         return user;
+        test
     });
 
     //user har allerede recipe-id i favorites array, så vi fjerne den (unfavorite)
