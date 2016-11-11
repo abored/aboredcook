@@ -77,6 +77,21 @@ router.get('/recipes/:recipe', function(req, res, next) {
     });
 });
 
+// DELETE single recipe
+router.delete('/recipes/:recipe/delete', function(req, res, next) {
+
+    Recipe.remove({
+        _id: req.recipe._id
+    }, function(err, removed) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json("Recipe deleted");
+    })
+
+});
+
 // PUT upvote recipe (bruger upvote metode defineret i modellen for recipe)
 router.put('/recipes/:recipe/upvote', auth, function(req, res, next) {
     req.recipe.upvote(function(err, recipe) {
