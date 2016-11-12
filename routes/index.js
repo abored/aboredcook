@@ -51,7 +51,7 @@ router.post('/recipes', auth, function(req, res, next) {
         //Opret reference til users "recipe"-array, der holder alle recipe id's brugeren har lavet
         User.findByIdAndUpdate(req.payload._id, {
                 $push: {
-                    "recipes": {
+                    "favorites": {
                         _id: recipe._id
                     }
                 }
@@ -96,48 +96,41 @@ router.delete('/recipes/:recipe/delete', auth, function(req, res, next) {
 
 // PUT favorite recipe (bruger upvote metode defineret i modellen for recipe)
 router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
-
-    function getUserByIdPromise(id) {
-        var promise = User.findById(req.payload._id).exec();
-        return promise;
-    }
-
-    var userPromise = getUserByIdPromise(req.payload._id);
-    userPromise.then(function(user) {
-        console.log(user);
-        if (user.favorites.includes(req.recipe._id)) {
-            User.update({
-                _id: user._id
-            }, {
-                $pull: {
-                    "favorites": req.recipe._id
-                }
-            });
-            req.recipe.unFavorite(function(err, recipe) {
-                if (err) {
-                    return next(err);
-                }
-                res.json(recipe);
-            })
+    getUserByIdPromise(req).then(function(user) {
+        var isInArray = user.favorites.some(function(favId) {
+            return favId.equals(req.recipe._id);
+        });
+        console.log(isInArray);
+        if (isInArray) {
+            User.findByIdAndUpdate(req.payload._id, {
+                    $pull: {
+                        favorites: req.recipe._id
+                    }
+                },
+                function(err, user) {
+                    if (err) {
+                        return next(err);
+                    }
+                })
+            req.recipe.unFavorite();
         }
         //user har ikke favorited recipe så vi tilføjer den hans array.
         else {
-            User.update({
-                _id: user._id
-            }, {
-                $pull: {
-                    "favorites": req.recipe._id
-                }
-            });
-            req.recipe.Favorite(function(err, recipe) {
-                if (err) {
-                    return next(err);
-                }
-                res.json(recipe);
-            })
+            User.findByIdAndUpdate(req.payload._id, {
+                    $push: {
+                        "favorites": {
+                            _id: req.recipe._id
+                        }
+                    }
+                },
+                function(err, user) {
+                    if (err) {
+                        return next(err);
+                    }
+                })
+            req.recipe.favorite();
         }
-    })
-
+    });
 });
 
 // PUT upvote recipe (bruger upvote metode defineret i modellen for recipe)
@@ -282,6 +275,8 @@ router.post('/register', function(req, res, next) {
 
     var user = new User();
 
+    user.favorites = new Array();
+
     user.username = req.body.username;
 
     user.setPassword(req.body.password)
@@ -319,6 +314,9 @@ router.post('/login', function(req, res, next) {
     })(req, res, next);
 });
 
+function getUserByIdPromise(req) {
+    return User.findById(req.payload._id).exec();
+}
 
 
 //Eksponér alle routes i vores express router

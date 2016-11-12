@@ -23,11 +23,13 @@ RecipeSchema.methods.upvote = function(callback) {
 RecipeSchema.methods.favorite = function(callback) {
   this.favorites += 1;
   this.save(callback);
+  console.log("+1")
 };
 
 RecipeSchema.methods.unFavorite = function(callback) {
   this.favorites -= 1;
   this.save(callback);
+  console.log("-1")
 };
 
 

@@ -26,6 +26,11 @@ app.config([
                         return recipes.get($stateParams.id);
                     }]
                 }
+                onEnter: ['$state', 'auth', function($state, auth) {
+                    if (auth.isLoggedIn()) {
+                        $state.user =
+                    }
+                }]
             })
             .state('recipes.favorite', {
                 url: '/favorite',
@@ -321,7 +326,7 @@ app.controller('AuthCtrl', [
     '$state',
     'auth',
     function($scope, $state, auth) {
-        $scope.user = {};
+
 
         $scope.register = function() {
             auth.register($scope.user).error(function(error) {
