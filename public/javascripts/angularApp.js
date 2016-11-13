@@ -1,4 +1,4 @@
-var app = angular.module('cookbook', ['ui.router']);
+var app = angular.module('cookbook', ['ui.router', 'ngMaterial']);
 
 app.config([
     '$stateProvider',
@@ -30,11 +30,7 @@ app.config([
                     }]
                 }
             })
-            .state('recipes.favorite', {
-                url: '/favorite',
-                templateUrl: 'templates/recipes.html'
 
-            })
 
         .state('login', {
                 url: '/login',
@@ -80,7 +76,8 @@ app.config([
             })
             .state('me.edit', {
                 url: '/edit',
-                templateUrl: 'templates/me.edit.html'
+                templateUrl: 'templates/me.edit.html',
+
             });
     }
 ]);
@@ -287,13 +284,29 @@ app.controller('RecipesCtrl', [
     '$state',
     function($scope, recipes, recipe, auth, user, $state) {
         $scope.recipe = recipe;
-        $scope.user = user;
         $scope.isLoggedIn = auth.isLoggedIn;
+        $scope.user = user;
 
-        $scope.favorite = function(){
-          recipes.favorite(recipe._id).success(function(res){
-            console.log(res);
-          })
+
+
+        $scope.checkFav = function() {
+
+            var isInArray = user.favorites.some(function(favId) {
+                return favId === recipe._id
+            });
+
+            if (isInArray) {
+                $scope.mdfavorite = "favorite";
+            } else {
+                $scope.mdfavorite = "favorite_border";
+            }
+        }
+
+        $scope.favorite = function() {
+            recipes.favorite(recipe._id).success(function(res) {
+                console.log(res);
+            })
+            $state.reload();
         };
 
 

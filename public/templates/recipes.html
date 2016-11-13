@@ -2,7 +2,7 @@
     <h3>{{recipe.title}}</h3>
 </div>
 <span ng-show="recipe.ingredients">
-    {{user}}
+{{user}}
     Ingredients:
     {{recipe.ingredients}}</span>
 
@@ -36,4 +36,10 @@
 
 
 <button ng-click="deleteRecipe()">Delete</button>
-<div class="heart" ng-click="favorite()"></div>
+
+
+<div>
+{{checkFav()}}
+<md-button class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="favorite()">
+  <md-icon md-font-library="material-icons">{{mdfavorite}}</md-icon>
+</md-button></div>

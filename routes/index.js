@@ -113,6 +113,7 @@ router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
                     }
                 })
             req.recipe.unFavorite();
+            res.json(false);
         }
         //user har ikke favorited recipe så vi tilføjer den hans array.
         else {
@@ -129,6 +130,7 @@ router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
                     }
                 })
             req.recipe.favorite();
+            res.json(true);
         }
     });
 });
