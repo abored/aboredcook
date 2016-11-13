@@ -24,17 +24,16 @@ app.config([
                 resolve: {
                     recipe: ['$stateParams', 'recipes', function($stateParams, recipes) {
                         return recipes.get($stateParams.id);
+                    }],
+                    user: ['users', function(users) {
+                        return users.getCurrentUser();
                     }]
                 }
-                onEnter: ['$state', 'auth', function($state, auth) {
-                    if (auth.isLoggedIn()) {
-                        $state.user =
-                    }
-                }]
             })
             .state('recipes.favorite', {
                 url: '/favorite',
                 templateUrl: 'templates/recipes.html'
+
             })
 
         .state('login', {
@@ -73,7 +72,7 @@ app.config([
                 templateUrl: 'templates/me.html',
                 controller: 'UserCtrl',
                 resolve: {
-                    user: ['$stateParams', 'users', function($stateParams, users) {
+                    user: ['users', function(users) {
                         return users.getCurrentUser();
                     }]
                 }
@@ -284,9 +283,11 @@ app.controller('RecipesCtrl', [
     'recipes',
     'recipe',
     'auth',
+    'user',
     '$state',
-    function($scope, recipes, recipe, auth, $state) {
+    function($scope, recipes, recipe, auth, user, $state) {
         $scope.recipe = recipe;
+        $scope.user = user;
         $scope.isLoggedIn = auth.isLoggedIn;
 
         $scope.favorite = function(){
@@ -326,7 +327,7 @@ app.controller('AuthCtrl', [
     '$state',
     'auth',
     function($scope, $state, auth) {
-
+        $scope.user = {};
 
         $scope.register = function() {
             auth.register($scope.user).error(function(error) {

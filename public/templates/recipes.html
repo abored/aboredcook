@@ -2,6 +2,7 @@
     <h3>{{recipe.title}}</h3>
 </div>
 <span ng-show="recipe.ingredients">
+    {{user}}
     Ingredients:
     {{recipe.ingredients}}</span>
 
@@ -33,5 +34,6 @@
     <button type="submit" class="btn btn-primary">recipe</button>
 </form>
 
+
 <button ng-click="deleteRecipe()">Delete</button>
-<button ng-click="favorite()">fav</button>
+<div class="heart" ng-click="favorite()"></div>
