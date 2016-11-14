@@ -277,18 +277,19 @@ app.controller('MainCtrl', [
 
 app.controller('RecipesCtrl', [
     '$scope',
+    '$timeout',
     'recipes',
     'recipe',
     'auth',
     'user',
     '$state',
-    function($scope, recipes, recipe, auth, user, $state) {
+    function($scope, $timeout, recipes, recipe, auth, user, $state) {
         $scope.recipe = recipe;
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.user = user;
 
 
-
+        //func der undersøger om bruger har fav. recipe, og sætter mdfavorite (se button i UI)
         $scope.checkFav = function() {
 
             var isInArray = user.favorites.some(function(favId) {
@@ -302,11 +303,20 @@ app.controller('RecipesCtrl', [
             }
         }
 
+        //foretag check/instansiate mdfavorite
+        $scope.checkFav();
+
+        //affyres når bruger trykker på hjertet
         $scope.favorite = function() {
             recipes.favorite(recipe._id).success(function(res) {
                 console.log(res);
-            })
-            $state.reload();
+            }).then(function() {
+                return $timeout(function() { //timeout FTW (fuck state.reload - se: https://mwop.net/blog/2014-05-08-angular-ui-router-reload.html) - only took me 10 hours to fix, k
+                    $state.go('.', {}, {
+                        reload: true
+                    });
+                }, 0);
+            });
         };
 
 
@@ -317,6 +327,7 @@ app.controller('RecipesCtrl', [
             })
 
         };
+
         $scope.addComment = function() {
             if (!$scope.body) {
                 return;
