@@ -284,18 +284,18 @@ app.controller('MainCtrl', [
 
         // søg opskrifter
         $scope.searchRecipes = function () {
-          // kald factory
+          // Tjek om searchText er tom eller ej
           if ($scope.searchText || !$scope.searchText === ''){
-            console.log('hej');
+            // der var noget i den, send request til factory
             recipes.find($scope.searchText, function(err, docs){
               if(err)
               return err;
-
+               // sæt recipes i scope til de returnerede dokumenter (recipes)
               $scope.recipes = docs;
             });
           }
           else {
-            console.log('det virker ikke');
+            // hent alle recipes igen hvis searchText er tom
             recipes.getAll(function(err, docs) {
               if(err)
               return err;
