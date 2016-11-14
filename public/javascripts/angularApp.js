@@ -157,8 +157,16 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
                 comment.upvotes += 1;
             });
     };
-    return o;
-}]);
+    //definer funktionen
+    o.find = function(searchText) {
+      // returner hvad der fås tilbage fra route kaldet
+      return $http.get('/recipes/search/' + searchText)
+      .success(function(data) {
+          angular.copy(data, o.recipes);
+    });
+};
+     return o;
+}])
 
 app.factory('users', ['$http', 'auth', function($http, auth) {
     var o = {};
@@ -268,11 +276,36 @@ app.controller('MainCtrl', [
             $scope.title = '';
             $scope.ingredients = '';
         };
+
+        // tilføj upvotes (likes)
         $scope.incrementUpvotes = function(recipe) {
             recipes.upvote(recipe);
         };
-    }
 
+        // søg opskrifter
+        $scope.searchRecipes = function () {
+          // kald factory
+          if ($scope.searchText || !$scope.searchText === ''){
+            console.log('hej');
+            recipes.find($scope.searchText, function(err, docs){
+              if(err)
+              return err;
+
+              $scope.recipes = docs;
+            });
+          }
+          else {
+            console.log('det virker ikke');
+            recipes.getAll(function(err, docs) {
+              if(err)
+              return err;
+
+              $scope.recipes = docs;
+            })
+          }
+
+        };
+    }
 ]);
 
 app.controller('RecipesCtrl', [
