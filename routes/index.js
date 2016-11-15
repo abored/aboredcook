@@ -178,6 +178,20 @@ router.post('/recipes/:recipe/comments', auth, function(req, res, next) {
     });
 });
 
+router.get('/recipes/search/:searchText', function(req, res, next) {
+  console.log(req.params.searchText);
+  var ss = req.params.searchText;
+    Recipe.find({title: new RegExp(ss, "i")}, 'title ingredients', function(err, docs) {
+      res.json(docs);
+    } );
+
+    // query.then(function( docs) {
+    //   console.log('searched for: ' + searchText + 'and got: '+ docs);
+    //   res.json(docs);
+
+    // });
+});
+
 //middleware til GET recipes
 router.param('recipe', function(req, res, next, id) {
     var query = Recipe.findById(id);
@@ -211,6 +225,23 @@ router.param('comment', function(req, res, next, id) {
         return next();
     });
 });
+
+router.param('searchText', function(req, res, next, searchText) {
+    var query = Recipe.find(searchText);
+
+    query.exec(function(err, recipe) {
+        if (err) {
+            return next(err);
+        }
+        if (!recipe) {
+            return next(new Error('can\'t find recipe'));
+        }
+
+        req.recipe = recipe;
+        return next();
+    });
+});
+
 
 
 /******************************

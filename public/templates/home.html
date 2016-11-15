@@ -2,6 +2,10 @@
     <h1>COOKBOOK</h1>
 </div>
 
+<div class="searchContainer">
+    <input ng-model="searchText" ng-keyup="searchRecipes()"  id="searchbar" type="text" size="40" placeholder="search recipes here"></input>
+</div>
+
 <div ng-repeat="recipe in recipes | orderBy:'-upvotes'">
     <div class="col-md-4 text-center">
         <div class="thumbnail">
@@ -16,10 +20,10 @@
                     <li><span class="glyphicon glyphicon-user"></span> {{recipe.people}} </li>
                 </ul>
             </div>
-            
+
         </div>
     </div>
-    
+
 </div>
 
 <form ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
