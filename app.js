@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 
+
 //load models
 require('./models/Recipes');
 require('./models/Comments');
@@ -32,9 +33,13 @@ app.set('view engine', 'ejs');
 //Sæt favicon
 app.use(favicon(path.join(__dirname, 'public', 'fav.ico')));
 
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(cookieParser());
 
 //serve alle static filer (css, javascript, images etc.) i public folderen
@@ -48,20 +53,20 @@ app.use('/', index);
 
 // catch 404 og forward til error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use(function(err, req, res) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;

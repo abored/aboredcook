@@ -5,6 +5,14 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var jwt = require('express-jwt');
 
+
+var multer = require('multer')
+var upload = multer({
+    dest: 'uploads/'
+})
+var fs = require('fs')
+var crypto = require('crypto');
+
 //load models
 var Recipe = mongoose.model('Recipe');
 var Comment = mongoose.model('Comment');
@@ -19,6 +27,28 @@ var auth = jwt({
 // GET homepage (vores SPA index.ejs)
 router.get('/', function(req, res) {
     res.render('index.ejs', {});
+});
+
+router.post('/upload', upload.single('userfile'), function(req, res, next) {
+    /** When using the "single"
+        data come in "req.file" regardless of the attribute "name". **/
+    var tmp_path = req.file.path;
+    console.log(req);
+
+    /** The original name of the uploaded file
+        stored in the variable "originalname". **/
+    var target_path = 'uploads/' + crypto.randomBytes(20).toString('hex');
+
+    var src = fs.createReadStream(tmp_path);
+    var dest = fs.createWriteStream(target_path);
+    src.pipe(dest);
+    src.on('end', function() {
+        Recipe.
+        res.json("ok (check uploads-mappe på server)");
+    });
+    src.on('error', function(err) {
+        return next(err)
+    });
 });
 
 /******************************
@@ -185,12 +215,16 @@ router.post('/recipes/:recipe/comments', auth, function(req, res, next) {
       res.json(docs);
     } ); */
 
-     router.get('/recipes/search/:searchText', function(req, res, next) {
-      console.log(req.params.searchText);
+router.get('/recipes/search/:searchText', function(req, res, next) {
+    console.log(req.params.searchText);
 
-        Recipe.find( {$text : {$search:  req.params.searchText}}).exec(function(err, results){
-          res.json(results);
-        })
+    Recipe.find({
+        $text: {
+            $search: req.params.searchText
+        }
+    }).exec(function(err, results) {
+        res.json(results);
+    })
 
     // query.then(function( docs) {
     //   console.log('searched for: ' + searchText + 'and got: '+ docs);

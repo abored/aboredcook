@@ -1,4 +1,4 @@
-var app = angular.module('cookbook', ['ui.router', 'ngMaterial', 'ngFileUpload']);
+var app = angular.module('cookbook', ['ui.router', 'ngMaterial']);
 
 app.config([
     '$stateProvider',
@@ -254,6 +254,22 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
     return auth;
 }])
 
+app.factory('upload', ['$http', function($http) {
+  var o = {};
+
+  o.uploadImage = function(image) {
+      return $http.post('/upload', image, {
+          headers: {
+              Authorization: 'Bearer ' + auth.getToken()
+          }
+      }).then(function(res) {
+
+          return res.data;
+      });
+  }
+  return o;
+}])
+
 /*********************
  *    CONTROLLERS    *
  *********************/
@@ -310,38 +326,18 @@ app.controller('MainCtrl', [
 app.controller('RecipesCtrl', [
     '$scope',
     '$timeout',
-    'Upload',
     'recipes',
     'recipe',
     'auth',
     'user',
     '$state',
-    function($scope, $timeout, Upload, recipes, recipe, auth, user, $state) {
+    function($scope, $timeout, recipes, recipe, auth, user, $state) {
         $scope.recipe = recipe;
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.user = user;
 
-        $scope.uploadFiles = function(files) {
-            $scope.files = files;
-            if (files && files.length) {
-                Upload.upload({
-                    url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-                    data: {
-                        files: files
-                    }
-                }).then(function(response) {
-                    $timeout(function() {
-                        $scope.result = response.data;
-                    });
-                }, function(response) {
-                    if (response.status > 0) {
-                        $scope.errorMsg = response.status + ': ' + response.data;
-                    }
-                }, function(evt) {
-                    $scope.progress =
-                        Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                });
-            }
+        $scope.uploadFile = function(file) {
+
         };
         //func der undersøger om bruger har fav. recipe, og sætter mdfavorite (se button i UI)
         $scope.checkFav = function() {
