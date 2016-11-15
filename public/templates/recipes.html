@@ -40,4 +40,18 @@
 
 <md-button class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="favorite()">
   <md-icon md-font-library="material-icons" style="color:red; font-size: 30px">{{mdfavorite}}</md-icon>
-</md-button></div>
+</md-button></div>{{recipe.favorites}}
+
+<md-list>
+  <md-list-item class="md-2-line" ng-repeat="comment in recipe.comments">
+    <md-button class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="incrementUpvotes(comment)">  {{comment.upvotes}}</md-button>
+    <div class="md-list-item-text">
+      <h3>{{comment.body}}</h3> - by: <a href="/#/user/{{comment.author}}">{{comment.author}}</a>
+    </div>
+  </md-list-item>
+</md-list>
+
+<md-input-container>
+  <label>Username</label>
+  <input type="text" ng-model="user.name">
+</md-input-container>
