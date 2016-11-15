@@ -33,6 +33,6 @@ RecipeSchema.methods.unFavorite = function(callback) {
 };
 
 
-RecipeSchema.index({title: 'text', ingredients: 'text' });
+RecipeSchema.index({title: 1, ingredients : -1});
 
 mongoose.model('Recipe', RecipeSchema);

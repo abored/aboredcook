@@ -1,4 +1,4 @@
-var app = angular.module('cookbook', ['ui.router', 'ngMaterial']);
+var app = angular.module('cookbook', ['ui.router', 'ngMaterial', 'ngFileUpload']);
 
 app.config([
     '$stateProvider',
@@ -159,13 +159,13 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
     };
     //definer funktionen
     o.find = function(searchText) {
-      // returner hvad der fås tilbage fra route kaldet
-      return $http.get('/recipes/search/' + searchText)
-      .success(function(data) {
-          angular.copy(data, o.recipes);
-    });
-};
-     return o;
+        // returner hvad der fås tilbage fra route kaldet
+        return $http.get('/recipes/search/' + searchText)
+            .success(function(data) {
+                angular.copy(data, o.recipes);
+            });
+    };
+    return o;
 }])
 
 app.factory('users', ['$http', 'auth', function($http, auth) {
@@ -283,26 +283,25 @@ app.controller('MainCtrl', [
         };
 
         // søg opskrifter
-        $scope.searchRecipes = function () {
-          // Tjek om searchText er tom eller ej
-          if ($scope.searchText || !$scope.searchText === ''){
-            // der var noget i den, send request til factory
-            recipes.find($scope.searchText, function(err, docs){
-              if(err)
-              return err;
-               // sæt recipes i scope til de returnerede dokumenter (recipes)
-              $scope.recipes = docs;
-            });
-          }
-          else {
-            // hent alle recipes igen hvis searchText er tom
-            recipes.getAll(function(err, docs) {
-              if(err)
-              return err;
+        $scope.searchRecipes = function() {
+            // Tjek om searchText er tom eller ej
+            if ($scope.searchText || !$scope.searchText === '') {
+                // der var noget i den, send request til factory
+                recipes.find($scope.searchText, function(err, docs) {
+                    if (err)
+                        return err;
+                    // sæt recipes i scope til de returnerede dokumenter (recipes)
+                    $scope.recipes = docs;
+                });
+            } else {
+                // hent alle recipes igen hvis searchText er tom
+                recipes.getAll(function(err, docs) {
+                    if (err)
+                        return err;
 
-              $scope.recipes = docs;
-            })
-          }
+                    $scope.recipes = docs;
+                })
+            }
 
         };
     }
@@ -311,17 +310,39 @@ app.controller('MainCtrl', [
 app.controller('RecipesCtrl', [
     '$scope',
     '$timeout',
+    'Upload',
     'recipes',
     'recipe',
     'auth',
     'user',
     '$state',
-    function($scope, $timeout, recipes, recipe, auth, user, $state) {
+    function($scope, $timeout, Upload, recipes, recipe, auth, user, $state) {
         $scope.recipe = recipe;
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.user = user;
 
-
+        $scope.uploadFiles = function(files) {
+            $scope.files = files;
+            if (files && files.length) {
+                Upload.upload({
+                    url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+                    data: {
+                        files: files
+                    }
+                }).then(function(response) {
+                    $timeout(function() {
+                        $scope.result = response.data;
+                    });
+                }, function(response) {
+                    if (response.status > 0) {
+                        $scope.errorMsg = response.status + ': ' + response.data;
+                    }
+                }, function(evt) {
+                    $scope.progress =
+                        Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                });
+            }
+        };
         //func der undersøger om bruger har fav. recipe, og sætter mdfavorite (se button i UI)
         $scope.checkFav = function() {
 

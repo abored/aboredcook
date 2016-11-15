@@ -178,12 +178,19 @@ router.post('/recipes/:recipe/comments', auth, function(req, res, next) {
     });
 });
 
-router.get('/recipes/search/:searchText', function(req, res, next) {
+/* router.get('/recipes/search/:searchText', function(req, res, next) {
   console.log(req.params.searchText);
   var ss = req.params.searchText;
     Recipe.find({title: new RegExp(ss, "i")}, 'title ingredients', function(err, docs) {
       res.json(docs);
-    } );
+    } ); */
+
+     router.get('/recipes/search/:searchText', function(req, res, next) {
+      console.log(req.params.searchText);
+
+        Recipe.find( {$text : {$search:  req.params.searchText}}).exec(function(err, results){
+          res.json(results);
+        })
 
     // query.then(function( docs) {
     //   console.log('searched for: ' + searchText + 'and got: '+ docs);
