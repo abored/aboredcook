@@ -1,10 +1,12 @@
 <div class="page-header">
     <h3>{{recipe.title}}</h3>
 </div>
+
 <span ng-show="recipe.ingredients">
 {{user}}
     Ingredients:
     {{recipe.ingredients}}</span>
+
 
 <div ng-repeat="comment in recipe.comments | orderBy:'-upvotes'">
     <span class="glyphicon glyphicon-thumbs-up" ng-show="isLoggedIn()" ng-click="incrementUpvotes(comment)"></span>
@@ -56,18 +58,10 @@
   <input type="text" ng-model="user.name">
 </md-input-container>
 
-<h4>Upload on file select</h4>
-
-    <button ngf-select="uploadFiles($files)" multiple
-            accept="image/*">Select Files</button>
-    <br>
-    <br>Files:
-    <ul>
-        <li ng-repeat="f in files" style="font:smaller">
-            {{f.name}}
-        </li>
-    </ul>
-    <span class="progress" ng-show="progress >= 0">
-        <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
-    </span>
-    {{errorMsg}}
+Upload on form submit or button click
+<form name="form">
+  Multiple files
+  <div class="button" ngf-select ng-model="files" ngf-multiple="true">Select</div>
+  Drop files: <div ngf-drop ng-model="files" class="drop-box">Drop</div>
+  <button type="submit" ng-click="uploadFiles(files)">submit</button>
+</form>

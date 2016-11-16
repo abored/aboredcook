@@ -27,7 +27,8 @@ var RecipeSchema = new mongoose.Schema({
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment'
-    }]
+    }],
+    images: [String]
 });
 
 RecipeSchema.methods.upvote = function(callback) {

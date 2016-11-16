@@ -254,17 +254,13 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
     return auth;
 }])
 
-app.factory('upload', ['$http', function($http) {
+app.factory('image', ['$http', function($http) {
     var o = {};
 
-    o.uploadImage = function(image) {
-        return $http.post('/upload', image, {
-            headers: {
-                Authorization: 'Bearer ' + auth.getToken()
-            }
-        }).then(function(res) {
-
-            return res.data;
+    o.getImage = function(id) {
+        return $http.get('/images/' + id).success(function(res){
+          console.log(res)
+          return res.data;
         });
     }
     return o;
@@ -329,36 +325,38 @@ app.controller('RecipesCtrl', [
     'Upload',
     'recipes',
     'recipe',
+    'image',
     'auth',
     'user',
     '$state',
-    function($scope, $timeout, Upload, recipes, recipe, auth, user, $state) {
+    function($scope, $timeout, Upload, recipes, recipe, image, auth, user, $state) {
         $scope.recipe = recipe;
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.user = user;
 
+        $scope.getImage = function(id) {
+          console.log("kaldt")
+          return image.getImage(id);
+        }
+        var de = $scope.getImage(recipe.images[0]);
+
+        //console.log(de);
+        $scope.img1 = de;
+        //console.log($scope.img1);
         $scope.uploadFiles = function(files) {
-            $scope.files = files;
             if (files && files.length) {
-                Upload.upload({
-                    url: '/upload',
-                    data: {
-                        files: files
-                    }
-                }).then(function(response) {
-                    $timeout(function() {
-                        $scope.result = response.data;
-                    });
-                }, function(response) {
-                    if (response.status > 0) {
-                        $scope.errorMsg = response.status + ': ' + response.data;
-                    }
-                }, function(evt) {
-                    $scope.progress =
-                        Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                });
+                for (var i = 0; i < files.length; i++) {
+                    console.log(files[i]);
+                    Upload.upload({
+                        url: "/upload",
+                        data: {
+                            file: files[i],
+                            recipeId: recipe._id
+                        }
+                    })
+                }
             }
-        };
+        }
 
         //func der undersøger om bruger har fav. recipe, og sætter mdfavorite (se button i UI)
         $scope.checkFav = function() {

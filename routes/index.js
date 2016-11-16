@@ -8,12 +8,10 @@ var jwt = require('express-jwt');
 var multiparty = require('connect-multiparty');
 var multipartyMiddleware = multiparty();
 
-var multer = require('multer')
-var upload = multer({
-    dest: 'uploads/'
-})
 var fs = require('fs')
 var crypto = require('crypto');
+
+var path = require('path');
 
 //load models
 var Recipe = mongoose.model('Recipe');
@@ -31,8 +29,48 @@ router.get('/', function(req, res) {
     res.render('index.ejs', {});
 });
 
-router.post('/upload', function(req, res, next) {
-  console.log(req.files);
+router.post('/upload', multipartyMiddleware, function(req, res) {
+
+    console.log(req.body.recipeId);
+    var tmp_path = req.files.file.path;
+    var imageId = crypto.randomBytes(20).toString('hex');
+    var target_path = 'uploads/' + imageId;
+
+    var src = fs.createReadStream(tmp_path);
+    var dest = fs.createWriteStream(target_path);
+    src.pipe(dest);
+
+    src.on('end', function() {
+        Recipe.findByIdAndUpdate(req.body.recipeId, {
+                $push: {
+                    "images": {
+                        _id: imageId
+                    }
+                }
+            },
+            function(err, recipe) {
+                if (err) {
+                    return next(err);
+                }
+                res.json(recipe);
+            })
+
+    });
+
+    src.on('error', function(err) {
+        return next(err)
+    });
+
+});
+
+router.get('/images/:image', function(req, res, next) {
+
+    console.log(req.params.image);
+
+
+    var file = path.resolve("uploads/" + req.params.image);
+    res.contentType('image/*');
+    res.sendFile(new Buffer(file).toString('base64'));
 });
 
 /******************************
