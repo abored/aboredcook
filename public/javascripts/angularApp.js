@@ -30,6 +30,16 @@ app.config([
                     }]
                 }
             })
+            .state('create', {
+                url: '/create',
+                templateUrl: 'templates/create.html',
+                controller: 'CreateCtrl',
+                resolve: {
+                    user: ['users', function(users) {
+                        return users.getCurrentUser();
+                    }]
+                }
+            })
 
 
         .state('login', {
@@ -117,6 +127,7 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
             }
         }).success(function(data) {
             o.recipes.push(data);
+             $state.go('recipes', data._id)
         });
     };
     o.addComment = function(id, comment) {
@@ -254,18 +265,6 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
     return auth;
 }])
 
-app.factory('image', ['$http', function($http) {
-    var o = {};
-
-    o.getImage = function(id) {
-        return $http.get('/images/' + id).success(function(res){
-          console.log(res)
-          return res.data;
-        });
-    }
-    return o;
-}])
-
 /*********************
  *    CONTROLLERS    *
  *********************/
@@ -277,17 +276,8 @@ app.controller('MainCtrl', [
     function($scope, recipes, auth) {
         $scope.recipes = recipes.recipes;
         $scope.isLoggedIn = auth.isLoggedIn;
-        $scope.addRecipe = function() {
-            if (!$scope.title || $scope.title === '') {
-                return;
-            }
-            recipes.create({
-                title: $scope.title,
-                ingredients: $scope.ingredients
-            });
-            $scope.title = '';
-            $scope.ingredients = '';
-        };
+
+
 
         // tilføj upvotes (likes)
         $scope.incrementUpvotes = function(recipe) {
@@ -319,46 +309,86 @@ app.controller('MainCtrl', [
     }
 ]);
 
+app.controller('CreateCtrl', [
+    '$scope',
+    'auth',
+    'user',
+    'recipes',
+    function($scope, auth, user, recipes) {
+        $scope.user = user;
+        $scope.isLoggedIn = auth.isLoggedIn;
+        $scope.ingredients = [];
+
+        $scope.addRecipe = function() {
+            if (!$scope.title || $scope.title === '') {
+                return;
+            }
+
+            recipes.create({
+                title: $scope.title,
+                ingredients: $scope.ingredients
+            });
+            $scope.title = '';
+            //  $scope.ingredients = '';
+
+        };
+
+        $scope.addNewIng = function() {
+            $scope.ingredients.push({});
+        };
+
+        $scope.removeIng = function() {
+            var lastItem = $scope.ingredients.length - 1;
+            $scope.ingredients.splice(lastItem);
+        };
+    }
+]);
+
 app.controller('RecipesCtrl', [
     '$scope',
     '$timeout',
     'Upload',
     'recipes',
     'recipe',
-    'image',
     'auth',
     'user',
     '$state',
-    function($scope, $timeout, Upload, recipes, recipe, image, auth, user, $state) {
+    function($scope, $timeout, Upload, recipes, recipe, auth, user, $state) {
         $scope.recipe = recipe;
         $scope.isLoggedIn = auth.isLoggedIn;
+        console.log($scope.isLoggedIn)
         $scope.user = user;
 
-        $scope.getImage = function(id) {
-          console.log("kaldt")
-          return image.getImage(id);
-        }
-        var de = $scope.getImage(recipe.images[0]);
 
-        //console.log(de);
-        $scope.img1 = de;
+
+
+
+
+
+
+
         //console.log($scope.img1);
         $scope.uploadFiles = function(files) {
-            if (files && files.length) {
-                for (var i = 0; i < files.length; i++) {
-                    console.log(files[i]);
-                    Upload.upload({
-                        url: "/upload",
-                        data: {
-                            file: files[i],
-                            recipeId: recipe._id
-                        }
-                    })
+                if (files && files.length) {
+                    for (var i = 0; i < files.length; i++) {
+                        console.log(files[i]);
+                        Upload.upload({
+                            url: "/upload",
+                            data: {
+                                file: files[i],
+                                recipeId: recipe._id
+                            }
+                        }).then(function() {
+                            return $timeout(function() { //timeout FTW (fuck state.reload - se: https://mwop.net/blog/2014-05-08-angular-ui-router-reload.html) - only took me 10 hours to fix, k
+                                $state.go('.', {}, {
+                                    reload: true
+                                });
+                            }, 0);
+                        });
+                    }
                 }
             }
-        }
-
-        //func der undersøger om bruger har fav. recipe, og sætter mdfavorite (se button i UI)
+            //func der undersøger om bruger har fav. recipe, og sætter mdfavorite (se button i UI)
         $scope.checkFav = function() {
 
             var isInArray = user.favorites.some(function(favId) {

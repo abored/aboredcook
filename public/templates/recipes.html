@@ -1,12 +1,13 @@
 <div class="page-header">
     <h3>{{recipe.title}}</h3>
 </div>
-
-<span ng-show="recipe.ingredients">
-{{user}}
+<div ng-repeat="image in recipe.images">
+    <img ng-src='/images/{{image}}'/>
+</div>
     Ingredients:
-    {{recipe.ingredients}}</span>
-
+<list ng-repeat="i in recipe.ingredients" ng-show="recipe.ingredients">
+    <li>{{i.name}}, {{i.amount}}{{i.unit}}</li>
+</list>
 
 <div ng-repeat="comment in recipe.comments | orderBy:'-upvotes'">
     <span class="glyphicon glyphicon-thumbs-up" ng-show="isLoggedIn()" ng-click="incrementUpvotes(comment)"></span>
@@ -36,32 +37,35 @@
     <button type="submit" class="btn btn-primary">recipe</button>
 </form>
 
-
 <button ng-click="deleteRecipe()">Delete</button>
 
-
 <md-button class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="favorite()">
-  <md-icon md-font-library="material-icons" style="color:red; font-size: 30px">{{mdfavorite}}</md-icon>
-</md-button></div>{{recipe.favorites}}
+    <md-icon md-font-library="material-icons" style="color:red; font-size: 30px">{{mdfavorite}}</md-icon>
+</md-button>
+</div>{{recipe.favorites}}
 
 <md-list>
-  <md-list-item class="md-2-line" ng-repeat="comment in recipe.comments">
-    <md-button class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="incrementUpvotes(comment)">  {{comment.upvotes}}</md-button>
+<md-list-item class="md-2-line" ng-repeat="comment in recipe.comments">
+    <md-button class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="incrementUpvotes(comment)">
+        {{comment.upvotes}}</md-button>
     <div class="md-list-item-text">
-      <h3>{{comment.body}}</h3> - by: <a href="/#/user/{{comment.author}}">{{comment.author}}</a>
+        <h3>{{comment.body}}</h3>
+        - by:
+        <a href="/#/user/{{comment.author}}">{{comment.author}}</a>
     </div>
-  </md-list-item>
+</md-list-item>
 </md-list>
 
 <md-input-container>
-  <label>Username</label>
-  <input type="text" ng-model="user.name">
+<label>Username</label>
+<input type="text" ng-model="user.name">
 </md-input-container>
 
 Upload on form submit or button click
 <form name="form">
-  Multiple files
-  <div class="button" ngf-select ng-model="files" ngf-multiple="true">Select</div>
-  Drop files: <div ngf-drop ng-model="files" class="drop-box">Drop</div>
-  <button type="submit" ng-click="uploadFiles(files)">submit</button>
+Multiple files
+<div class="button" ngf-select ng-model="files" ngf-multiple="true">Select</div>
+Drop files:
+<div ngf-drop ng-model="files" class="drop-box">Drop</div>
+<button type="submit" ng-click="uploadFiles(files)">submit</button>
 </form>

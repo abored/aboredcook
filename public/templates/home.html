@@ -25,24 +25,3 @@
     </div>
 
 </div>
-
-<form ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
-
-    <div ng-hide="isLoggedIn()">
-        <h3>You need to
-            <a href="/#/login">Log In</a>
-            or
-            <a href="/#/register">Register</a>
-            before you can add a post.</h3>
-    </div>
-
-    <h3>Add a new recipe</h3>
-
-    <div class="form-group">
-        <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
-    </div>
-    <div class="form-group">
-        <input type="text" class="form-control" placeholder="Ingredients" ng-model="ingredients"></input>
-    </div>
-    <button type="submit" class="btn btn-primary">recipe</button>
-</form>

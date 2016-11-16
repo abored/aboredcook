@@ -1,0 +1,34 @@
+<form ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
+
+    <div ng-hide="isLoggedIn()">
+        <h3>You need to
+            <a href="/#/login">Log In</a>
+            or
+            <a href="/#/register">Register</a>
+            before you can add a post.</h3>
+    </div>
+    <h3>Add a new recipe</h3>
+
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
+    </div>
+
+    <fieldset data-ng-repeat="i in ingredients">
+        <input type="text" ng-model="i.name" name="" placeholder="Ingredient">
+        <input type="text" ng-model="i.amount" name="" placeholder="Mængde">
+
+        <select ng-model="i.unit">
+            <option value>Enhed</option>
+            <option value="g.">g.</option>
+            <option value="ml.">ml.</option>
+            <option value="dl.">dl.</option>
+        </select>
+        <button class="remove" ng-show="$last" ng-click="removeIng()">-</button>
+    </fieldset>
+    <button class="addfields" ng-click="addNewIng()">Add fields</button>
+
+    <div id="ingredientsDisplay">
+        {{ ingredients }}
+    </div>
+    <button type="submit" class="btn btn-primary">gem recipe</button>
+        <form>

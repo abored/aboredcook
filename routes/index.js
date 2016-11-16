@@ -65,12 +65,9 @@ router.post('/upload', multipartyMiddleware, function(req, res) {
 
 router.get('/images/:image', function(req, res, next) {
 
-    console.log(req.params.image);
-
-
     var file = path.resolve("uploads/" + req.params.image);
     res.contentType('image/*');
-    res.sendFile(new Buffer(file).toString('base64'));
+    res.sendFile(file);
 });
 
 /******************************
@@ -91,7 +88,7 @@ router.get('/recipes', function(req, res, next) {
 // POST recipe
 router.post('/recipes', auth, function(req, res, next) {
     var recipe = new Recipe(req.body);
-
+    console.log(req.body.ingredients);
     //hent og sæt username fra jwt-payload (slip for at query db for username)
     recipe.author = req.payload.username;
 
