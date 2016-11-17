@@ -10,12 +10,7 @@ app.config([
             .state('home', {
                 url: '/home',
                 templateUrl: 'templates/home.html',
-                controller: 'MainCtrl',
-                resolve: {
-                    recipePromise: ['recipes', function(recipes) {
-                        return recipes.getAll();
-                    }]
-                }
+                controller: 'MainCtrl'
             })
             .state('recipes', {
                 url: '/recipes/{id}',
@@ -29,6 +24,16 @@ app.config([
                         return users.getCurrentUser();
                     }]
                 }
+            })
+            .state('list', {
+                url: '/list',
+                templateUrl: 'templates/recipelist.html',
+                controller: 'ListCtrl',
+                resolve: {
+                    recipesPromise: ['recipes', function(recipes) {
+                        return recipes.getAll();
+                    }]
+                  }
             })
             .state('create', {
                 url: '/create',
@@ -306,6 +311,14 @@ app.controller('MainCtrl', [
             }
 
         };
+    }
+]);
+
+app.controller('ListCtrl', [
+    '$scope',
+    'recipes',
+    function($scope, recipes) {
+        $scope.recipes = recipes.recipes;
     }
 ]);
 

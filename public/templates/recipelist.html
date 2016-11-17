@@ -1,0 +1,20 @@
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Time</th>
+      <th>People</th>
+      <th>Favorites</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tr ng-repeat="r in recipes" ui-sref="recipes({id: r._id})">
+    <td>{{ r.title }}</td>
+    <td>{{ r.author}}</td>
+    <td>{{ r.preptime}}</td>
+    <td>{{ r.people}}</td>
+    <td>{{ r.favorites}}</td>
+    <td>{{ r.comments.length}}</td>
+  </tr>
+</table>
