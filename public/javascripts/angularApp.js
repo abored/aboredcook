@@ -339,10 +339,12 @@ app.controller('CreateCtrl', [
 
             recipes.create({
                 title: $scope.title,
-                ingredients: $scope.ingredients
+                ingredients: $scope.ingredients,
+                howTo: $scope.howTo,
+                discription: $scope.discription,
+                people: $scope.people,
+                preptime: $scope.time
             });
-            $scope.title = '';
-            //  $scope.ingredients = '';
 
         };
 

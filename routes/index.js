@@ -100,7 +100,7 @@ router.post('/recipes', auth, function(req, res, next) {
         //Opret reference til users "recipe"-array, der holder alle recipe id's brugeren har lavet
         User.findByIdAndUpdate(req.payload._id, {
                 $push: {
-                    "favorites": {
+                    "recipes": {
                         _id: recipe._id
                     }
                 }

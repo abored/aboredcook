@@ -11,7 +11,26 @@
     </div>
     <h3>Add a new recipe</h3>
 
-    <input type="text" class="form-control" placeholder="Title" ng-model="title"></input>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Title" ng-model="title" />
+        <input type="text" class="form-control" placeholder="Discription" ng-model="discription" />
+
+        <select ng-model="people">
+            <option value>antal portioner</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select>
+        <input type="number" class="form-control" placeholder="tid fra start til slut" ng-model="time" />
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="How to. Descripe the procedure of this recipe start to finish." ng-model="howTo" />
+    </div>
 
     <fieldset data-ng-repeat="i in ingredients">
         <input type="text" ng-model="i.name" name="" placeholder="Ingredient">
