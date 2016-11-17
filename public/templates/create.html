@@ -1,5 +1,5 @@
 
-<form ng-show="isLoggedIn()" style="margin-top:30px;">
+<form ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
 
     <div ng-hide="isLoggedIn()">
         <h3>You need to
@@ -11,8 +11,8 @@
     <h3>Add a new recipe</h3>
 
     <div class="form-group">
-        <input type="text" class="form-control wpadding" placeholder="Title" ng-model="title" />
-        <input type="text" class="form-control wpadding" placeholder="Discription" ng-model="discription" />
+        <input type="text" class="form-control wpadding" placeholder="Title" ng-model="title" required/>
+        <input type="text" class="form-control wpadding" placeholder="Description" ng-model="description" required />
 
         <select ng-model="people" class="wpadding row">
             <option value>antal portioner</option>
@@ -31,11 +31,11 @@
         <input type="text" class="form-control wpadding" placeholder="How to. Descripe the procedure of this recipe start to finish." ng-model="howTo" />
     </div>
 
-    <fieldset data-ng-repeat="i in ingredients" class="wpadding">
-        <input type="text" ng-model="i.name" name="" placeholder="Ingredient">
-        <input type="text" ng-model="i.amount" name="" placeholder="Mængde">
+    <fieldset data-ng-repeat="i in ingredients" class="form-inline wpadding">
+        <input type="text" ng-model="i.name" name="" class="form-control wpadding" placeholder="Ingredient">
+        <input type="number" ng-model="i.amount" name="" class="form-control wpadding" placeholder="Mængde">
 
-        <select ng-model="i.unit">
+        <select ng-model="i.unit" class="form-control">
             <option value="" disabled selected>Enhed</option>
             <option value="g.">g.</option>
             <option value="ml.">ml.</option>
@@ -49,4 +49,4 @@
         {{ ingredients }}
     </div>
   </form>
-<button ng-click="addRecipe()" class="btn btn-primary">gem recipe</button>
+<input type="submit" id="submit" value="submit" class="btn btn-primary"/>

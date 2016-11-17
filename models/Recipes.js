@@ -8,8 +8,14 @@ var IngredientSchema = new mongoose.Schema({
 });
 
 var RecipeSchema = new mongoose.Schema({
-    title: String,
-    author: String,
+    title: {
+        type: String,
+        index: true
+    },
+    author: {
+        type: String,
+        index: true
+    },
     ingredients: [IngredientSchema],
     description: String,
     howto: String,
@@ -49,10 +55,6 @@ RecipeSchema.methods.unFavorite = function(callback) {
     console.log("-1")
 };
 
-
-RecipeSchema.index({
-    title: 1,
-    ingredients: -1
-});
+RecipeSchema.index({'$**': 'text'});
 
 mongoose.model('Recipe', RecipeSchema);

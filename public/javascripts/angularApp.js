@@ -33,7 +33,7 @@ app.config([
                     recipesPromise: ['recipes', function(recipes) {
                         return recipes.getAll();
                     }]
-                  }
+                }
             })
             .state('create', {
                 url: '/create',
@@ -42,6 +42,17 @@ app.config([
                 resolve: {
                     user: ['users', function(users) {
                         return users.getCurrentUser();
+                    }]
+                }
+            })
+            .state('search', {
+                url: '/search/{string}',
+                templateUrl: 'templates/search.html',
+                controller: 'NavCtrl',
+                resolve: {
+                    results1: ['$stateParams', 'search', function($stateParams, search) {
+                        console.log($stateParams.string);
+                        return search.find($stateParams.string);
                     }]
                 }
             })
@@ -132,7 +143,7 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
             }
         }).success(function(data) {
             o.recipes.push(data);
-             $state.go('recipes', data._id)
+            $state.go('recipes', data._id)
         });
     };
     o.addComment = function(id, comment) {
@@ -173,14 +184,7 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
                 comment.upvotes += 1;
             });
     };
-    //definer funktionen
-    o.find = function(searchText) {
-        // returner hvad der fås tilbage fra route kaldet
-        return $http.get('/recipes/search/' + searchText)
-            .success(function(data) {
-                angular.copy(data, o.recipes);
-            });
-    };
+
     return o;
 }])
 
@@ -270,6 +274,23 @@ app.factory('auth', ['$http', '$window', function($http, $window) {
     return auth;
 }])
 
+app.factory('search', ['$http', function($http) {
+    var o = {
+        results: []
+    };
+    o.find = function(searchText) {
+        // returner hvad der fås tilbage fra route kaldet
+        return $http.get('/search/' + searchText)
+            .success(function(data) {
+              console.log(data);
+                angular.copy(data, o.results);
+            });
+    }
+    return o;
+}])
+
+//definer funktionen
+
 /*********************
  *    CONTROLLERS    *
  *********************/
@@ -341,7 +362,7 @@ app.controller('CreateCtrl', [
                 title: $scope.title,
                 ingredients: $scope.ingredients,
                 howTo: $scope.howTo,
-                discription: $scope.discription,
+                description: $scope.description,
                 people: $scope.people,
                 preptime: $scope.time
             });
@@ -504,11 +525,29 @@ app.controller('UserCtrl', [
 app.controller('NavCtrl', [
     '$scope',
     'auth',
-    function($scope, auth) {
+    'search',
+    function($scope, auth, search) {
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.currentUser = auth.currentUser;
         $scope.logOut = auth.logOut;
+        $scope.results = search.results;
+
+        $scope.search = function() {
+            // Tjek om searchText er tom eller ej
+            if ($scope.searchText || !$scope.searchText === '') {
+                // der var noget i den, send request til factory
+                search.find($scope.searchText, function(err, docs) {
+                    if (err)
+                        return err;
+                    // sæt recipes i scope til de returnerede dokumenter (recipes)
+                    $scope.result = docs;
+                });
+            } else {
+                $scope.result = "none found";
+            }
+        };
     }
+
 ])
 
 /*********************

@@ -234,7 +234,7 @@ router.post('/recipes/:recipe/comments', auth, function(req, res, next) {
       res.json(docs);
     } ); */
 
-router.get('/recipes/search/:searchText', function(req, res, next) {
+router.get('/search/:searchText', function(req, res, next) {
     console.log(req.params.searchText);
 
     Recipe.find({

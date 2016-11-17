@@ -4,6 +4,7 @@
     <title>COOK A BOOK</title>
     <link href="https://bootswatch.com/united/bootstrap.min.css" rel="stylesheet">
 
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -12,7 +13,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="/javascripts/angularApp.js"></script>
     <script src="/javascripts/ng-file-upload.min.js"></script>
@@ -32,7 +36,7 @@
 
 <body ng-app="cookbook">
 
-    <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
+    <!--  <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
         <ul class="nav navbar-nav">
             <li ng-show="isLoggedIn()"><a href="/#/me">{{ currentUser() }}</a></li>
             <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
@@ -40,6 +44,42 @@
             <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
         </ul>
     </nav>
+     -->
+
+    <nav class="navbar navbar-default" ng-controller=NavCtrl>
+        <div class="container-fluid">
+            <div class="navbar-header">
+
+                <a class="navbar-brand" href="#">COOKBOOK</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="#/list">All recipes <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#/create">New recipe</a></li>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+                    </div>
+                    <button ui-sref="search({string: searchText})">Søg</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                  <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+                  <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+                  <li ng-show="isLoggedIn()" class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentUser()}} <span class="caret"></span></a>
+                      <ul class="dropdown-menu" role="menu">
+                          <li><a href="#/me">Profile</a></li>
+                          <li class="divider"></li>
+                          <li><a ng-click="logOut()">Logout</a></li>
+                      </ul>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
 

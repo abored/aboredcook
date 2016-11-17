@@ -6,8 +6,27 @@
         {{user._id}}</h3>
 
     <h3>Muh recipes:</h3>
-    <div ng-repeat="recipe in user.recipes">
-    <li>{{recipe}}</li>
+    <table class="table table-striped table-hover ">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Time</th>
+          <th>People</th>
+          <th>Favorites</th>
+          <th>Comments</th>
+        </tr>
+      </thead>
+      <tr ng-repeat="r in user.recipes" ui-sref="recipes({id: r._id})">
+        <td>{{ r.title }}</td>
+        <td>{{ r.author}}</td>
+        <td>{{ r.preptime}}</td>
+        <td>{{ r.people}}</td>
+        <td>{{ r.favorites}}</td>
+        <td>{{ r.comments.length}}</td>
+      </tr>
+    </table>
+
 </div>
 
 <button ui-sref="me.edit">edit</button>
