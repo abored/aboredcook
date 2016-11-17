@@ -1,19 +1,20 @@
-
+<h3>Add a new recipe</h3>
+<div ng-hide="isLoggedIn()">
+    <h3>You need to
+        <a href="/#/login">Log In</a>
+        or
+        <a href="/#/register">Register</a>
+        before you can add a post.</h3>
+</div>
 <form ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
 
-    <div ng-hide="isLoggedIn()">
-        <h3>You need to
-            <a href="/#/login">Log In</a>
-            or
-            <a href="/#/register">Register</a>
-            before you can add a post.</h3>
-    </div>
-    <h3>Add a new recipe</h3>
+
+
 
     <div class="form-group">
         <input type="text" class="form-control wpadding" placeholder="Title" ng-model="title" required/>
         <input type="text" class="form-control wpadding" placeholder="Description" ng-model="description" required />
-
+    <div class="col-lg-3">
         <select ng-model="people" class="wpadding row">
             <option value>antal portioner</option>
             <option value="1">1</option>
@@ -26,6 +27,7 @@
             <option value="8">8</option>
         </select>
         <input type="number" class="form-control wpadding row" placeholder="tid fra start til slut" ng-model="time" />
+      </div>
     </div>
     <div class="form-group">
         <input type="text" class="form-control wpadding" placeholder="How to. Descripe the procedure of this recipe start to finish." ng-model="howTo" />
@@ -43,10 +45,12 @@
         </select>
         <button class="remove" ng-show="$last" ng-click="removeIng()">-</button>
     </fieldset>
-    <button class="addfields" ng-click="addNewIng()">Add fields</button>
+    <button type='button' class="addfields" ng-click="addNewIng()">Add fields</button>
 
-    <div id="ingredientsDisplay">
-        {{ ingredients }}
-    </div>
+
+    <input type="submit" id="submit" value="submit" class="btn btn-primary"/>
   </form>
-<input type="submit" id="submit" value="submit" class="btn btn-primary"/>
+
+  <div id="ingredientsDisplay">
+    {{ingredients}}
+  </div>
