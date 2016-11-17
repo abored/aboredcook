@@ -1,6 +1,5 @@
 
-
-<form ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
+<form ng-show="isLoggedIn()" style="margin-top:30px;">
 
     <div ng-hide="isLoggedIn()">
         <h3>You need to
@@ -49,5 +48,5 @@
     <div id="ingredientsDisplay">
         {{ ingredients }}
     </div>
-    <button type="submit" class="btn btn-primary">gem recipe</button>
   </form>
+<button ng-click="addRecipe()" class="btn btn-primary">gem recipe</button>
