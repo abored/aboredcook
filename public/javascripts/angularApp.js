@@ -85,6 +85,14 @@ app.config([
                 resolve: {
                     user: ['$stateParams', 'users', function($stateParams, users) {
                         return users.getUserByUsername($stateParams.username);
+                    }],
+                    favs: ['$q', 'recipes', 'user', function($q, recipes, user) {
+                        var promises = [];
+                        user.favorites.forEach(function(id) {
+                            console.log(id);
+                            promises.push(recipes.get(id));
+                        })
+                        return $q.all(promises);
                     }]
                 }
 
@@ -370,9 +378,15 @@ app.controller('CreateCtrl', [
             $scope.ingredients.push({});
         };
 
+        $scope.addNewIng();
+
         $scope.removeIng = function() {
-            var lastItem = $scope.ingredients.length - 1;
-            $scope.ingredients.splice(lastItem);
+            if ($scope.ingredients.length <= 1) {
+                console.log("You need at least one ingredient!")
+            } else {
+                var lastItem = $scope.ingredients.length - 1;
+                $scope.ingredients.splice(lastItem);
+            }
         };
     }
 ]);
@@ -452,7 +466,7 @@ app.controller('RecipesCtrl', [
         };
 
 
-        $scope.deleteRecipe = function() {
+        $scope.deleteRecipe = function(id) {
             recipes.delete(recipe._id).success(function(res) {
                 console.log(res);
                 $state.go('home');
@@ -507,11 +521,23 @@ app.controller('UserCtrl', [
     '$scope',
     '$state',
     'user',
+    'recipes',
     'auth',
     'users',
-    function($scope, $state, user, auth, users) {
+    '$window',
+    'favs',
+    function($scope, $state, user, recipes, auth, users, $window, favs) {
         $scope.user = user;
         $scope.isLoggedIn = auth.isLoggedIn();
+        $scope.favs = favs;
+        console.log(favs)
+        $scope.confirmDelete = function(title, id) {
+            if ($window.confirm("Vil du slette " + title)) {
+                recipes.delete(id);
+                $state.reload();
+            }
+        }
+
         $scope.submit = function() {
             users.editUser($scope.user);
             $state.go('me');
