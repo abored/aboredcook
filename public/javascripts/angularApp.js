@@ -85,14 +85,6 @@ app.config([
                 resolve: {
                     user: ['$stateParams', 'users', function($stateParams, users) {
                         return users.getUserByUsername($stateParams.username);
-                    }],
-                    favs: ['$q', 'recipes', 'user', function($q, recipes, user) {
-                        var promises = [];
-                        user.favorites.forEach(function(id) {
-                            console.log(id);
-                            promises.push(recipes.get(id));
-                        })
-                        return $q.all(promises);
                     }]
                 }
 
@@ -100,7 +92,7 @@ app.config([
             .state('me', {
                 url: '/me',
                 templateUrl: 'templates/me.html',
-                controller: 'UserCtrl',
+                controller: 'MeCtrl',
                 resolve: {
                     user: ['users', function(users) {
                         return users.getCurrentUser();
@@ -206,6 +198,7 @@ app.factory('users', ['$http', 'auth', function($http, auth) {
 
     o.getUserByUsername = function(username) {
         return $http.get('/users/' + username).then(function(res) {
+            console.log(res.data);
             return res.data;
         });
     }
@@ -519,18 +512,25 @@ app.controller('AuthCtrl', [
 
 app.controller('UserCtrl', [
     '$scope',
+    'user',
+    'auth',
+    function($scope, user, auth) {
+        $scope.user = user;
+        console.log(user);
+        $scope.isLoggedIn = auth.isLoggedIn();
+    }
+])
+
+app.controller('MeCtrl', [
+    '$scope',
     '$state',
     'user',
-    'recipes',
     'auth',
-    'users',
     '$window',
-    'favs',
-    function($scope, $state, user, recipes, auth, users, $window, favs) {
+    function($scope, $state, user, auth, $window) {
         $scope.user = user;
         $scope.isLoggedIn = auth.isLoggedIn();
-        $scope.favs = favs;
-        console.log(favs)
+
         $scope.confirmDelete = function(title, id) {
             if ($window.confirm("Vil du slette " + title)) {
                 recipes.delete(id);

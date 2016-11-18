@@ -314,6 +314,11 @@ router.get('/users/:user', function(req, res, next) {
         if (err) {
             return next(err);
         }
+    });
+    req.user.populate('favorites', 'title author preptime people comments favorites'  , function(err, user) {
+        if (err) {
+            return next(err);
+        }
 
         res.json(user);
     });

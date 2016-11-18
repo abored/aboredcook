@@ -8,7 +8,7 @@ var UserSchema = new mongoose.Schema({
         lowercase: true,
         unique: true
     },
-    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Favorite' }],
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
     recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
     hash: String,
     salt: String

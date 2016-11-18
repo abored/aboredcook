@@ -39,10 +39,14 @@
                 <th><span class="glyphicon glyphicon-comment"></span></th>
             </tr>
         </thead>
-        <tr ng-repeat="r in favs">
+        <tr ng-repeat="r in user.favorites">
             <td ui-sref="recipes({id: r._id})">
                 <a href="">
                     {{ r.title }}</a>
+            </td>
+            <td>
+                <a href="/#/user/{{r.author}}">
+                    {{ r.author}}</a>
             </td>
             <td ui-sref="recipes({id: r._id})">{{ r.preptime}}</td>
             <td ui-sref="recipes({id: r._id})">
