@@ -12,30 +12,30 @@
 
 
     <div class="form-group">
-        <input type="text" class="form-control wpadding" placeholder="Title" ng-model="title" required/>
-        <input type="text" class="form-control wpadding" placeholder="Description" ng-model="description" required />
-    <div class="col-lg-3">
-        <select ng-model="people" class="wpadding row">
-            <option value>antal portioner</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
+        <input type="text" class="form-control wmargins" placeholder="Title" ng-model="title" required/>
+        <input type="text" class="form-control wmargins" placeholder="Description" ng-model="description" required />
+    <div class="form-inline wmargins">
+        <select ng-model="people" class="form-control">
+            <option value="" disabled selected>antal portioner</option>
+            <option value="1">1 portion</option>
+            <option value="2">2 portioner</option>
+            <option value="3">3 portioner</option>
+            <option value="4">4 portioner</option>
+            <option value="5">5 portioner</option>
+            <option value="6">6 portioner</option>
+            <option value="7">7 portioner</option>
+            <option value="8">8 portioner</option>
         </select>
-        <input type="number" class="form-control wpadding row" placeholder="tid fra start til slut" ng-model="time" />
+        <input type="number" class="form-control" placeholder="sammenlagt tid i minutter" ng-model="time" />
       </div>
     </div>
     <div class="form-group">
-        <input type="text" class="form-control wpadding" placeholder="How to. Descripe the procedure of this recipe start to finish." ng-model="howTo" />
+        <input type="text" class="form-control wmargins" placeholder="How to. Descripe the procedure of this recipe start to finish." ng-model="howTo" />
     </div>
 
-    <fieldset data-ng-repeat="i in ingredients" class="form-inline wpadding">
-        <input type="text" ng-model="i.name" name="" class="form-control wpadding" placeholder="Ingredient">
-        <input type="number" ng-model="i.amount" name="" class="form-control wpadding" placeholder="Mængde">
+    <fieldset data-ng-repeat="i in ingredients" class="form-inline wmargins">
+        <input type="text" ng-model="i.name" name="" class="form-control" placeholder="Ingredient">
+        <input type="number" ng-model="i.amount" name="" class="form-control" placeholder="Mængde">
 
         <select ng-model="i.unit" class="form-control">
             <option value="" disabled selected>Enhed</option>
