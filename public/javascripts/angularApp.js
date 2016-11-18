@@ -478,7 +478,7 @@ app.controller('RecipesCtrl', [
         $scope.imageClick = function (image) {
             console.log(image);
             $scope.bigImage = image;
-            console.log(bigImage);
+          //  console.log($scope.bigImage);
         };
     }
 ]);
@@ -523,9 +523,10 @@ app.controller('MeCtrl', [
     '$scope',
     '$state',
     'user',
+    'recipes',
     'auth',
     '$window',
-    function($scope, $state, user, auth, $window) {
+    function($scope, $state, user, recipes, auth, $window) {
         $scope.user = user;
         $scope.isLoggedIn = auth.isLoggedIn();
 
