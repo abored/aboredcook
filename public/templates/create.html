@@ -1,4 +1,4 @@
-<h3>Add a new recipe</h3>
+<h3 class="wmargins">Opret ny opskrift</h3>
 <div ng-hide="isLoggedIn()">
     <h3>You need to
         <a href="/#/login">Log In</a>
@@ -8,49 +8,51 @@
 </div>
 <form ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
 
-
-
-
     <div class="form-group">
         <input type="text" class="form-control wmargins" placeholder="Title" ng-model="title" required/>
-        <input type="text" class="form-control wmargins" placeholder="Description" ng-model="description" required />
-    <div class="form-inline wmargins">
-        <select ng-model="people" class="form-control">
-            <option value="" disabled selected>antal portioner</option>
-            <option value="1">1 portion</option>
-            <option value="2">2 portioner</option>
-            <option value="3">3 portioner</option>
-            <option value="4">4 portioner</option>
-            <option value="5">5 portioner</option>
-            <option value="6">6 portioner</option>
-            <option value="7">7 portioner</option>
-            <option value="8">8 portioner</option>
-        </select>
-        <input type="number" class="form-control" placeholder="sammenlagt tid i minutter" ng-model="time" />
-      </div>
-    </div>
-    <div class="form-group">
-        <input type="text" class="form-control wmargins" placeholder="How to. Descripe the procedure of this recipe start to finish." ng-model="howto" />
+        <input type="text" class="form-control wmargins" placeholder="Description" ng-model="description" required/>
+
+        <div class="form-inline wmargins">
+
+            <select ng-model="people" class="form-control" required>
+                <option value="" disabled selected>Antal personer</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+            </select>
+            <span class="glyphicon glyphicon-user wsmallmargins"></span>
+            <input type="number" class="form-control" placeholder="Tid (min)" ng-model="time" required/>
+            <span class="glyphicon glyphicon-time wsmallmargins"></span>
+        </div>
     </div>
 
     <fieldset data-ng-repeat="i in ingredients" class="form-inline wmargins">
-        <input type="text" ng-model="i.name" name="" class="form-control" placeholder="Ingredient">
-        <input type="number" ng-model="i.amount" name="" class="form-control" placeholder="Mængde">
+        <input type="text" ng-model="i.name" name="" class="form-control" placeholder="Ingredient" required>
+        <input type="number" ng-model="i.amount" name="" class="form-control" placeholder="Mængde" required>
 
-        <select ng-model="i.unit" class="form-control">
+        <select ng-model="i.unit" class="form-control" required>
             <option value="" disabled selected>Enhed</option>
             <option value="g.">g.</option>
             <option value="ml.">ml.</option>
             <option value="dl.">dl.</option>
         </select>
-        <button class="remove" ng-show="$last" ng-click="removeIng()">-</button>
+        <button type='button' class="btn btn-info" ng-show="$last" ng-click="removeIng()">Fjern
+          <span style="margin-left: 5px; " class="glyphicon glyphicon-minus "></span></button>
+
+        </button>
     </fieldset>
-    <button type='button' class="addfields" ng-click="addNewIng()">Add fields</button>
+    <button type='button' class="btn btn-info wmargins" ng-click="addNewIng()">Tilføj
+    <span style="margin-left: 5px; " class="glyphicon glyphicon-plus "></span></button>
+    <textarea type="text" class="form-control wmargins" placeholder="Fremgangsmåde" ng-model="howTo" required></textarea>
 
+    <input type="submit" id="submit" value="Opret opskrift" class="btn btn-primary wmargins"/>
+</form>
 
-    <input type="submit" id="submit" value="submit" class="btn btn-primary"/>
-  </form>
-
-  <div id="ingredientsDisplay">
+<div id="ingredientsDisplay">
     {{ingredients}}
-  </div>
+</div>
