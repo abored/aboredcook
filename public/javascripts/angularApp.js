@@ -358,7 +358,7 @@ app.controller('CreateCtrl', [
             recipes.create({
                 title: $scope.title,
                 ingredients: $scope.ingredients,
-                howTo: $scope.howTo,
+                howto: $scope.howto,
                 description: $scope.description,
                 people: $scope.people,
                 preptime: $scope.time
@@ -391,15 +391,7 @@ app.controller('RecipesCtrl', [
         $scope.isLoggedIn = auth.isLoggedIn;
         console.log($scope.isLoggedIn)
         $scope.user = user;
-
-
-
-
-
-
-
-
-
+        $scope.bigImage = recipe.images[0];
         //console.log($scope.img1);
         $scope.uploadFiles = function(files) {
                 if (files && files.length) {
@@ -474,6 +466,12 @@ app.controller('RecipesCtrl', [
                 recipes.upvoteComment(recipe, comment);
             };
             $scope.body = '';
+        };
+
+        $scope.imageClick = function (image) {
+            console.log(image);
+            $scope.bigImage = image;
+            console.log(bigImage);
         };
     }
 ]);
