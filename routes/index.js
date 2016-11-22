@@ -310,18 +310,20 @@ router.param('searchText', function(req, res, next, searchText) {
 
 // GET single user
 router.get('/users/:user', function(req, res, next) {
-    req.user.populate('recipes', function(err, user) {
-        if (err) {
-            return next(err);
-        }
-    });
-    req.user.populate('favorites', 'title author preptime people comments favorites'  , function(err, user) {
-        if (err) {
-            return next(err);
-        }
 
-        res.json(user);
+    req.user.populate('recipes', 'title author preptime people comments favorites', function(err, user) {
+        if (err) {
+            return next(err);
+        }
+        req.user.populate('favorites', 'title author preptime people comments favorites', function(err, user) {
+            if (err) {
+                return next(err);
+            }
+
+            res.json(user);
+        });
     });
+
 });
 
 // middleware til GET user

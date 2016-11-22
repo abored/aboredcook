@@ -422,14 +422,11 @@ app.controller('RecipesCtrl', [
             }
             //func der undersøger om bruger har fav. recipe, og sætter mdfavorite (se button i UI)
         $scope.checkFav = function() {
-
-            var isInArray = user.favorites.some(function(favId) {
-                return favId === recipe._id
-            });
-
-            if (isInArray) {
-                $scope.mdfavorite = "favorite";
-            } else {
+            for (var i = 0, length = user.favorites.length; i < length; i++) {
+                if (user.favorites[i]._id === recipe._id) {
+                    $scope.mdfavorite = "favorite";
+                    break;
+                }
                 $scope.mdfavorite = "favorite_border";
             }
         }
@@ -475,10 +472,10 @@ app.controller('RecipesCtrl', [
             $scope.body = '';
         };
 
-        $scope.imageClick = function (image) {
+        $scope.imageClick = function(image) {
             console.log(image);
             $scope.bigImage = image;
-          //  console.log($scope.bigImage);
+            //  console.log($scope.bigImage);
         };
     }
 ]);
