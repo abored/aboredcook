@@ -427,7 +427,9 @@ app.controller('RecipesCtrl', [
                     $scope.mdfavorite = "favorite";
                     break;
                 }
-                $scope.mdfavorite = "favorite_border";
+                else {
+                    $scope.mdfavorite = "favorite_border";
+                }
             }
         }
 

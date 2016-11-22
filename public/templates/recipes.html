@@ -1,25 +1,34 @@
-<div class="page-header">
-    <h3>{{recipe.title}}</h3>
-</div>
+    <div style="width:80%; float:left;">
+        <h3>{{recipe.title}}</h3>
+    </div>
+    
+    <div style="width:20%; float:right; padding-top:8px;">
+        <h4 style="float:left; padding:5px;">Favorite it: </h4>
+        <md-button style="float:left;" class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="favorite()">
+            <md-icon md-font-library="material-icons" style="color:red; font-size: 25px">{{mdfavorite}}</md-icon>
+        </md-button>
+
+    </div>
+    <hr style="border:1px solid; width:100%;"/>
 <div>
     <center> <img style="max-width:100%; height:350px; margin-bottom:10px" ng-src='/images/{{bigImage}}' /></center>
 </div>
 
-<span ng-repeat="image in recipe.images">
-    <img ng-click="imageClick(image)" style="height:100px; width:auto; margin:1px;" ng-src='/images/{{image}}'/>
+<span ng-repeat="image in recipe.images | limitTo:5">
+    <img ng-click="imageClick(image)" style="height:100px; width:auto; max-width:19%;" ng-src='/images/{{image}}'/>
 </span>
 
-    <br /><br />
-    <div style="width:50%; float:left;">
-        <h4>Ingredients:</h4>
-        <list ng-repeat="i in recipe.ingredients" ng-show="recipe.ingredients">
-            <li>{{i.name}}, {{i.amount}}{{i.unit}}</li>
-        </list>
-    </div>
-    <div style="width:50%; float:right;">
-        <h4>Description:</h4>
-        {{recipe.description}}
-    </div>
+<div style="width:48%; float:left;">
+    <h4>Ingredients:</h4>
+    <list ng-repeat="i in recipe.ingredients" ng-show="recipe.ingredients">
+        <li>{{i.name}}, {{i.amount}}{{i.unit}}</li>
+    </list>
+</div>
+
+<div style="width:48%; float:right;">
+    <h4>Description:</h4>
+    {{recipe.description}}
+</div>
 
 
 <div style="margin-top:50px; width:100%;">
@@ -35,7 +44,7 @@
 
 <div ng-repeat="comment in recipe.comments | orderBy:'-upvotes'">
     <div style="margin:10px;">
-        <a style="font-size:20px;" href="/#/user/{{comment.author}}">{{comment.author}}:</a>
+        <a style="font-size:18px;" href="/#/user/{{comment.author}}">{{comment.author}}:</a>
 
         <span style="margin-left:10px;">
             {{comment.body}}
@@ -64,13 +73,9 @@
     <button type="submit" class="btn btn-primary">Add comment</button>
 </form>
 
-<div>
-    <md-button class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="favorite()">
-    <md-icon md-font-library="material-icons" style="color:red; font-size: 30px">{{mdfavorite}}</md-icon>
-    </md-button>
-</div>{{recipe.favorites}}
 
-<md-list>
+
+<!--<md-list>
 <md-list-item class="md-2-line" ng-repeat="comment in recipe.comments">
     <md-button class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="incrementUpvotes(comment)">
         {{comment.upvotes}}</md-button>
@@ -80,7 +85,7 @@
         <a href="/#/user/{{comment.author}}">{{comment.author}}</a>
     </div>
 </md-list-item>
-</md-list>
+</md-list>-->
 
 <!--<md-input-container>
 <label>Username</label> 
