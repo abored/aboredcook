@@ -122,8 +122,19 @@ router.get('/recipes/:recipe', function(req, res, next) {
         if (err) {
             return next(err);
         }
+        console.log(recipe);
         res.json(recipe);
+
+
+        /*    recipe.populate('comments.upvotes', function(err, recipe) {
+                if (err) {
+                    return next(err);
+                }
+                console.log(recipe);
+
+            })*/
     });
+
 });
 
 router.delete('/recipes/:recipe/delete', auth, function(req, res, next) {
@@ -186,24 +197,51 @@ router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
 
 // PUT upvote recipe (bruger upvote metode defineret i modellen for recipe)
 router.put('/recipes/:recipe/upvote', auth, function(req, res, next) {
-    req.recipe.upvote(function(err, recipe) {
-        if (err) {
-            return next(err);
-        }
 
-        res.json(recipe);
-    });
 });
 
 // PUT upvote comment
 router.put('/recipes/:recipe/comments/:comment/upvote', auth, function(req, res, next) {
-    req.recipe.comment.upvote(function(err, comment) {
+
+    req.recipe.populate('comments', function(err, recipe) {
         if (err) {
             return next(err);
         }
 
-        res.json(comment);
-    });
+        for (var i = 0, length = recipe.comments.length; i < length; i++) {
+            for (var x = 0, len = recipe.comments[i].upvotes.length; x < len; x++) {
+                if (recipe.comments[i].upvotes[x]._id === req.payload._id) {
+                    console.log("found! removing!")
+                    Comment.findByIdAndUpdate(recipe.comments[i]._id, {
+                            $pull: {
+                                upvotes: req.payload._id
+                            }
+                        },
+                        function(err, user) {
+                            if (err) {
+                                return next(err);
+                            }
+                        })
+                } else {
+                    console.log("indsætter!")
+                    Comment.findByIdAndUpdate(recipe.comments[i]._id, {
+                            $push: {
+                                upvotes: {
+                                    _id: req.payload._id
+                                }
+                            }
+                        },
+                        function(err, user) {
+                            if (err) {
+                                return next(err);
+                            }
+                        })
+                }
+            }
+        }
+    })
+    res.json(true);
+
 });
 
 // POST comment til recipe
