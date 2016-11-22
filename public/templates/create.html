@@ -1,4 +1,4 @@
-<h3 class="wmargins">Opret ny opskrift</h3>
+<h3>Add a new recipe</h3>
 <div ng-hide="isLoggedIn()">
     <h3>You need to
         <a href="/#/login">Log In</a>
@@ -6,53 +6,54 @@
         <a href="/#/register">Register</a>
         before you can add a post.</h3>
 </div>
-<form ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
+
+<form id="mainform" ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
 
     <div class="form-group">
-        <input type="text" class="form-control wmargins" placeholder="Title" ng-model="title" required/>
-        <input type="text" class="form-control wmargins" placeholder="Description" ng-model="description" required/>
+        <input type="text" class="form-control wpadding" placeholder="Title" ng-model="title" required/>
+        <input type="text" class="form-control wpadding" placeholder="Description" ng-model="description" required/>
 
-        <div class="form-inline wmargins">
-
-            <select ng-model="people" class="form-control" required>
-                <option value="" disabled selected>Antal personer</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-            </select>
-            <span class="glyphicon glyphicon-user wsmallmargins"></span>
-            <input type="number" class="form-control" placeholder="Tid (min)" ng-model="time" required/>
-            <span class="glyphicon glyphicon-time wsmallmargins"></span>
-        </div>
+        <select ng-model="people" class="wpadding row">
+            <option value>antal portioner</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select>
+        <input type="number" class="form-control wpadding row" placeholder="tid fra start til slut" ng-model="time"/>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control wpadding" placeholder="How to. Descripe the procedure of this recipe start to finish." ng-model="howTo"/>
     </div>
 
-    <fieldset data-ng-repeat="i in ingredients" class="form-inline wmargins">
-        <input type="text" ng-model="i.name" name="" class="form-control" placeholder="Ingredient" required>
-        <input type="number" ng-model="i.amount" name="" class="form-control" placeholder="Mængde" required>
+    <fieldset data-ng-repeat="i in ingredients" class="form-inline wpadding">
+        <input type="text" ng-model="i.name" name="" class="form-control wpadding" placeholder="Ingredient">
+        <input type="number" ng-model="i.amount" name="" class="form-control wpadding" placeholder="Mængde">
 
-        <select ng-model="i.unit" class="form-control" required>
+        <select ng-model="i.unit" class="form-control">
             <option value="" disabled selected>Enhed</option>
             <option value="g.">g.</option>
             <option value="ml.">ml.</option>
             <option value="dl.">dl.</option>
         </select>
-        <button type='button' class="btn btn-info" ng-show="$last" ng-click="removeIng()">Fjern
-          <span style="margin-left: 5px; " class="glyphicon glyphicon-minus "></span></button>
-
-        </button>
+        <button class="remove" ng-show="$last" ng-click="removeIng()">-</button>
     </fieldset>
-    <button type='button' class="btn btn-info wmargins" ng-click="addNewIng()">Tilføj
-    <span style="margin-left: 5px; " class="glyphicon glyphicon-plus "></span></button>
-    <textarea type="text" class="form-control wmargins" placeholder="Fremgangsmåde" ng-model="howTo" required></textarea>
+    <button type='button' class="addfields" ng-click="addNewIng()">Add fields</button>
 
-    <input type="submit" id="submit" value="Opret opskrift" class="btn btn-primary wmargins"/>
 </form>
 
 <div id="ingredientsDisplay">
     {{ingredients}}
 </div>
+
+<form name="form">
+    <div class="btn btn-info" ngf-select ng-model="files" ngf-multiple="true">Vælg billeder</div>
+</form>
+<h4>Preview</h4>
+<img ng-repeat="file in files" ngf-thumbnail="file" ngf-size="{width: 100, height: 100, quality: 1}" class="thumb">
+<br><br>
+<input type="submit" form="mainform" value="Opret opskrift" class="btn btn-primary"/>

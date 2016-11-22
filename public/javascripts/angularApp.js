@@ -141,8 +141,9 @@ app.factory('recipes', ['$http', 'auth', function($http, auth) {
             headers: {
                 Authorization: 'Bearer ' + auth.getToken()
             }
-        }).success(function(data) {
-            o.recipes.push(data);
+        }).success(function(res) {
+            //o.recipes.push(data);
+            return res;
         });
     };
     o.addComment = function(id, comment) {
@@ -348,7 +349,9 @@ app.controller('CreateCtrl', [
     'auth',
     'user',
     'recipes',
-    function($scope, auth, user, recipes) {
+    'Upload',
+    '$state',
+    function($scope, auth, user, recipes, Upload, $state) {
         $scope.user = user;
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.ingredients = [];
@@ -363,7 +366,12 @@ app.controller('CreateCtrl', [
                 description: $scope.description,
                 people: $scope.people,
                 preptime: $scope.time
-            });
+            }).success(function(res) {
+
+                //upload valgte billeder og knyt til nyoprettet id.
+                $scope.uploadFiles($scope.files, res._id);
+                $state.go('home');
+            })
 
         };
 
@@ -381,6 +389,21 @@ app.controller('CreateCtrl', [
                 $scope.ingredients.splice(lastItem);
             }
         };
+
+        $scope.uploadFiles = function(files, id) {
+                if (files && files.length) {
+                    for (var i = 0; i < files.length; i++) {
+                        console.log(files[i]);
+                        Upload.upload({
+                            url: "/upload",
+                            data: {
+                                file: files[i],
+                                recipeId: id
+                            }
+                        })
+                    }
+                }
+            }
     }
 ]);
 
@@ -400,35 +423,13 @@ app.controller('RecipesCtrl', [
         $scope.user = user;
         $scope.bigImage = recipe.images[0];
         //console.log($scope.img1);
-        $scope.uploadFiles = function(files) {
-                if (files && files.length) {
-                    for (var i = 0; i < files.length; i++) {
-                        console.log(files[i]);
-                        Upload.upload({
-                            url: "/upload",
-                            data: {
-                                file: files[i],
-                                recipeId: recipe._id
-                            }
-                        }).then(function() {
-                            return $timeout(function() { //timeout FTW (fuck state.reload - se: https://mwop.net/blog/2014-05-08-angular-ui-router-reload.html) - only took me 10 hours to fix, k
-                                $state.go('.', {}, {
-                                    reload: true
-                                });
-                            }, 0);
-                        });
-                    }
-                }
-            }
+
             //func der undersøger om bruger har fav. recipe, og sætter mdfavorite (se button i UI)
         $scope.checkFav = function() {
+          $scope.mdfavorite = "favorite_border";
             for (var i = 0, length = user.favorites.length; i < length; i++) {
                 if (user.favorites[i]._id === recipe._id) {
                     $scope.mdfavorite = "favorite";
-                    break;
-                }
-                else {
-                    $scope.mdfavorite = "favorite_border";
                 }
             }
         }

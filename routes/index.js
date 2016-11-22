@@ -31,16 +31,16 @@ router.get('/', function(req, res) {
 
 router.post('/upload', multipartyMiddleware, function(req, res) {
 
-    console.log(req.body.recipeId);
-    var tmp_path = req.files.file.path;
+    //console.log(req.body.recipeId);
+    var temp_path = req.files.file.path;
     var imageId = crypto.randomBytes(20).toString('hex');
-    var target_path = 'uploads/' + imageId;
+    var server_path = 'uploads/' + imageId;
 
-    var src = fs.createReadStream(tmp_path);
-    var dest = fs.createWriteStream(target_path);
-    src.pipe(dest);
+    var source = fs.createReadStream(temp_path);
+    var dest = fs.createWriteStream(server_path);
+    source.pipe(dest);
 
-    src.on('end', function() {
+    source.on('end', function() {
         Recipe.findByIdAndUpdate(req.body.recipeId, {
                 $push: {
                     "images": {
@@ -57,7 +57,7 @@ router.post('/upload', multipartyMiddleware, function(req, res) {
 
     });
 
-    src.on('error', function(err) {
+    source.on('error', function(err) {
         return next(err)
     });
 
