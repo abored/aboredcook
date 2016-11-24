@@ -1,0 +1,23 @@
+<div class="page-header">
+    <h1>COOKBOOK</h1>
+</div>
+
+<div ng-repeat="recipe in recipes">
+    <div class="col-md-4 text-center">
+        <div class="thumbnail">
+            <img class="img-responsive img-portfolio img-hover" src="img/pop-food1.jpg" alt="Cook book">
+            <div class="caption">
+                <a href="#/recipes/{{recipe._id}}"><h3>{{recipe.title}}</h3></a>
+                <small><span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(recipe)"></span> {{recipe.upvotes}} likes!</small>
+                <p>{{recipe.disc}}</p>
+                <ul class="list-inline">
+                    <li><span class="glyphicon glyphicon-comment"></span> {{recipe.comments.length}} </li>
+                    <li><span class="glyphicon glyphicon-time"></span> {{recipe.preptime}} </li>
+                    <li><span class="glyphicon glyphicon-user"></span> {{recipe.people}} </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+</div>

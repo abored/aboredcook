@@ -1,0 +1,60 @@
+﻿<div class="page-header">
+    <h3>Username: {{user.username}}</h3>
+    <h3>My Id: {{user._id}}</h3>
+
+    <h3>{{user.username}}'s recipes:</h3>
+    <table class="table table-striped table-hover ">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th><span class="glyphicon glyphicon-time"></span></th>
+                <th><span class="glyphicon glyphicon-user"></span></th>
+                <th><span class="glyphicon glyphicon-heart"></span></th>
+                <th><span class="glyphicon glyphicon-comment"></span></th>
+            </tr>
+        </thead>
+        <tr ng-repeat="r in user.recipes">
+            <td ui-sref="recipes({id: r._id})">
+                <a href="">
+                    {{ r.title }}</a>
+            </td>
+            <td ui-sref="recipes({id: r._id})">{{ r.preptime}}</td>
+            <td ui-sref="recipes({id: r._id})">
+                {{ r.people}}
+            </td>
+            <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
+            <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>
+        </tr>
+    </table>
+
+    <h3>{{user.username}}'s favorite recipes:</h3>
+    <table class="table table-striped table-hover ">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th><span class="glyphicon glyphicon-time"></span></th>
+                <th><span class="glyphicon glyphicon-user"></span></th>
+                <th><span class="glyphicon glyphicon-heart"></span></th>
+                <th><span class="glyphicon glyphicon-comment"></span></th>
+            </tr>
+        </thead>
+        <tr ng-repeat="r in user.favorites">
+            <td ui-sref="recipes({id: r._id})">
+                <a href="">
+                    {{ r.title }}</a>
+            </td>
+            <td>
+                <a href="/#/user/{{r.author}}">
+                    {{ r.author}}</a>
+            </td>
+            <td ui-sref="recipes({id: r._id})">{{ r.preptime}}</td>
+            <td ui-sref="recipes({id: r._id})">
+                {{ r.people}}
+            </td>
+            <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
+            <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>
+        </tr>
+    </table>
+
+</div>

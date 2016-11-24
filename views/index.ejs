@@ -18,9 +18,6 @@
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <script src="/javascripts/angularApp.js"></script>
-    <script src="/javascripts/ng-file-upload.min.js"></script>
     <style>
         .glyphicon-thumbs-up {
             cursor: pointer;
@@ -29,10 +26,12 @@
         body {
             overflow-x: hidden;
         }
-        .wmargins{
+
+        .wmargins {
             margin: 20px;
         }
-        .wsmallmargins{
+
+        .wsmallmargins {
             margin: 10px;
         }
     </style>
@@ -69,15 +68,15 @@
                     <button ui-sref="search({string: searchText})">Søg</button>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                  <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-                  <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
-                  <li ng-show="isLoggedIn()" class="dropdown">
-                      <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentUser()}} <span class="caret"></span></a>
-                      <ul class="dropdown-menu" role="menu">
-                          <li><a href="#/me">Profile</a></li>
-                          <li class="divider"></li>
-                          <li><a ng-click="logOut()">Logout</a></li>
-                      </ul>
+                    <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+                    <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+                    <li ng-show="isLoggedIn()" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentUser()}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#/me">Profile</a></li>
+                            <li class="divider"></li>
+                            <li><a ng-click="logOut()">Logout</a></li>
+                        </ul>
                 </ul>
             </div>
         </div>
@@ -91,23 +90,31 @@
         </div>
     </div>
 
-
-    <!-- in-line template starts here -->
-
-    <script type="text/ng-template" id="/home.html"></script>
-
-    <script type="text/ng-template" id="/recipes.html"></script>
-
-    <script type="text/ng-template" id="/user.html"></script>
-
-    <script type="text/ng-template" id="/me.html"></script>
-
-    <script type="text/ng-template" id="/register.html"></script>
-
-    <script type="text/ng-template" id="/login.html"></script>
-
-    <script type="text/ng-template" id="/create.html"></script>
-
 </body>
+
+<!-- FACTORIES -->
+
+<script src="/angular/.factories/auth.js"></script>
+<script src="/angular/.factories/users.js"></script>
+<script src="/angular/.factories/recipes.js"></script>
+<script src="/angular/.factories/search.js"></script>
+
+<!-- CONTROLLERS -->
+
+<script src="/angular/home/controller.js"></script>
+<script src="/angular/nav/controller.js"></script>
+
+<script src="/angular/auth/controller.js"></script>
+<script src="/angular/recipe/controller.js"></script>
+<script src="/angular/create/controller.js"></script>
+<script src="/angular/list/controller.js"></script>
+
+<script src="/angular/me/controller.js"></script>
+<script src="/angular/user/controller.js"></script>
+
+<!-- ANGULAR APP + EXTERNAL MODULES -->
+<script src="/angular/angularApp.js"></script>
+
+<script src="/angular/scripts/ng-file-upload.min.js"></script>
 
 </html>
