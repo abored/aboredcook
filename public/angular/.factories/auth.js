@@ -1,57 +1,57 @@
 angular.module('authFactory', [])
-.factory('Auth', ['$http', '$window', function($http, $window) {
-    var auth = {};
-    auth.saveToken = function(token) {
-        $window.localStorage['cookbook-token'] = token;
-    };
+    .factory('Auth', ['$http', '$window', function($http, $window) {
+        var auth = {};
+        auth.saveToken = function(token) {
+            $window.localStorage['cookbook-token'] = token;
+        };
 
-    auth.getToken = function() {
-        return $window.localStorage['cookbook-token'];
-    };
+        auth.getToken = function() {
+            return $window.localStorage['cookbook-token'];
+        };
 
-    auth.isLoggedIn = function() {
-        var token = auth.getToken();
-
-        if (token) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    auth.currentUser = function() {
-        if (auth.isLoggedIn()) {
+        auth.isLoggedIn = function() {
             var token = auth.getToken();
-            var payload = JSON.parse($window.atob(token.split('.')[1]));
 
-            return payload.username;
-        }
-    };
+            if (token) {
+                return true;
+            } else {
+                return false;
+            }
+        };
 
-    auth.currentUserId = function() {
-        if (auth.isLoggedIn()) {
-            var token = auth.getToken();
-            var payload = JSON.parse($window.atob(token.split('.')[1]));
+        auth.currentUser = function() {
+            if (auth.isLoggedIn()) {
+                var token = auth.getToken();
+                var payload = JSON.parse($window.atob(token.split('.')[1]));
 
-            return payload._id;
-        }
-    };
+                return payload.username;
+            }
+        };
 
-    auth.register = function(user) {
-        return $http.post('/register', user).success(function(data) {
-            auth.saveToken(data.token);
-        });
-    };
+        auth.currentUserId = function() {
+            if (auth.isLoggedIn()) {
+                var token = auth.getToken();
+                var payload = JSON.parse($window.atob(token.split('.')[1]));
 
-    auth.logIn = function(user) {
-        return $http.post('/login', user).success(function(data) {
-            auth.saveToken(data.token);
-        });
-    };
+                return payload._id;
+            }
+        };
 
-    auth.logOut = function() {
-        $window.localStorage.removeItem('cookbook-token');
-    };
+        auth.register = function(user) {
+            return $http.post('/register', user).success(function(data) {
+                auth.saveToken(data.token);
+            });
+        };
 
-    return auth;
-}])
+        auth.logIn = function(user) {
+            return $http.post('/login', user).success(function(data) {
+                auth.saveToken(data.token);
+            });
+        };
+
+        auth.logOut = function() {
+            $window.localStorage.removeItem('cookbook-token');
+        };
+
+        return auth;
+    }])
