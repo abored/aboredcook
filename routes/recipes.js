@@ -183,14 +183,10 @@ router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
     });
 });
 
-// PUT upvote recipe (bruger upvote metode defineret i modellen for recipe)
-router.put('/recipes/:recipe/upvote', auth, function(req, res, next) {
-
-});
-
 // PUT upvote comment
 router.put('/recipes/:recipe/comments/:comment/upvote', auth, function(req, res, next) {
 
+    /*
     req.recipe.populate('comments', function(err, recipe) {
         if (err) {
             return next(err);
@@ -227,7 +223,7 @@ router.put('/recipes/:recipe/comments/:comment/upvote', auth, function(req, res,
                 }
             }
         }
-    })
+    })*/
     res.json(true);
 
 });
