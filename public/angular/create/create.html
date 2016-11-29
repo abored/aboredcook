@@ -10,10 +10,10 @@
 <form id="mainform" ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
 
     <div class="form-group">
-        <input type="text" class="form-control wpadding" placeholder="Title" ng-model="title" required/>
-        <input type="text" class="form-control wpadding" placeholder="Description" ng-model="description" required/>
+        <input type="text" class="form-control" placeholder="Title" ng-model="title" style="margin:5px;" required/>
+        <input type="text" class="form-control" placeholder="Description" ng-model="description" style="margin:5px;" required/>
 
-        <select ng-model="people" class="wpadding row">
+        <select ng-model="people" class="form-control" style="float:left; width:49%; margin:5px;">
             <option value>antal portioner</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -24,10 +24,10 @@
             <option value="7">7</option>
             <option value="8">8</option>
         </select>
-        <input type="number" class="form-control wpadding row" placeholder="tid fra start til slut" ng-model="time"/>
+        <input type="number" class="form-control" placeholder="tid fra start til slut" ng-model="time" style="float:right; width:48%; margin:5px;"/>
     </div>
     <div class="form-group">
-        <input type="text" class="form-control wpadding" placeholder="How to. Descripe the procedure of this recipe start to finish." ng-model="howTo"/>
+        <textarea elastic type="text" class="form-control" placeholder="How to. Descripe the procedure of this recipe start to finish." ng-model="howTo" style="margin:5px;"></textarea>
     </div>
 
     <fieldset data-ng-repeat="i in ingredients" class="form-inline wpadding">
@@ -42,7 +42,7 @@
         </select>
         <button class="remove" ng-show="$last" ng-click="removeIng()">-</button>
     </fieldset>
-    <button type='button' class="addfields" ng-click="addNewIng()">Add fields</button>
+    <button type='button' class="addfields" ng-click="addNewIng()" style="margin:5px;">Add fields</button>
 
 </form>
 
