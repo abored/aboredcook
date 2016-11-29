@@ -24,7 +24,8 @@ angular.module('userController', [])
         'Auth',
         function($scope, user, Auth) {
             $scope.user = user;
-            console.log(user);
             $scope.isLoggedIn = Auth.isLoggedIn();
+            $scope.listCollapsed = true;
+            $scope.favsCollapsed = true;
         }
     ])

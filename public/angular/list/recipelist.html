@@ -3,25 +3,20 @@
         <tr>
             <th>Title</th>
             <th>Author</th>
-            <th><span class="glyphicon glyphicon-time"></span></th>
-            <th><span class="glyphicon glyphicon-user"></span></th>
-            <th><span class="glyphicon glyphicon-heart"></span></th>
-            <th><span class="glyphicon glyphicon-comment"></span></th>
+            <th><span class="glyphicon glyphicon-time" title='Tid (min)' ></span></th>
+            <th><span class="glyphicon glyphicon-user" title='Antal portioner'></span></th>
+            <th><span class="glyphicon glyphicon-heart" title='Favoritter'></span></th>
+            <th><span class="glyphicon glyphicon-comment" title='Kommentarer'></span></th>
         </tr>
     </thead>
     <tr ng-repeat="r in recipes">
-        <td ui-sref="recipes({id: r._id})">
-            <a href="">
-                {{ r.title }}</a>
-        </td>
-        <td>
-            <a href="/#/user/{{r.author}}">
-                {{ r.author}}</a>
-        </td>
+
+        <td ui-sref="recipes({id: r._id})"><a href="">{{ r.title }}</a></td>
+
+        <td ui-sref="user({username: r.author})"><a href="">{{ r.author }}</a></td>
+
         <td ui-sref="recipes({id: r._id})">{{ r.preptime}}</td>
-        <td ui-sref="recipes({id: r._id})">
-            {{ r.people}}
-        </td>
+        <td ui-sref="recipes({id: r._id})">{{ r.people}}</td>
         <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
         <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>
     </tr>

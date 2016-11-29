@@ -1,4 +1,4 @@
-angular.module('meController', [])
+angular.module('meController', ['ngAnimate', 'ngSanitize', 'ui.bootstrap'])
     .config([
         '$stateProvider',
         '$urlRouterProvider',
@@ -35,6 +35,8 @@ angular.module('meController', [])
         function($scope, $state, user, Users, Recipes, Auth, $window) {
             $scope.user = user;
             $scope.isLoggedIn = Auth.isLoggedIn();
+            $scope.listCollapsed = true;
+            $scope.favsCollapsed = true;
 
             $scope.confirmDelete = function(title, id) {
                 if ($window.confirm("Vil du slette " + title)) {
