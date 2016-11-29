@@ -1,4 +1,4 @@
-﻿<div class="page-header">
+<div class="page-header">
     <h3>Username: {{user.username}}</h3>
     <h3>My Id: {{user._id}}</h3>
 
@@ -19,9 +19,7 @@
                     {{ r.title }}</a>
             </td>
             <td ui-sref="recipes({id: r._id})">{{ r.preptime}}</td>
-            <td ui-sref="recipes({id: r._id})">
-                {{ r.people}}
-            </td>
+            <td ui-sref="recipes({id: r._id})">{{ r.people}}  </td>
             <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
             <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>
         </tr>
@@ -40,18 +38,10 @@
             </tr>
         </thead>
         <tr ng-repeat="r in user.favorites">
-            <td ui-sref="recipes({id: r._id})">
-                <a href="">
-                    {{ r.title }}</a>
-            </td>
-            <td>
-                <a href="/#/user/{{r.author}}">
-                    {{ r.author}}</a>
-            </td>
+            <td ui-sref="recipes({id: r._id})"><a href="">{{ r.title }}</a></td>
+            <td ui-sref="user({username: r.author})"><a href="">{{ r.author }}</a></td>
             <td ui-sref="recipes({id: r._id})">{{ r.preptime}}</td>
-            <td ui-sref="recipes({id: r._id})">
-                {{ r.people}}
-            </td>
+            <td ui-sref="recipes({id: r._id})">{{ r.people}}</td>
             <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
             <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>
         </tr>

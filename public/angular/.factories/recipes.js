@@ -6,6 +6,7 @@ angular.module('recipesFactory', [])
         o.getAll = function() {
             return $http.get('/recipes').success(function(data) {
                 angular.copy(data, o.recipes);
+                return res.data;
             });
         };
         o.get = function(id) {
