@@ -1,4 +1,4 @@
-angular.module('homeController', ['ui.router'])
+angular.module('homeController', ['ui.bootstrap', 'ui.router'])
     .config([
         '$stateProvider',
         '$urlRouterProvider',
@@ -20,5 +20,6 @@ angular.module('homeController', ['ui.router'])
         function($scope, Recipes, Auth) {
             $scope.recipes = Recipes.recipes;
             $scope.isLoggedIn = Auth.isLoggedIn;
+            $scope.slideInterval = 3000;
         }
     ]);
