@@ -29,8 +29,9 @@ a.author-name {
 }
 
 .recipe-title{
- width:80%;
+ width:70%;
  float:left;
+ border: 1px solid blue;
 }
 
 .btn-add-comment{
