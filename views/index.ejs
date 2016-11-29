@@ -65,10 +65,14 @@
                     <li><a href="#/create">New recipe</a></li>
                 </ul>
                 <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
+                    <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
-                    </div>
-                    <button ui-sref="search({string: searchText})">Søg</button>
+                            <div class="input-group-btn">
+                                <button class="btn" type="submit" ui-sref="search({string: searchText})">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>
+                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
