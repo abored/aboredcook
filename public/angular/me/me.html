@@ -1,67 +1,74 @@
-<div class="page-header">
+<h2>Min side</h2>
+<div class="well well-lg">
+    <h3>Id: {{user._id}}</h3>
+    <h3>Brugernavn: {{user.username}}</h3>
+</div>
 
-    <h3>Private page for
-        {{user.username}}</h3>
-    <h3>My Id:
-        {{user._id}}</h3>
 
-    <h3>Muh recipes:</h3>
-    <table class="table table-striped table-hover ">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th><span class="glyphicon glyphicon-time"></span></th>
-                <th><span class="glyphicon glyphicon-user"></span></th>
-                <th><span class="glyphicon glyphicon-heart"></span></th>
-                <th><span class="glyphicon glyphicon-comment"></span></th>
-            </tr>
-        </thead>
-        <tr ng-repeat="r in user.recipes" >
-          <td ui-sref="recipes({id: r._id})">
-              <a href="">
+<button type="button" class="btn btn-primary" ng-click="listCollapsed = !listCollapsed">Mine opskrifter</button>
+
+<div uib-collapse="listCollapsed">
+    <div class="well well-lg">
+        <table class="table table-striped table-hover ">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th><span class="glyphicon glyphicon-time" title='Tid (min)' ></span></th>
+                    <th><span class="glyphicon glyphicon-user" title='Antal portioner'></span></th>
+                    <th><span class="glyphicon glyphicon-heart" title='Favoritter'></span></th>
+                    <th><span class="glyphicon glyphicon-comment" title='Kommentarer'></span></th>
+                    <th>Slet</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="r in user.recipes">
+                <td ui-sref="recipes({id: r._id})">
+                    <a href="">
                   {{ r.title }}</a>
-          </td>
-            <td ui-sref="recipes({id: r._id})">{{ r.preptime}}</td>
-            <td ui-sref="recipes({id: r._id})">
-                {{ r.people}}
-            </td>
-            <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
-            <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>
-            <td><button ng-click="confirmDelete(r.title, r._id)"><span class="glyphicon glyphicon-remove"></span></button></td>
-        </tr>
-    </table>
-
+                </td>
+                <td ui-sref="recipes({id: r._id})">{{ r.preptime}}</td>
+                <td ui-sref="recipes({id: r._id})">
+                    {{ r.people}}
+                </td>
+                <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
+                <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>
+                <td><button ng-click="confirmDelete(r.title, r._id)"><span class="glyphicon glyphicon-remove"></span></button></td>
+            </tr>
+        </table>
+    </div>
+</div>
 </div>
 
-<h3>favs:</h3>
-<table class="table table-striped table-hover ">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th><span class="glyphicon glyphicon-time"></span></th>
-            <th><span class="glyphicon glyphicon-user"></span></th>
-            <th><span class="glyphicon glyphicon-heart"></span></th>
-            <th><span class="glyphicon glyphicon-comment"></span></th>
-        </tr>
-    </thead>
-    <tr ng-repeat="r in user.favorites" >
-      <td ui-sref="recipes({id: r._id})">
-          <a href="">
+<button type="button" class="btn btn-primary" ng-click="favsCollapsed = !favsCollapsed">Mine favoritter</button>
+<div uib-collapse="favsCollapsed">
+    <div class="well well-lg">
+        <table class="table table-striped table-hover ">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th><span class="glyphicon glyphicon-time" title='Tid (min)' ></span></th>
+                    <th><span class="glyphicon glyphicon-user" title='Antal portioner'></span></th>
+                    <th><span class="glyphicon glyphicon-heart" title='Favoritter'></span></th>
+                    <th><span class="glyphicon glyphicon-comment" title='Kommentarer'></span></th>
+                </tr>
+            </thead>
+            <tr ng-repeat="r in user.favorites">
+                <td ui-sref="recipes({id: r._id})">
+                    <a href="">
               {{ r.title }}</a>
-      </td>
-      <td>
-          <a href="/#/user/{{r.author}}">
+                </td>
+                <td>
+                    <a href="/#/user/{{r.author}}">
               {{ r.author}}</a>
-      </td>
-        <td ui-sref="recipes({id: r._id})">{{ r.preptime}}</td>
-        <td ui-sref="recipes({id: r._id})">
-            {{ r.people}}
-        </td>
-        <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
-        <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>    </tr>
-</table>
-
-<button ui-sref="me.edit">edit</button>
-<div ui-view></div>
+                </td>
+                <td ui-sref="recipes({id: r._id})">{{ r.preptime}}</td>
+                <td ui-sref="recipes({id: r._id})">
+                    {{ r.people}}
+                </td>
+                <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
+                <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>
+            </tr>
+        </table>
+    </div>
 </div>
+<div ui-view></div>
