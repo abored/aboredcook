@@ -6,22 +6,22 @@ angular.module('listController', [])
             $urlRouterProvider.otherwise('home');
 
             $stateProvider
-            .state('list', {
-                url: '/list',
-                templateUrl: 'angular/list/recipelist.html',
-                controller: 'ListCtrl',
-                resolve: {
-                    recipesPromise: ['Recipes', function(Recipes) {
-                        return Recipes.getAll();
-                    }]
-                }
-            })
+                .state('list', {
+                    url: '/list',
+                    templateUrl: 'angular/list/recipelist.html',
+                    controller: 'ListCtrl',
+                    resolve: {
+                        recipes: ['Recipes', function(Recipes) {
+                            return Recipes.getAll();
+                        }]
+                    }
+                })
         }
     ])
     .controller('ListCtrl', [
         '$scope',
-        'Recipes',
-        function($scope, Recipes) {
-            $scope.recipes = Recipes.recipes;
+        'recipes',
+        function($scope, recipes) {
+            $scope.recipes = recipes.data;
         }
     ]);
