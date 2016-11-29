@@ -8,40 +8,39 @@ var IngredientSchema = new mongoose.Schema({
 });
 
 var RecipeSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        index: true
-    },
-    author: {
-        type: String,
-        index: true
-    },
-    ingredients: [IngredientSchema],
-    description: String,
-    howto: String,
+        title: {
+            type: String,
+            index: true
+        },
+        author: {
+            type: String,
+            index: true
+        },
+        ingredients: [IngredientSchema],
+        description: String,
+        howto: String,
 
-    preptime: Number,
-    people: Number,
+        preptime: Number,
+        people: Number,
 
-    favorites: {
-        type: Number,
-        default: 0
+        favorites: {
+            type: Number,
+            default: 0
+        },
+        upvotes: {
+            type: Number,
+            default: 0
+        },
+        comments: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'
+        }],
+        images: [String]
     },
-    upvotes: {
-        type: Number,
-        default: 0
-    },
-    comments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comment'
-    }],
-    images: [String]
-});
 
-RecipeSchema.methods.upvote = function(callback) {
-    this.upvotes += 1;
-    this.save(callback);
-};
+    {
+        timestamps: true
+    });
 
 RecipeSchema.methods.favorite = function(callback) {
     this.favorites += 1;
@@ -55,6 +54,8 @@ RecipeSchema.methods.unFavorite = function(callback) {
     console.log("-1")
 };
 
-RecipeSchema.index({'$**': 'text'});
+RecipeSchema.index({
+    '$**': 'text'
+});
 
 mongoose.model('Recipe', RecipeSchema);

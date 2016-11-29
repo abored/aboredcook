@@ -3,9 +3,11 @@
 
 <head>
     <title>COOK A BOOK</title>
+
+
     <link href="https://bootswatch.com/united/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <link href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel="stylesheet">
 
     <!-- Carousel CSS -->
     <link href="stylesheets/carouselstyle.css" rel="stylesheet">
@@ -13,6 +15,8 @@
     <link href="stylesheets/style.css" rel="stylesheet">
     <!-- Heart CSS -->
     <link href="stylesheets/heart.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/ng-img-crop.css">
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular-animate.js"></script>
@@ -25,6 +29,8 @@
     <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.3.0.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 </head>
 
 <body ng-app="cookbook">
@@ -53,21 +59,21 @@
                             <button class="btn" type="submit" ui-sref="search({string: searchText})">
                                     <i class="glyphicon glyphicon-search"></i>
                                 </button>
-                        </div>
-                    </div>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-                    <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
-                    <li ng-show="isLoggedIn()" class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentUser()}} <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#/me">Profile</a></li>
-                            <li class="divider"></li>
-                            <li><a ng-click="logOut()">Logout</a></li>
-                        </ul>
-                </ul>
             </div>
+        </div>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+            <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
+            <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+            <li ng-show="isLoggedIn()" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentUser()}} <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/me">Profile</a></li>
+                    <li class="divider"></li>
+                    <li><a ng-click="logOut()">Logout</a></li>
+                </ul>
+        </ul>
+        </div>
         </div>
     </nav>
 
@@ -104,6 +110,7 @@
     <!-- ANGULAR APP + EXTERNAL MODULES -->
     <script src="/angular/angularApp.js"></script>
     <script src="/angular/scripts/ng-file-upload.min.js"></script>
+    <script src="/angular/scripts/ng-img-crop.js"></script>
 
 </body>
 

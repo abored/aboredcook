@@ -23,5 +23,7 @@ angular.module('listController', [])
         'recipes',
         function($scope, recipes) {
             $scope.recipes = recipes.data;
+            $scope.sortType = 'createdAt'; // set the default sort type
+            $scope.sortReverse = false;  // set the default sort order
         }
     ]);

@@ -1,4 +1,4 @@
-angular.module('createController', [])
+angular.module('createController', ['ngFileUpload', 'ngImgCrop'])
     .config([
         '$stateProvider',
         '$urlRouterProvider',
