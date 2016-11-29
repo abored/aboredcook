@@ -1,4 +1,4 @@
-angular.module('homeController', ['ui.router'])
+angular.module('homeController', ['ui.bootstrap', 'ui.router'])
     .config([
         '$stateProvider',
         '$urlRouterProvider',
@@ -9,16 +9,23 @@ angular.module('homeController', ['ui.router'])
                 .state('home', {
                     url: '/home',
                     templateUrl: 'angular/home/home.html',
-                    controller: 'HomeCtrl'
+                    controller: 'HomeCtrl',
+                    resolve: {
+                        recipes: ['Recipes', function(Recipes) {
+                            return Recipes.getAll();
+                        }]
+                    }
                 })
+
         }
     ])
     .controller('HomeCtrl', [
         '$scope',
-        'Recipes',
+        'recipes',
         'Auth',
-        function($scope, Recipes, Auth) {
-            $scope.recipes = Recipes.recipes;
+        function($scope, recipes, Auth) {
+            $scope.recipes = recipes.data;
             $scope.isLoggedIn = Auth.isLoggedIn;
+            $scope.slideInterval = 3000;
         }
     ]);
