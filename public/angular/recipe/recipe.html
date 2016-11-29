@@ -1,4 +1,6 @@
-    <div style="width:80%; float:left;">
+        
+    
+    <div class="recipe-title">
         <h3>{{recipe.title}}</h3>
     </div>
 
@@ -44,7 +46,7 @@
 
 <div ng-repeat="comment in recipe.comments | orderBy:'-upvotes'">
     <div style="margin:10px;">
-        <a style="font-size:18px;" href="/#/user/{{comment.author}}">{{comment.author}}:</a>
+        <a class="author-name" href="/#/user/{{comment.author}}">{{comment.author}}:</a>
 
         <span style="margin-left:10px;">
             {{comment.body}}
@@ -70,7 +72,7 @@
     <div class="form-group">
         <input type="text" class="form-control" placeholder="Comment" ng-model="body"></input>
     </div>
-    <button type="submit" class="btn btn-primary">Add comment</button>
+    <button type="submit" class="btn btn-primary btn-add-comment">Add comment</button>
 </form>
 
 

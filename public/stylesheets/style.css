@@ -3,6 +3,36 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.glyphicon-thumbs-up{
+  cursor: pointer;
+}
+
+body{
+ overflow-x: hidden;
+}
+
+.wmargins{
+  margin: 20px;
+}
+
+.wsmallmargins{
+ margin: 10px;
+}
+
+
+/* --- Recipe --*/
+a.author-name {
+  color: #3670ba;
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.recipe-title{
+ width:80%;
+ float:left;
+}
+
+.btn-add-comment{
+  margin-bottom: 60px;
 }
