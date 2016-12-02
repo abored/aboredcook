@@ -22,16 +22,17 @@
  /* background-color: rgba(0,0,0,.6);*/
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 10;
   z-index: 10;
   position: absolute;
-  padding: 0 20px 150px 0;
+  padding: 10px 20px 10px 10px;
   text-align: center;
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .carousel-indicators {
   position: absolute;
-  bottom: 0;
+  bottom: -60px;
   right: 0;
   left: 0;
   width: 100%;
@@ -39,10 +40,11 @@
   margin: 0;
   padding: 0 25px 25px 0;
   text-align: center;
+  background-color: grey;
 }
 
 .carousel-indicators .active{
-  background-color: orange;
+  background-color: red;
   border: 2px solid #fff;
 }
 

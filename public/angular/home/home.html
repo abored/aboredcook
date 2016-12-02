@@ -2,12 +2,14 @@
     <div uib-carousel active="active" interval="slideInterval" style="background-color:dimgray; width:700px;">
         <div uib-slide ng-repeat="r in recipes" index="$index">
             <div ng-switch="r.images.length">
-                <div ng-switch-when="0">
-                    <img src="img/default.png" style="margin:auto;">
-                </div>
-                <div ng-switch-default>
-                    <img ng-src="/images/{{r.images[0]}}" style="margin:auto;">
-                </div>
+
+                    <div ng-switch-when="0">
+                        <img src="img/default.png" class="center-cropped">
+                    </div>
+                    <div ng-switch-default>
+                        <img ng-src="/images/{{r.images[0]}}" class="center-cropped" style="margin:auto;">
+                    </div>
+
             </div>
 
 

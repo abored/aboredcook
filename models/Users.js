@@ -13,6 +13,10 @@ var UserSchema = new mongoose.Schema({
     hash: String,
     salt: String
 
+},
+
+{
+    timestamps: true
 });
 
 UserSchema.methods.setPassword = function(password) {

@@ -18,7 +18,8 @@ var User = mongoose.model('User');
 
 // GET single user
 router.get('/users/:user', function(req, res, next) {
-
+    req.user.hash = "";
+    req.user.salt = "";
     req.user.populate('recipes', 'title author preptime people comments favorites', function(err, user) {
         if (err) {
             return next(err);
