@@ -13,14 +13,15 @@ body{
 
 .wmargins{
   margin: 20px;
-}
+} 
 
 .wsmallmargins{
  margin: 10px;
 }
 
-
-/* --- Recipe --*/
+/******************
+RECIPE
+*******************/
 a.author-name {
   color: #3670ba;
   font-family: sans-serif;
@@ -31,49 +32,20 @@ a.author-name {
 .recipe-title{
  width:70%;
  float:left;
- border: 1px solid blue;
 }
 
 .btn-add-comment{
   margin-bottom: 60px;
 }
 
-.cropArea {
-    background: #E4E4E4;
-    overflow: hidden;
-    width:500px;
-    height:350px;
-}
-form .progress {
-    line-height: 15px;
-}
-.progress {
-    display: inline-block;
-    width: 100px;
-    border: 3px groove #CCC;
-}
-.progress div {
-    font-size: smaller;
-    background: orange;
-    width: 0;
+
+/******************
+CREATE
+*******************/
+.create-headline{
+  padding-left: 5px;
 }
 
-.center-cropped {
-  width: auto;
-  height: auto;
-  background-position: center center;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-
-/* Set the image to fill its parent and make transparent */
-.center-cropped img {
-  min-height: 100%;
-  min-width: 100%;
-  /* IE 8 */
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  /* IE 5-7 */
-  filter: alpha(opacity=0);
-  /* modern browsers */
-  opacity: 0;
+.mainform-create{
+  margin-top:30px; 
 }

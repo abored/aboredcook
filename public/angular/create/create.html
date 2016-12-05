@@ -1,4 +1,4 @@
-<h3>Add a new recipe</h3>
+<h3 class="create-headline">Add a new recipe</h3>
 <div ng-hide="isLoggedIn()">
     <h3>You need to
         <a href="/#/login">Log In</a>
@@ -7,7 +7,7 @@
         before you can add a post.</h3>
 </div>
 
-<form id="mainform" ng-submit="addRecipe()" ng-show="isLoggedIn()" style="margin-top:30px;">
+<form id="mainform" class="mainform-create" ng-submit="addRecipe()" ng-show="isLoggedIn()">
 
     <div class="form-group">
         <input type="text" class="form-control" placeholder="Title" ng-model="title" style="margin:5px;" required/>
