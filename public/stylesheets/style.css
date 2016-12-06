@@ -42,10 +42,39 @@ a.author-name {
 /******************
 CREATE
 *******************/
-.create-headline{
-  padding-left: 5px;
+
+.create-form{
+ margin:  0 auto;
+ width: 100%;
 }
 
-.mainform-create{
-  margin-top:30px; 
+.textarea {
+  resize: none;
 }
+.create-headline{
+  padding-left: 20px;
+  margin-top: 50px;
+}
+
+
+.mainform-create{
+ /* margin-top:30px; */
+}
+
+.create-placeholder{
+  /* margin: 5px; */
+}
+
+.create-portioner{
+  /* float: left;
+  width: 49%; 
+  margin: 5px; */
+}
+
+.create-time{
+ /* float: right;
+  width: 48%;
+  margin-bottom: 5px; */
+}
+
+
