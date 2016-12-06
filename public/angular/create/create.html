@@ -19,7 +19,7 @@
     </div>
     <div>
     	<select ng-model="people" class="form-control create-portioner" style="margin-top:10px; width:285px;">
-            <option value>antal portioner</option>
+            <option value>Servings</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -29,38 +29,40 @@
             <option value="7">7</option>
             <option value="8">8</option>
         </select>
-        <input type="number" class="form-control create-time" placeholder="tid fra start til slut" style="margin-top:10px; margin-right:5px; width:285px; float:right;" ng-model="time">
+        <input type="number" class="form-control create-time" placeholder="Time" style="margin-top:10px; margin-right:7px; width:285px; float:right;" ng-model="time">
     </div>
     <div class="form-group">
-        <textarea elastic type="text" class="textarea form-control" placeholder="How to. Descripe the procedure of this recipe start to finish." style="margin-top:10px; width:580px;" ng-model="howTo"></textarea>
+        <textarea elastic type="text" class="textarea form-control" placeholder="Descripe the procedure of the recipe" style="margin-top:10px; width:580px;" ng-model="howTo"></textarea>
     </div>
     <div class="form-group" style="margin-top:10px;">
     	<fieldset data-ng-repeat="i in ingredients" class="form-inline wpadding">
-            <input type="text" ng-model="i.name" class="form-control wpadding" size="29" placeholder="Ingredient">
-            <input type="number" ng-model="i.amount" class="form-control wpadding" style="width:155px;" placeholder="Mængde">
+            <input type="text" ng-model="i.name" class="form-control wpadding" size="27" placeholder="Ingredient">
+            <input type="number" ng-model="i.amount" class="form-control wpadding" style="width:155px;" placeholder="Amount">
                 <select ng-model="i.unit" class="form-control" style="width:125px;">
-                    <option value="" disabled selected>Enhed</option>
+                    <option value>Yield</option>
                     <option value="g.">g.</option>
                     <option value="ml.">ml.</option>
                     <option value="dl.">dl.</option>
                 </select>
-             <button class="btn btn.default xs-small remove" ng-show="$last" ng-click="removeIng()">-</button>
+             <button class="btn btn.default xs-small remove" ng-show="$last" ng-click="removeIng()"><i class="glyphicon glyphicon-minus"></i></button>
         </fieldset>
     </div>
     <div>
-        <button type='button' class="btn btn-danger addfields" ng-click="addNewIng()" style="margin-top:20px;">Add fields</button>
+        <button type='button' class="btn btn-warning btn-sm create-upload-photo" ng-click="addNewIng()" style="margin-top:20px;">ADD FIELDS</button>
+        <button class="btn btn-warning create-upload-photo btn-sm" ngf-select ng-model="files" ngf-multiple="true" ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100" ngf-resize="{width: 500, height: 500}"><i class="glyphicon glyphicon-open"></i> ADD YOUR PHOTO</button>
+
     </div>
   </form>
 </div>
 
+<!--
 <div id="ingredientsDisplay">
     {{ingredients}}
 </div>
+-->
 
-<form name="form">
-    <div class="btn btn-info" ngf-select ng-model="files" ngf-multiple="true" ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100" ngf-resize="{width: 500, height: 500}">Vælg billeder</div>
-</form>
-<h4>Preview</h4>
+
+<h4 class="h4">Preview</h4>
 <img ng-repeat="file in files" ngf-thumbnail="file" ngf-size="{width: 100, height: 100, quality: 1}" class="thumb">
 <br><br>
-<input type="submit" form="mainform" value="Opret opskrift" class="btn btn-primary" />
+<button type="submit" class="btn btn-warning btn-block create-upload-photo" form="mainform">CREATE RECIPE</button>

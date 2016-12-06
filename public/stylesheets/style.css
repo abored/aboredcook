@@ -56,6 +56,29 @@ CREATE
   margin-top: 50px;
 }
 
+.create-upload-photo{
+  background-color: #e95420;
+  border: none;
+  color: #fff;
+  margin-top: 20px;
+
+}
+
+.create-upload-photo:hover{
+  background-color: #e95420;
+  color: #444444;
+}
+
+.h4{
+  margin-top: 30px;
+  padding-left: 20px;
+}
+
+
+
+
+
+
 
 .mainform-create{
  /* margin-top:30px; */
