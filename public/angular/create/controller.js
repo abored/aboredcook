@@ -9,24 +9,17 @@ angular.module('createController', ['ngFileUpload', 'ngImgCrop'])
                 .state('create', {
                     url: '/create',
                     templateUrl: 'angular/create/create.html',
-                    controller: 'CreateCtrl',
-                    resolve: {
-                        user: ['Users', function(Users) {
-                            return Users.getCurrentUser();
-                        }]
-                    }
+                    controller: 'CreateCtrl'
                 })
         }
     ])
     .controller('CreateCtrl', [
         '$scope',
         'Auth',
-        'user',
         'Recipes',
         'Upload',
         '$state',
-        function($scope, Auth, user, Recipes, Upload, $state) {
-            $scope.user = user;
+        function($scope, Auth, Recipes, Upload, $state) {
             $scope.isLoggedIn = Auth.isLoggedIn;
             $scope.ingredients = [];
 

@@ -34,25 +34,24 @@
 <body ng-app="cookbook">
     <nav class="navbar navbar-default navbar-fixed-top" ng-controller=NavCtrl>
         <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
+
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button
-                    <h1><a class="navbar-brand" href="#">COOKBOOK</a></h1>
+                    <h1><a class="navbar-brand" href="#">ABoredCook</a></h1>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#/list">All recipes <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#/create">New recipe</a></li>
+                    <li><a href="#/list">Alle opskrifter <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#/create">Opret opskrift</a></li>
                 </ul>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+                        <input type="text" class="form-control" placeholder="Find opskrift" ng-model="searchText">
                         <div class="input-group-btn">
                             <button class="btn" type="submit" ui-sref="search({string: searchText})">
                                     <i class="glyphicon glyphicon-search"></i>
@@ -61,14 +60,14 @@
         </div>
         </form>
         <ul class="nav navbar-nav navbar-right">
-            <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-            <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
+            <li ng-hide="isLoggedIn()"><a href="/#/login">Log ind</a></li>
+            <li ng-hide="isLoggedIn()"><a href="/#/register">Opret bruger</a></li>
             <li ng-show="isLoggedIn()" class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentUser()}} <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#/me">Profile</a></li>
+                    <li><a href="#/me">Profil</a></li>
                     <li class="divider"></li>
-                    <li><a ng-click="logOut()">Logout</a></li>
+                    <li><a ng-click="logOut()">Log ud</a></li>
                 </ul>
         </ul>
         </div>

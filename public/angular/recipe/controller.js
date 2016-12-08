@@ -48,8 +48,9 @@ angular.module('recipeController', [])
             }
 
             //foretag check/instansiate mdfavorite
-            $scope.checkFav();
-
+            if (user) {
+                $scope.checkFav();
+            }
             //affyres når bruger trykker på hjertet
             $scope.favorite = function() {
                 Recipes.favorite(recipe._id).success(function(res) {

@@ -29,6 +29,9 @@ angular.module('navController', [])
             $scope.logOut = Auth.logOut;
             $scope.results = search.results;
 
+            $scope.sortType = 'createdAt'; // set the default sort type
+            $scope.sortReverse = false;  // set the default sort order
+
             $scope.search = function() {
                 // Tjek om searchText er tom eller ej
                 if ($scope.searchText || !$scope.searchText === '') {

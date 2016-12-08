@@ -1,17 +1,17 @@
+<div class="recipe-title">
+    <h3>{{recipe.title}}</h3>
+</div>
 
+<div ng-show="isLoggedIn()">
+<div style="float:right; padding-top:8px;">
+    <h4 style="float:left; margin-right:10px;">Favorit: </h4> {{recipe.favorites}}
+    <md-button style="float:left;" class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="favorite()">
+        <md-icon md-font-library="material-icons" style="color:red; font-size: 25px">{{mdfavorite}}</md-icon>
+    </md-button>
 
-    <div class="recipe-title">
-        <h3>{{recipe.title}}</h3>
-    </div>
-
-    <div style="float:right; padding-top:8px;">
-        <h4 style="float:left; margin-right:10px;">Favorite it: </h4> {{recipe.favorites}}
-        <md-button style="float:left;" class="md-icon-button md-primary" aria-label="FAVORITE" ng-click="favorite()">
-            <md-icon md-font-library="material-icons" style="color:red; font-size: 25px">{{mdfavorite}}</md-icon>
-        </md-button>
-
-    </div>
-    <hr style="border:1px solid #222222; width:100%;"/>
+</div>
+</div>
+<hr style="border:1px solid #222222; width:100%;" />
 <div>
     <center> <img style="max-width:100%; height:350px; margin-bottom:10px" ng-src='/images/{{bigImage}}' /></center>
 </div>
@@ -21,27 +21,25 @@
 </span>
 
 <div style="width:48%; float:left;">
-    <h4>Ingredients:</h4>
+    <h4>Ingredienser:</h4>
     <list ng-repeat="i in recipe.ingredients" ng-show="recipe.ingredients">
         <li>{{i.name}}, {{i.amount}}{{i.unit}}</li>
     </list>
 </div>
 
 <div style="width:48%; float:right;">
-    <h4>Description:</h4>
-    {{recipe.description}}
+    <h4>Beskrivelse:</h4> {{recipe.description}}
 </div>
 
 
 <div style="margin-top:50px; width:100%;">
     <br />
-    <h4>Procedure:</h4>
-    {{recipe.howto}}
+    <h4>Fremgangsmåde:</h4> {{recipe.howto}}
 </div>
 
 <div style="margin-top:50px; width:100%;">
     <br />
-    <h4>Comments:</h4>
+    <h4>Kommentarer:</h4>
 </div>
 
 <div ng-repeat="comment in recipe.comments | orderBy:'-upvotes'">
@@ -52,30 +50,27 @@
             {{comment.body}}
         </span>
         <br />
-        <span class="glyphicon glyphicon-thumbs-up" ng-show="isLoggedIn()" ng-click="incrementUpvotes(comment)"></span>
-        {{comment.upvotes}}
+        <span class="glyphicon glyphicon-thumbs-up" ng-show="isLoggedIn()" ng-click="incrementUpvotes(comment)"></span> {{comment.upvotes}}
     </div>
 </div>
 
 <form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
 
-    <div ng-hide="isLoggedIn()">
-        <h3>You need to
-            <a href="/#/login">Log In</a>
-            or
-            <a href="/#/register">Register</a>
-            before you can comment.</h3>
-    </div>
-
-    <h3>Add a new comment</h3>
+    <h3>Tilføj kommentar</h3>
 
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="Comment" ng-model="body"></input>
+        <input type="text" class="form-control" placeholder="Skriv en kommentar" ng-model="body" required></input>
     </div>
-    <button type="submit" class="btn btn-primary btn-add-comment">Add comment</button>
+    <button type="submit" class="btn btn-primary btn-add-comment">Send</button>
 </form>
 
-
+<div ng-hide="isLoggedIn()">
+    <h4>Du skal
+        <a href="/#/login">logge ind</a>
+        eller
+        <a href="/#/register">oprette</a>
+        dig for at kunne tiføje en kommentar.</h4>
+</div>
 
 <!--<md-list>
 <md-list-item class="md-2-line" ng-repeat="comment in recipe.comments">

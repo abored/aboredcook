@@ -1,25 +1,27 @@
-<h3 class="create-headline">Add a new recipe</h3>
-
 <div ng-hide="isLoggedIn()">
-    <h3>You need to
-        <a href="/#/login">Log In</a>
-        or
-        <a href="/#/register">Register</a>
-        before you can add a post.</h3>
+    <h3>Du skal
+        <a href="/#/login">logge ind</a>
+        eller
+        <a href="/#/register">oprette</a>
+        dig for at kunne oprette opskrifter.</h3>
 </div>
 
-<div class="container create-form">
-  <form id="mainform" class="form-inline mainform-create" ng-submit="addRecipe()" ng-show="isLoggedIn()">
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Title" size="75" ng-model="title" required/>
-    </div>
-    <br>
-    <div class="form-group">
-      <input type="text" class="form-control create-desc" placeholder="Description" size="75" ng-model="description" required/>
-    </div>
-    <div>
-    	<select ng-model="people" class="form-control create-desc" style="width:285px;">
-            <option value="" disabled selected>Servings</option>
+<div ng-show="isLoggedIn()">
+    <h3 class="create-headline">Tilføj ny opskrift</h3>
+
+
+    <div class="container create-form">
+        <form id="mainform" class="form-inline mainform-create" ng-submit="addRecipe()" ng-show="isLoggedIn()">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Titel" size="75" ng-model="title" required/>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="text" class="form-control create-desc" placeholder="Beskrivelse" size="75" ng-model="description" required/>
+            </div>
+            <div>
+                <select ng-model="people" class="form-control create-desc" style="width:285px;">
+            <option value="" disabled selected>Portioner</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -29,42 +31,43 @@
             <option value="7">7</option>
             <option value="8">8</option>
         </select>
-        <input type="number" class="form-control create-time" placeholder="Time" style="width:285px;" ng-model="time">
+                <input type="number" class="form-control create-time" placeholder="Tid (min)" style="width:285px;" ng-model="time">
+            </div>
+            <div class="form-group">
+                <textarea elastic type="text" class="textarea form-control" placeholder="Fremgangsmåde" style="width:580px;" ng-model="howto"></textarea>
+            </div>
+            <div class="form-group create-desc">
+                <fieldset data-ng-repeat="i in ingredients" class="form-inline wpadding">
+                    <input type="text" ng-model="i.name" class="form-control wpadding" size="27" placeholder="Ingrediens">
+                    <input type="number" ng-model="i.amount" class="form-control wpadding" style="width:155px;" placeholder="Mængde">
+                    <select ng-model="i.unit" class="form-control" style="width:125px;">
+              <option value="" disabled selected>Enhed</option>
+                <option value="g.">g.</option>
+                <option value="dl.">dl.</option>
+                <option value="ml.">ml.</option>
+                <option value="spsk.">spsk.</option>
+                <option value="tsk.">tsk.</option>
+
+            </select>
+                    <button class="btn btn.default xs-small remove" ng-show="$last" ng-click="removeIng()"><i class="glyphicon glyphicon-minus"></i></button>
+                </fieldset>
+            </div>
+            <button type='button' class="btn btn-warning btn-sm create-upload-photo" ng-click="addNewIng()">Tilføj ingrediens</button>
+
+        </form>
+        <button class="btn btn-warning create-upload-photo btn-sm" ngf-select ng-model="files" ngf-multiple="true" ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100" ngf-resize="{width: 500, height: 500}"><i class="glyphicon glyphicon-open"></i>Vælg billeder</button>
+
     </div>
-    <div class="form-group">
-        <textarea elastic type="text" class="textarea form-control" placeholder="Descripe the procedure of the recipe" style="width:580px;" ng-model="howto"></textarea>
-    </div>
-    <div class="form-group create-desc">
-    	<fieldset data-ng-repeat="i in ingredients" class="form-inline wpadding">
-            <input type="text" ng-model="i.name" class="form-control wpadding" size="27" placeholder="Ingredient">
-            <input type="number" ng-model="i.amount" class="form-control wpadding" style="width:155px;" placeholder="Amount">
-                <select ng-model="i.unit" class="form-control" style="width:125px;">
-                    <option value>Yield</option>
-                    <option value="g.">g.</option>
-                    <option value="ml.">ml.</option>
-                    <option value="dl.">dl.</option>
-                </select>
-             <button class="btn btn.default xs-small remove" ng-show="$last" ng-click="removeIng()"><i class="glyphicon glyphicon-minus"></i></button>
-        </fieldset>
-    </div>
 
-  </form>
-</div>
-
-<div>
-    <button type='button' class="btn btn-warning btn-sm create-upload-photo" ng-click="addNewIng()">ADD FIELDS</button>
-    <button class="btn btn-warning create-upload-photo btn-sm" ngf-select ng-model="files" ngf-multiple="true" ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100" ngf-resize="{width: 500, height: 500}"><i class="glyphicon glyphicon-open"></i> ADD YOUR PHOTO</button>
-
-</div>
-
-<!--
+    <!--
 <div id="ingredientsDisplay">
     {{ingredients}}
 </div>
 -->
 
 
-<h4 class="h4">Preview</h4>
-<img ng-repeat="file in files" ngf-thumbnail="file" ngf-size="{width: 100, height: 100, quality: 1}" class="thumb">
-<br><br>
-<button type="submit" class="btn btn-warning btn-block create-upload-photo" form="mainform">CREATE RECIPE</button>
+    <h4 class="h4">Preview</h4>
+    <img ng-repeat="file in files" ngf-thumbnail="file" ngf-size="{width: 100, height: 100, quality: 1}" class="thumb">
+    <br><br>
+    <button type="submit" class="btn btn-warning btn-block create-upload-photo" form="mainform">OPRET OPSKRIFT</button>
+</div>

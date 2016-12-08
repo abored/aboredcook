@@ -3,9 +3,13 @@ angular.module('usersFactory', [])
         var o = {};
         o.getCurrentUser = function() {
             var userId = Auth.currentUserId();
-            return $http.get('/users/' + userId).then(function(res) {
-                return res.data;
-            });
+            if (userId) {
+                return $http.get('/users/' + userId).then(function(res) {
+                    return res.data;
+                });
+            } else {
+                return "";
+            }
         };
 
         o.getUserByUsername = function(username) {

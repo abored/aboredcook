@@ -44,8 +44,6 @@ angular.module('editController', ['ngFileUpload', 'ngImgCrop'])
                 }
             }
 
-            console.log($scope.isLoggedIn);
-
             $scope.options = [{
                 number: 1
             }, {
@@ -82,8 +80,6 @@ angular.module('editController', ['ngFileUpload', 'ngImgCrop'])
                     preptime: $scope.time
                 };
 
-                console.log(editRecipe);
-
                 Recipes.edit(recipe._id, editRecipe).success(function(res) {
                     if (res.body) {
                         console.log(res.body);
@@ -105,8 +101,6 @@ angular.module('editController', ['ngFileUpload', 'ngImgCrop'])
             $scope.addNewIng = function() {
                 $scope.ingredients.push({});
             };
-
-            $scope.addNewIng();
 
             $scope.removeIng = function() {
                 if ($scope.ingredients.length <= 1) {
