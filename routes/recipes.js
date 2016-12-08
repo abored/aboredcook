@@ -141,7 +141,7 @@ router.delete('/recipes/:recipe/delete', auth, function(req, res, next) {
 });
 
 router.put('/recipes/:recipe/edit', auth, function(req, res, next) {
-  if (req.recipe.author === req.payload.username) {
+    if (req.recipe.author === req.payload.username) {
         Recipe.update({
                 _id: req.recipe._id
             }, req.body)
@@ -202,46 +202,13 @@ router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
 // PUT upvote comment
 router.put('/recipes/:recipe/comments/:comment/upvote', auth, function(req, res, next) {
 
-    /*
-    req.recipe.populate('comments', function(err, recipe) {
+    req.recipe.comment.upvote(function(err, comment) {
         if (err) {
             return next(err);
         }
 
-        for (var i = 0, length = recipe.comments.length; i < length; i++) {
-            for (var x = 0, len = recipe.comments[i].upvotes.length; x < len; x++) {
-                if (recipe.comments[i].upvotes[x]._id === req.payload._id) {
-                    console.log("found! removing!")
-                    Comment.findByIdAndUpdate(recipe.comments[i]._id, {
-                            $pull: {
-                                upvotes: req.payload._id
-                            }
-                        },
-                        function(err, user) {
-                            if (err) {
-                                return next(err);
-                            }
-                        })
-                } else {
-                    console.log("indsætter!")
-                    Comment.findByIdAndUpdate(recipe.comments[i]._id, {
-                            $push: {
-                                upvotes: {
-                                    _id: req.payload._id
-                                }
-                            }
-                        },
-                        function(err, user) {
-                            if (err) {
-                                return next(err);
-                            }
-                        })
-                }
-            }
-        }
-    })*/
-    res.json(true);
-
+        res.json(comment);
+    });
 });
 
 // POST comment til recipe
@@ -249,7 +216,8 @@ router.post('/recipes/:recipe/comments', auth, function(req, res, next) {
     var comment = new Comment(req.body);
     comment.recipe = req.recipe;
     comment.author = req.payload.username;
-
+    comment.upvotes = 0;
+    
     comment.save(function(err, comment) {
         if (err) {
             return next(err);
