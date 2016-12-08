@@ -47,12 +47,14 @@
              <button class="btn btn.default xs-small remove" ng-show="$last" ng-click="removeIng()"><i class="glyphicon glyphicon-minus"></i></button>
         </fieldset>
     </div>
-    <div>
-        <button type='button' class="btn btn-warning btn-sm create-upload-photo" ng-click="addNewIng()">ADD FIELDS</button>
-        <button class="btn btn-warning create-upload-photo btn-sm" ngf-select ng-model="files" ngf-multiple="true" ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100" ngf-resize="{width: 500, height: 500}"><i class="glyphicon glyphicon-open"></i> ADD YOUR PHOTO</button>
 
-    </div>
   </form>
+</div>
+
+<div>
+    <button type='button' class="btn btn-warning btn-sm create-upload-photo" ng-click="addNewIng()">ADD FIELDS</button>
+    <button class="btn btn-warning create-upload-photo btn-sm" ngf-select ng-model="files" ngf-multiple="true" ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100" ngf-resize="{width: 500, height: 500}"><i class="glyphicon glyphicon-open"></i> ADD YOUR PHOTO</button>
+
 </div>
 
 <!--
