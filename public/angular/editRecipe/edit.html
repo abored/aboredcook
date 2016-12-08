@@ -1,6 +1,4 @@
-<h3 class="create-headline">Edit recipe</h3>
-
-<div ng-hide="isLoggedIn()">
+<div ng-hide="isLoggedIn">
     <h3>You need to
         <a href="/#/login">Log In</a>
         or
@@ -8,8 +6,17 @@
         before you can add a post.</h3>
 </div>
 
+<div ng-hide="realAuthor()" style="margin: 20px;"><h3>This is not yours to edit!</h3></div>
+
+<div ng-show="realAuthor()">
+
+<h3 class="create-headline">Edit recipe</h3>
+
+
+
+
 <div class="container create-form">
-  <form id="mainform" class="form-inline mainform-create" ng-submit="editRecipe()" ng-show="isLoggedIn()">
+  <form id="mainform" class="form-inline mainform-create" ng-submit="editRecipe()" ng-show="isLoggedIn">
     <div class="form-group">
       <input type="text" class="form-control" placeholder="Title" size="75" ng-model="title" required/>
     </div>
@@ -59,3 +66,4 @@
 <img ng-repeat="file in files" ngf-thumbnail="file" ngf-size="{width: 100, height: 100, quality: 1}" class="thumb">
 <br><br>
 <button type="submit" class="btn btn-warning btn-block create-upload-photo" form="mainform">EDIT RECIPE</button>
+</div>

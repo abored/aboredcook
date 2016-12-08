@@ -32,10 +32,38 @@ angular.module('editController', ['ngFileUpload', 'ngImgCrop'])
         function($scope, Auth, recipe, user, Recipes, Upload, $state) {
             $scope.user = user;
             $scope.recipe = recipe;
-            $scope.isLoggedIn = Auth.isLoggedIn;
 
-            $scope.options = [{ number: 1}, { number: 2}, { number: 3}, { number: 4}, { number: 5}, { number: 6}, { number: 7}, { number: 8}];
-            $scope.selectedOption = $scope.options[recipe.people-1];
+            $scope.isLoggedIn = Auth.isLoggedIn();
+            $scope.loggedUser = Auth.currentUser();
+
+            $scope.realAuthor = function() {
+                if (user.username === recipe.author) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            console.log($scope.isLoggedIn);
+
+            $scope.options = [{
+                number: 1
+            }, {
+                number: 2
+            }, {
+                number: 3
+            }, {
+                number: 4
+            }, {
+                number: 5
+            }, {
+                number: 6
+            }, {
+                number: 7
+            }, {
+                number: 8
+            }];
+            $scope.selectedOption = $scope.options[recipe.people - 1];
 
             $scope.title = recipe.title;
             $scope.howto = recipe.howto;
@@ -45,26 +73,31 @@ angular.module('editController', ['ngFileUpload', 'ngImgCrop'])
 
             $scope.editRecipe = function() {
 
-              var editRecipe = {
-                  title: $scope.title,
-                  ingredients: $scope.ingredients,
-                  howto: $scope.howto,
-                  description: $scope.description,
-                  people: $scope.people,
-                  preptime: $scope.time
-              };
+                var editRecipe = {
+                    title: $scope.title,
+                    ingredients: $scope.ingredients,
+                    howto: $scope.howto,
+                    description: $scope.description,
+                    people: $scope.people,
+                    preptime: $scope.time
+                };
 
-              console.log(editRecipe);
+                console.log(editRecipe);
 
                 Recipes.edit(recipe._id, editRecipe).success(function(res) {
+                    if (res.body) {
+                        console.log(res.body);
+                        $state.go('home');
 
-                    //upload valgte billeder og knyt til nyoprettet id.
-                    $scope.uploadFiles($scope.files, res._id);
+                    } else {
+                        //upload valgte billeder og knyt til nyoprettet id.
+                        $scope.uploadFiles($scope.files, recipe._id);
 
-                    //gå til den nye opskrift
-                    $state.go('recipes', {
-                        id: recipe._id
-                    });
+                        //gå til den nye opskrift
+                        $state.go('recipes', {
+                            id: recipe._id
+                        });
+                    }
                 })
 
             };

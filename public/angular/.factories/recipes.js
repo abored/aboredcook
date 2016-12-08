@@ -25,6 +25,9 @@ angular.module('recipesFactory', [])
         };
         o.edit = function(id, recipe) {
             return $http.put('/recipes/' + id + '/edit', recipe, {
+                headers: {
+                    Authorization: 'Bearer ' + Auth.getToken()
+                }
             }).success(function(res) {
                 return res
             });

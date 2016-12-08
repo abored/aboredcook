@@ -140,8 +140,8 @@ router.delete('/recipes/:recipe/delete', auth, function(req, res, next) {
 
 });
 
-router.put('/recipes/:recipe/edit', function(req, res, next) {
-    if (1 === 1) {
+router.put('/recipes/:recipe/edit', auth, function(req, res, next) {
+  if (req.recipe.author === req.payload.username) {
         Recipe.update({
                 _id: req.recipe._id
             }, req.body)
