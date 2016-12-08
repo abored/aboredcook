@@ -1,3 +1,20 @@
+/*	################################################################
+	1) SKELETON
+	2) AUTH
+  3) CREATE
+  5) HOME
+  6) RECIPELIST
+  7) ME
+  8) ME.EDIT
+  9) SEARCH
+  10) RECIPE
+  11) USER
+################################################################# */ 
+
+
+/************************************
+1. SKELETON
+*************************************/
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -19,9 +36,105 @@ body{
  margin: 10px;
 }
 
-/******************
-RECIPE
-*******************/
+
+/************************************
+2. AUTH
+*************************************/
+.login-signup{
+  margin-top:30px;
+}
+
+
+/************************************
+3. CREATE
+*************************************/
+.create-form{
+ margin:  0 auto;
+ width: 100%;
+}
+
+.create-desc{
+  margin-top:10px;
+}
+
+.create-serv{
+  margin-top:10px; 
+  width:500px;
+}
+
+.create-time{
+  margin-top:10px; 
+  margin-right:7px; 
+  width:285px; 
+  float:right;
+}
+
+.textarea {
+  resize: none;
+  margin-top:10px; 
+}
+
+.create-headline{
+  padding-left: 20px;
+  margin-top: 50px;
+}
+
+.create-upload-photo{
+  background-color: #e95420;
+  border: none;
+  color: #fff;
+  margin-top: 20px;
+}
+
+.create-upload-photo:hover{
+  background-color: #e95420;
+  color: #444444;
+}
+
+.h4{
+  margin-top: 30px;
+  padding-left: 20px;
+}
+
+
+/************************************
+5. HOME
+*************************************/
+.home{
+   height: 305px;
+}
+
+.carousel-bg{
+  background-color:#555555; 
+  width:700px;
+  margin-top: 30px;
+}
+
+/************************************
+6. RECIPELIST
+*************************************/
+
+
+
+/************************************
+7. ME
+*************************************/
+
+
+
+/************************************
+8. ME.EDIT
+*************************************/
+
+
+/************************************
+9. SEARCH
+*************************************/
+
+
+/************************************
+10. RECIPE
+*************************************/
 a.author-name {
   color: #3670ba;
   font-family: sans-serif;
@@ -39,65 +152,11 @@ a.author-name {
 }
 
 
-/******************
-CREATE
-*******************/
-
-.create-form{
- margin:  0 auto;
- width: 100%;
-}
-
-.textarea {
-  resize: none;
-}
-.create-headline{
-  padding-left: 20px;
-  margin-top: 50px;
-}
-
-.create-upload-photo{
-  background-color: #e95420;
-  border: none;
-  color: #fff;
-  margin-top: 20px;
-
-}
-
-.create-upload-photo:hover{
-  background-color: #e95420;
-  color: #444444;
-}
-
-.h4{
-  margin-top: 30px;
-  padding-left: 20px;
-}
+/************************************
+11. USER
+*************************************/
 
 
 
-
-
-
-
-.mainform-create{
- /* margin-top:30px; */
-}
-
-.create-placeholder{
-  /* margin: 5px; */
-}
-
-.create-portioner{
-  /* float: left;
-  width: 49%; 
-  margin: 5px; */
-}
-
-.create-time{
- /* float: right;
-  width: 48%;
-  margin-bottom: 5px; */
-}
 
 

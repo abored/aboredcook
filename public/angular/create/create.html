@@ -11,14 +11,14 @@
 <div class="container create-form">
   <form id="mainform" class="form-inline mainform-create" ng-submit="addRecipe()" ng-show="isLoggedIn()">
     <div class="form-group">
-      <input type="text" class="form-control create-placeholder" placeholder="Title" size="75" ng-model="title" required/>
+      <input type="text" class="form-control" placeholder="Title" size="75" ng-model="title" required/>
     </div>
     <br>
     <div class="form-group">
-      <input type="text" class="form-control create-placeholder create-space" style ="margin-top:10px;" placeholder="Description" size="75" ng-model="description" required/>
+      <input type="text" class="form-control create-desc" placeholder="Description" size="75" ng-model="description" required/>
     </div>
     <div>
-    	<select ng-model="people" class="form-control create-portioner" style="margin-top:10px; width:285px;">
+    	<select ng-model="people" class="form-control create-desc" style="width:285px;">
             <option value>Servings</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -29,12 +29,12 @@
             <option value="7">7</option>
             <option value="8">8</option>
         </select>
-        <input type="number" class="form-control create-time" placeholder="Time" style="margin-top:10px; margin-right:7px; width:285px; float:right;" ng-model="time">
+        <input type="number" class="form-control create-time" placeholder="Time" style="width:285px;" ng-model="time">
     </div>
     <div class="form-group">
-        <textarea elastic type="text" class="textarea form-control" placeholder="Descripe the procedure of the recipe" style="margin-top:10px; width:580px;" ng-model="howTo"></textarea>
+        <textarea elastic type="text" class="textarea form-control" placeholder="Descripe the procedure of the recipe" style="width:580px;" ng-model="howTo"></textarea>
     </div>
-    <div class="form-group" style="margin-top:10px;">
+    <div class="form-group create-desc">
     	<fieldset data-ng-repeat="i in ingredients" class="form-inline wpadding">
             <input type="text" ng-model="i.name" class="form-control wpadding" size="27" placeholder="Ingredient">
             <input type="number" ng-model="i.amount" class="form-control wpadding" style="width:155px;" placeholder="Amount">
@@ -48,7 +48,7 @@
         </fieldset>
     </div>
     <div>
-        <button type='button' class="btn btn-warning btn-sm create-upload-photo" ng-click="addNewIng()" style="margin-top:20px;">ADD FIELDS</button>
+        <button type='button' class="btn btn-warning btn-sm create-upload-photo" ng-click="addNewIng()">ADD FIELDS</button>
         <button class="btn btn-warning create-upload-photo btn-sm" ngf-select ng-model="files" ngf-multiple="true" ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100" ngf-resize="{width: 500, height: 500}"><i class="glyphicon glyphicon-open"></i> ADD YOUR PHOTO</button>
 
     </div>
