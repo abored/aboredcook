@@ -13,11 +13,12 @@
             <thead>
                 <tr>
                     <th>Title</th>
-                    <th><span class="glyphicon glyphicon-time" title='Tid (min)' ></span></th>
+                    <th><span class="glyphicon glyphicon-time" title='Tid (min)'></span></th>
                     <th><span class="glyphicon glyphicon-user" title='Antal portioner'></span></th>
                     <th><span class="glyphicon glyphicon-heart" title='Favoritter'></span></th>
                     <th><span class="glyphicon glyphicon-comment" title='Kommentarer'></span></th>
-                    <th>Slet</th>
+                                <th><span class="glyphicon glyphicon-edit" title='Edit'></span></th>
+                                  <th><span class="glyphicon glyphicon-remove" title='Delete'></span></th>
                 </tr>
             </thead>
             <tr ng-repeat="r in user.recipes">
@@ -31,7 +32,10 @@
                 </td>
                 <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
                 <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>
-                <td><button ng-click="confirmDelete(r.title, r._id)"><span class="glyphicon glyphicon-remove"></span></button></td>
+                <td>
+                    <a href="/#/recipes/{{r._id}}/edit">Edit</a>
+                </td>
+                <td><a href="" ng-click="confirmDelete(r.title, r._id)">Delete</a></td>
             </tr>
         </table>
     </div>
@@ -46,7 +50,7 @@
                 <tr>
                     <th>Title</th>
                     <th>Author</th>
-                    <th><span class="glyphicon glyphicon-time" title='Tid (min)' ></span></th>
+                    <th><span class="glyphicon glyphicon-time" title='Tid (min)'></span></th>
                     <th><span class="glyphicon glyphicon-user" title='Antal portioner'></span></th>
                     <th><span class="glyphicon glyphicon-heart" title='Favoritter'></span></th>
                     <th><span class="glyphicon glyphicon-comment" title='Kommentarer'></span></th>

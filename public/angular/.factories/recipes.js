@@ -10,7 +10,7 @@ angular.module('recipesFactory', [])
         };
         o.get = function(id) {
             return $http.get('/recipes/' + id).then(function(res) {
-                return res.data;
+                return res.data
             });
         };
         o.delete = function(id) {
@@ -18,6 +18,13 @@ angular.module('recipesFactory', [])
                 headers: {
                     Authorization: 'Bearer ' + Auth.getToken()
                 }
+            }).success(function(res) {
+                return res
+            });
+
+        };
+        o.edit = function(id, recipe) {
+            return $http.put('/recipes/' + id + '/edit', recipe, {
             }).success(function(res) {
                 return res
             });

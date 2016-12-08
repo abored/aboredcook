@@ -10,10 +10,10 @@ angular.module('cookbook', [
   'homeController',
   'navController',
   'authController',
-
   'recipeController',
   'createController',
   'listController',
+  'editController',
 
   'userController',
   'meController',

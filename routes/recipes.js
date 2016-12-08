@@ -105,7 +105,6 @@ router.get('/images/:image', function(req, res, next) {
 
 // GET single recipe (her bruger vi router.param middleware injection til at håndtere ":recipe"-id -se middleware routes længere nede)
 router.get('/recipes/:recipe', function(req, res, next) {
-    console.log(req.body)
     req.recipe.populate('comments', function(err, recipe) {
         if (err) {
             return next(err);
@@ -135,6 +134,23 @@ router.delete('/recipes/:recipe/delete', auth, function(req, res, next) {
             }
             res.json("Recipe removed");
         })
+    } else {
+        res.json("That's not your recipe!");
+    }
+
+});
+
+router.put('/recipes/:recipe/edit', function(req, res, next) {
+    if (1 === 1) {
+        Recipe.update({
+                _id: req.recipe._id
+            }, req.body)
+            .then(function(success) {
+                res.json();
+            })
+            .catch(function(error) {
+                res.status(404).send(err);
+            });
     } else {
         res.json("That's not your recipe!");
     }

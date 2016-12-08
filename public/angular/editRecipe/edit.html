@@ -1,4 +1,4 @@
-<h3 class="create-headline">Add a new recipe</h3>
+<h3 class="create-headline">Edit recipe</h3>
 
 <div ng-hide="isLoggedIn()">
     <h3>You need to
@@ -9,7 +9,7 @@
 </div>
 
 <div class="container create-form">
-  <form id="mainform" class="form-inline mainform-create" ng-submit="addRecipe()" ng-show="isLoggedIn()">
+  <form id="mainform" class="form-inline mainform-create" ng-submit="editRecipe()" ng-show="isLoggedIn()">
     <div class="form-group">
       <input type="text" class="form-control" placeholder="Title" size="75" ng-model="title" required/>
     </div>
@@ -18,17 +18,8 @@
       <input type="text" class="form-control create-desc" placeholder="Description" size="75" ng-model="description" required/>
     </div>
     <div>
-    	<select ng-model="people" class="form-control create-desc" style="width:285px;">
-            <option value="" disabled selected>Servings</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-        </select>
+      <select data-ng-options="o.number for o in options" data-ng-model="selectedOption" class="form-control create-desc" style="width:285px;"></select>
+
         <input type="number" class="form-control create-time" placeholder="Time" style="width:285px;" ng-model="time">
     </div>
     <div class="form-group">
@@ -67,4 +58,4 @@
 <h4 class="h4">Preview</h4>
 <img ng-repeat="file in files" ngf-thumbnail="file" ngf-size="{width: 100, height: 100, quality: 1}" class="thumb">
 <br><br>
-<button type="submit" class="btn btn-warning btn-block create-upload-photo" form="mainform">CREATE RECIPE</button>
+<button type="submit" class="btn btn-warning btn-block create-upload-photo" form="mainform">EDIT RECIPE</button>

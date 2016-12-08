@@ -35,7 +35,7 @@ angular.module('meController', ['ngAnimate', 'ngSanitize', 'ui.bootstrap'])
         function($scope, $state, user, Users, Recipes, Auth, $window) {
             $scope.user = user;
             $scope.isLoggedIn = Auth.isLoggedIn();
-            $scope.listCollapsed = true;
+            $scope.listCollapsed = false;
             $scope.favsCollapsed = true;
 
             $scope.confirmDelete = function(title, id) {
