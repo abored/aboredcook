@@ -38,6 +38,7 @@ angular.module('authController', [])
             $scope.register = function() {
                 Auth.register($scope.user).error(function(error) {
                     $scope.error = error;
+                    console.log(error);
                 }).then(function() {
                     $state.go('home');
                 });

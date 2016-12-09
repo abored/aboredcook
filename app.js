@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 
-
 //load models
 require('./models/Recipes');
 require('./models/Comments');
