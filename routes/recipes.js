@@ -217,7 +217,7 @@ router.post('/recipes/:recipe/comments', auth, function(req, res, next) {
     comment.recipe = req.recipe;
     comment.author = req.payload.username;
     comment.upvotes = 0;
-    
+
     comment.save(function(err, comment) {
         if (err) {
             return next(err);
@@ -275,12 +275,15 @@ router.get('/search/:searchText', function(req, res, next) {
     console.log(req.params.searchText);
 
     Recipe.find({
-        $text: {
-            $search: req.params.searchText
-        }
-    }).exec(function(err, results) {
-        res.json(results);
-    })
+            $text: {
+                $search: req.params.searchText
+            }
+        })
+        .limit(10)
+        .exec(function(err, results) {
+            console.log(results);
+            res.json(results);
+        })
 
     // query.then(function( docs) {
     //   console.log('searched for: ' + searchText + 'and got: '+ docs);

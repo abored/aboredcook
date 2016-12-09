@@ -12,9 +12,7 @@ var UserSchema = new mongoose.Schema({
     recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
     hash: String,
     salt: String
-
 },
-
 {
     timestamps: true
 });

@@ -4,12 +4,8 @@ var CommentSchema = new mongoose.Schema({
         body: String,
         author: String,
         upvotes: Number,
-        recipe: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Recipe'
-        }
+        recipe: { type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }
     },
-
     {
         timestamps: true
     });
@@ -17,7 +13,6 @@ var CommentSchema = new mongoose.Schema({
 CommentSchema.methods.upvote = function(callback) {
     this.upvotes += 1;
     this.save(callback);
-    console.log("+1!")
 };
 
 mongoose.model('Comment', CommentSchema);
