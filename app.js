@@ -32,8 +32,6 @@ app.set('view engine', 'ejs');
 //Sæt favicon
 app.use(favicon(path.join(__dirname, 'public', 'fav.ico')));
 
-
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -68,4 +66,9 @@ app.use(function(err, req, res) {
     res.render('error');
 });
 
-module.exports = app;
+var server = app.listen(3000, function () {
+   var host = server.address().address
+   var port = server.address().port
+   
+   console.log("Server listening at http://localhost:" + port)
+})

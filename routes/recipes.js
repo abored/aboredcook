@@ -279,17 +279,10 @@ router.get('/search/:searchText', function(req, res, next) {
                 $search: req.params.searchText
             }
         })
-        .limit(10)
         .exec(function(err, results) {
             console.log(results);
             res.json(results);
         })
-
-    // query.then(function( docs) {
-    //   console.log('searched for: ' + searchText + 'and got: '+ docs);
-    //   res.json(docs);
-
-    // });
 });
 
 
@@ -308,8 +301,5 @@ router.param('searchText', function(req, res, next, searchText) {
         return next();
     });
 });
-
-
-
 
 module.exports = router;

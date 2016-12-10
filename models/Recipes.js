@@ -29,9 +29,7 @@ var RecipeSchema = new mongoose.Schema({
         timestamps: true
     });
 
-RecipeSchema.index({title: 'text', author: 'text', 'ingredients.name': 'text' });
-
-mongoose.model('Recipe', RecipeSchema);
+//RecipeSchema.index({title: 'text', author: 'text', 'ingredients.name': 'text' });
 
 RecipeSchema.methods.favorite = function(callback) {
     this.favorites += 1;
@@ -44,3 +42,5 @@ RecipeSchema.methods.unFavorite = function(callback) {
     this.save(callback);
     console.log("-1")
 };
+
+mongoose.model('Recipe', RecipeSchema);
