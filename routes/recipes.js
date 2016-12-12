@@ -19,7 +19,7 @@ var express = require('express'),
 
 var auth = jwt({
     secret: 'jegerhemmeligucn',
-    userProperty: 'payload'
+    requestProperty: 'payload'
 });
 
 // GET all recipes
@@ -37,6 +37,7 @@ router.get('/recipes', function(req, res, next) {
 router.post('/recipes', auth, function(req, res, next) {
     var recipe = new Recipe(req.body);
     console.log(req.body.ingredients);
+
     //hent og sæt username fra jwt-payload (slip for at query db for username)
     recipe.author = req.payload.username;
 

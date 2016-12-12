@@ -39,7 +39,6 @@ angular.module('recipesFactory', [])
                     Authorization: 'Bearer ' + Auth.getToken()
                 }
             }).success(function(res) {
-                //o.recipes.push(data);
                 return res;
             });
         };

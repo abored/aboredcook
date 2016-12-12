@@ -29,7 +29,7 @@ var RecipeSchema = new mongoose.Schema({
         timestamps: true
     });
 
-//RecipeSchema.index({title: 'text', author: 'text', 'ingredients.name': 'text' });
+RecipeSchema.index({title: 'text', author: 'text', 'ingredients.name': 'text' });
 
 RecipeSchema.methods.favorite = function(callback) {
     this.favorites += 1;

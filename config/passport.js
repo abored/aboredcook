@@ -1,10 +1,11 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 
-//TODO: IMPLEMENT FACEBOOK OG GOOGLE STRATS SENERE!!
+//TODO: IMPLEMENTÉR FACEBOOK OG GOOGLE STRATEGIER SENERE
 
 var local = new LocalStrategy(
     function(username, password, done) {
