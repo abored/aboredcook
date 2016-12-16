@@ -1,5 +1,5 @@
 angular.module('searchFactory', [])
-    .factory('search', ['$http', function($http) {
+    .factory('Search', ['$http', function($http) {
         var o = {
             results: []
         };

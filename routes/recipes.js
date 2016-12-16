@@ -9,7 +9,6 @@ var crypto = require('crypto');
 
 var path = require('path');
 
-var Recipe = mongoose.model('Recipe');
 var Comment = mongoose.model('Comment');
 var User = mongoose.model('User');
 
@@ -20,6 +19,22 @@ var express = require('express'),
 var auth = jwt({
     secret: 'jegerhemmeligucn',
     requestProperty: 'payload'
+});
+
+var Recipe = mongoose.model('Recipe');
+
+router.get('/search/:searchText', function(req, res, next) {
+    console.log(req.params.searchText);
+
+    Recipe.find({
+            $text: {
+                $search: req.params.searchText
+            }
+        })
+        .exec(function(err, results) {
+            console.log(results);
+            res.json(results);
+        })
 });
 
 // GET all recipes
@@ -272,35 +287,6 @@ function getUserByIdPromise(req) {
     return User.findById(req.payload._id).exec();
 }
 
-router.get('/search/:searchText', function(req, res, next) {
-    console.log(req.params.searchText);
 
-    Recipe.find({
-            $text: {
-                $search: req.params.searchText
-            }
-        })
-        .exec(function(err, results) {
-            console.log(results);
-            res.json(results);
-        })
-});
-
-
-router.param('searchText', function(req, res, next, searchText) {
-    var query = Recipe.find(searchText);
-
-    query.exec(function(err, recipe) {
-        if (err) {
-            return next(err);
-        }
-        if (!recipe) {
-            return next(new Error('can\'t find recipe'));
-        }
-
-        req.recipe = recipe;
-        return next();
-    });
-});
 
 module.exports = router;

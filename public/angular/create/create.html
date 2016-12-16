@@ -6,10 +6,14 @@
         dig for at kunne oprette opskrifter.</h3>
 </div>
 
+
+
 <div ng-show="isLoggedIn()">
     <h3 class="create-headline">Tilføj ny opskrift</h3>
 
-
+    <div ng-show="error" class="alert alert-danger row">
+        <span>{{ error }}</span>
+    </div>
     <div class="container create-form">
         <form id="mainform" class="form-inline mainform-create" ng-submit="addRecipe()" ng-show="isLoggedIn()">
             <div class="form-group">
@@ -49,13 +53,17 @@
                 <option value="tsk.">tsk.</option>
 
             </select>
-                    <button class="btn btn.default xs-small remove" ng-show="$last" ng-click="removeIng()"><i class="glyphicon glyphicon-minus"></i></button>
+                    <button type=button class="btn btn-warning btn-sm create-upload-photoe" ng-show="$last" ng-click="removeIng()">Fjern</button>
                 </fieldset>
             </div>
-            <button type='button' class="btn btn-warning btn-sm create-upload-photo" ng-click="addNewIng()">Tilføj ingrediens</button>
 
         </form>
-        <button class="btn btn-warning create-upload-photo btn-sm" ngf-select ng-model="files" ngf-multiple="true" ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100" ngf-resize="{width: 500, height: 500}"><i class="glyphicon glyphicon-open"></i>Vælg billeder</button>
+        <div>
+          <button type="button" class="btn btn-warning btn-sm create-upload-photo" ng-click="addNewIng()">Tilføj ingrediens</button>
+
+        </div>
+
+        <button type="button" class="btn btn-warning create-upload-photo btn-sm" ngf-select ng-model="files" ngf-multiple="true" ngf-accept="'image/*'" ngf-max-size="10MB" ngf-min-height="100" ngf-resize="{width: 500, height: 500}"><i class="glyphicon glyphicon-open"></i>Vælg billeder</button>
 
     </div>
 

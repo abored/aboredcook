@@ -22,7 +22,6 @@ angular.module('createController', ['ngFileUpload', 'ngImgCrop'])
         function($scope, Auth, Recipes, Upload, $state) {
             $scope.isLoggedIn = Auth.isLoggedIn;
             $scope.ingredients = [];
-
             $scope.addRecipe = function() {
                 console.log($scope.ingredients)
 
@@ -54,7 +53,7 @@ angular.module('createController', ['ngFileUpload', 'ngImgCrop'])
 
             $scope.removeIng = function() {
                 if ($scope.ingredients.length <= 1) {
-                    console.log("You need at least one ingredient!")
+                    $scope.error = "Du skal have mindst én ingrediens!";
                 } else {
                     var lastItem = $scope.ingredients.length - 1;
                     $scope.ingredients.splice(lastItem);

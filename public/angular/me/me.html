@@ -4,7 +4,6 @@
     <h3>Brugernavn: {{user.username}}</h3>
 </div>
 
-
 <button type="button" class="btn btn-primary" ng-click="listCollapsed = !listCollapsed">Mine opskrifter</button>
 
 <div uib-collapse="listCollapsed">
@@ -33,7 +32,7 @@
                 <td ui-sref="recipes({id: r._id})">{{ r.favorites}}</td>
                 <td ui-sref="recipes({id: r._id})">{{ r.comments.length}}</td>
                 <td>
-                    <a href="/#/recipes/{{r._id}}/edit">Ret</a>
+                    <a href="/#/recipes/{{r._id}}/edit" style="color: #CC0000">Ret</a>
                 </td>
                 <td><a href="" ng-click="confirmDelete(r.title, r._id)">Slet</a></td>
             </tr>

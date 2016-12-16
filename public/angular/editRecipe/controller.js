@@ -61,6 +61,7 @@ angular.module('editController', ['ngFileUpload', 'ngImgCrop'])
             }, {
                 number: 8
             }];
+
             $scope.selectedOption = $scope.options[recipe.people - 1];
 
             $scope.title = recipe.title;

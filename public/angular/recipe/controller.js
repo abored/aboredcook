@@ -1,4 +1,4 @@
-angular.module('recipeController', [])
+angular.module('recipeController', ['ui.router'])
     .config([
         '$stateProvider',
         '$urlRouterProvider',

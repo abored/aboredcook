@@ -1,26 +1,14 @@
 angular.module('cookbook', [
 
   //FACTORIES
-  'authFactory',
-  'usersFactory',
-  'recipesFactory',
-  'searchFactory',
+  'authFactory', 'usersFactory', 'recipesFactory', 'searchFactory',
 
   //CONTROLLERS
-  'homeController',
-  'navController',
-  'authController',
-  'recipeController',
-  'createController',
-  'listController',
-  'editController',
+  'homeController', 'navController', 'authController', 'recipeController', 'createController',
+  'listController', 'editController',  'userController', 'meController',
 
-  'userController',
-  'meController',
-
-  //OTHER DEPENDENCIES
-  'ngMaterial',
-  'ngFileUpload']);
+  //DIVERSE DEPENDINCES
+  'ngMaterial', 'ngFileUpload']);
 
 /*********************
  *     DIRECTIVES    *
