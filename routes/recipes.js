@@ -176,11 +176,14 @@ router.put('/recipes/:recipe/edit', auth, function(req, res, next) {
 
 // PUT favorite recipe (bruger upvote metode defineret i modellen for recipe)
 router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
-    getUserByIdPromise(req).then(function(user) {
+    var query = User.findById(req.payload._id);
+
+    query.exec().then(function(user) {
         var isInArray = user.favorites.some(function(favId) {
             return favId.equals(req.recipe._id);
         });
         console.log(isInArray);
+
         if (isInArray) {
             User.findByIdAndUpdate(req.payload._id, {
                     $pull: {
@@ -283,9 +286,7 @@ router.param('comment', function(req, res, next, id) {
     });
 });
 
-function getUserByIdPromise(req) {
-    return User.findById(req.payload._id).exec();
-}
+
 
 
 
