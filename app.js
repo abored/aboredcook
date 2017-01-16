@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var fs = require('fs')
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -32,7 +33,11 @@ app.set('view engine', 'ejs');
 //Sæt favicon
 app.use(favicon(path.join(__dirname, 'public', 'fav.ico')));
 
+//log http requests til access.log OG console
+var logStream = fs.createWriteStream(__dirname + '/access.log', {flags: 'a'});
+app.use(logger('combined', {stream: logStream}));
 app.use(logger('dev'));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false

@@ -178,7 +178,7 @@ router.put('/recipes/:recipe/edit', auth, function(req, res, next) {
 router.put('/recipes/:recipe/favorite', auth, function(req, res, next) {
     var query = User.findById(req.payload._id);
 
-    query.exec().then(function(user) {
+    query.then(function(user) {
         var isInArray = user.favorites.some(function(favId) {
             return favId.equals(req.recipe._id);
         });
